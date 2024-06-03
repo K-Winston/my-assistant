@@ -1,0 +1,122 @@
+import openai
+import pyttsx3
+import speech_recognition as sr
+import time
+import datetime
+import subprocess
+import os
+import requests
+import sys
+
+# Remplacez 'votre-cle-api' par votre clé API OpenAI
+openai.api_key = 'votre-cle-api'
+
+# Initialiser le moteur de synthèse vocale
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[0].id)  # 0 pour la voix masculine, changer à 1 pour la voix féminine
+engine.setProperty('rate', 150)  # Vitesse de la parole
+
+# Fonction pour parler
+def speak(text):
+    engine.say(text)
+    engine.runAndWait()
+
+# Fonction pour écouter et reconnaître la voix
+def listen():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Écoute...")
+        r.pause_threshold = 1
+        audio = r.listen(source)
+    
+    try:
+        print("Reconnaissance...")
+        query = r.recognize_google(audio, language='fr-FR')
+        print(f"Vous avez dit: {query}\n")
+    except Exception as e:
+        print(e)
+        speak("Désolé, je n'ai pas compris. Pouvez-vous répéter s'il vous plaît?")
+        return "None"
+    return query
+
+# Fonction pour interagir avec GPT
+def chat_with_gpt(messages):
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=messages
+    )
+    return response.choices[0].message['content'].strip()
+
+# Fonction pour vérifier les mises à jour des packages et les installer
+def update_packages():
+    try:
+        subprocess.run(["pip", "install", "--upgrade", "openai", "pyttsx3", "SpeechRecognition", "requests"], check=True)
+        speak("Les packages ont été mis à jour.")
+    except subprocess.CalledProcessError as e:
+        speak("La mise à jour des packages a échoué.")
+
+# Fonction pour télécharger et mettre à jour le script
+def update_script():
+    url = "https://raw.githubusercontent.com/<votre_nom_utilisateur>/my-assistant/main/chatgpt.py"  # Remplacez par l'URL brute de votre script
+    try:
+        response = requests.get(url)
+        with open(__file__, 'wb') as f:
+            f.write(response.content)
+        speak("Le script a été mis à jour. Redémarrage en cours.")
+        os.execv(sys.executable, ['python3'] + sys.argv)
+    except Exception as e:
+        speak("La mise à jour du script a échoué.")
+
+# Fonction pour surveiller les menaces potentielles
+def monitor_security():
+    # Exemple simple : vérification des fichiers suspects
+    suspicious_files = ["malicious.exe", "virus.py"]
+    for file in suspicious_files:
+        if os.path.exists(file):
+            speak(f"Alerte : fichier suspect détecté - {file}. Veuillez vérifier votre système.")
+            # Supprimer le fichier suspect (optionnel)
+            os.remove(file)
+
+# Fonction principale
+def main():
+    speak("Bonjour, je suis votre assistant personnel. Comment puis-je vous aider aujourd'hui?")
+    messages = [{"role": "system", "content": "You are a helpful assistant who speaks French."}]
+    
+    while True:
+        query = listen().lower()
+
+        if 'arrête' in query or 'stop' in query:
+            speak("Au revoir!")
+            break
+        
+        elif 'heure' en query:
+            strTime = datetime.datetime.now().strftime("%H:%M:%S")
+            speak(f"Il est {strTime}")
+        
+        elif 'date' en query:
+            strDate = datetime.datetime.now().strftime("%Y-%m-%d")
+            speak(f"Aujourd'hui, nous sommes le {strDate}")
+        
+        elif 'ton nom' en query:
+            speak("Je suis JARVIS, votre assistant personnel.")
+        
+        elif 'mise à jour' en query:
+            update_packages()
+        
+        elif 'script' en query:
+            update_script()
+        
+        elif 'sécurité' en query:
+            monitor_security()
+        
+        else:
+            messages.append({"role": "user", "content": query})
+            response = chat_with_gpt(messages)
+            print(f"ChatGPT: {response}")
+            speak(response)
+            messages.append({"role": "assistant", "content": response})
+            time.sleep(2)
+
+if __name__ == "__main__":
+    main()
