@@ -1,0 +1,439 @@
+:root {
+  --bg: #1e1530;
+  --bg2: #2a1d3d;
+  --panel: #362650;
+  --panel2: #45325f;
+  --text: #f6eefc;
+  --muted: #b9a9cf;
+  --gold: #ffd25e;
+  --accent: #8ee07a;
+  --danger: #ff6b6b;
+  --radius: 16px;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: radial-gradient(circle at 50% 0%, #3b2758 0%, var(--bg) 60%);
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  overscroll-behavior: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+#app {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100%;
+  padding: calc(env(safe-area-inset-top) + 10px) 14px calc(env(safe-area-inset-bottom) + 14px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ---------- Barre du haut ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg2);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  box-shadow: 0 4px 0 #0003;
+}
+.gold {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.rate {
+  color: var(--muted);
+  font-size: 0.9rem;
+  flex: 1;
+  font-variant-numeric: tabular-nums;
+}
+.icon-btn {
+  font-size: 1.5rem;
+  background: var(--panel);
+  border-radius: 12px;
+  width: 44px;
+  height: 44px;
+}
+
+/* ---------- Potions ---------- */
+.potion {
+  --c: #888;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--c) 70%, white), var(--c) 55%, color-mix(in srgb, var(--c) 60%, black));
+  box-shadow: inset 0 -4px 0 #0004, 0 3px 0 #0005;
+}
+.p-icon {
+  font-size: clamp(1.4rem, 7vw, 2rem);
+  filter: drop-shadow(0 2px 1px #0006);
+}
+.p-lvl {
+  position: absolute;
+  top: 3px;
+  right: 5px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  background: #0008;
+  border-radius: 8px;
+  padding: 0 5px;
+}
+.potion.locked {
+  --c: #4a3b60;
+}
+
+/* ---------- Clients ---------- */
+.customers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.customer {
+  background: var(--panel);
+  border-radius: var(--radius);
+  padding: 8px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-height: 132px;
+  justify-content: center;
+  border: 2px solid transparent;
+  transition: border-color 0.2s, transform 0.1s;
+}
+.customer:active {
+  transform: scale(0.97);
+}
+.customer.ready {
+  border-color: var(--accent);
+  box-shadow: 0 0 14px #8ee07a55;
+}
+.customer.empty {
+  opacity: 0.5;
+}
+.waiting {
+  font-size: 1.6rem;
+  color: var(--muted);
+  animation: blink 1.4s infinite;
+}
+.avatar {
+  font-size: 2rem;
+  line-height: 1;
+}
+.bubble {
+  width: 52px;
+  height: 52px;
+}
+.bubble .p-icon {
+  font-size: 1.5rem;
+}
+.reward {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+/* ---------- Étagère ---------- */
+.shelf-wrap {
+  background: linear-gradient(#5a3d2b, #47301f);
+  border-radius: var(--radius);
+  padding: 10px;
+  box-shadow: inset 0 0 0 3px #7a5638, 0 4px 0 #0005;
+}
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  touch-action: none;
+}
+.cell {
+  aspect-ratio: 1;
+  border-radius: 14px;
+  background: #00000030;
+  box-shadow: inset 0 2px 4px #0006;
+}
+.cell.dragging .potion {
+  opacity: 0.3;
+}
+.cell.spawn .potion {
+  animation: spawn 0.35s ease-out;
+}
+.cell.pop .potion {
+  animation: pop 0.4s ease-out;
+}
+
+.ghost {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 72px;
+  height: 72px;
+  pointer-events: none;
+  z-index: 50;
+  filter: drop-shadow(0 8px 10px #0008);
+}
+
+/* ---------- Chaudron ---------- */
+.cauldron {
+  width: 100%;
+  background: var(--panel);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 12px;
+  align-items: center;
+  box-shadow: 0 4px 0 #0004;
+}
+.cauldron-icon {
+  font-size: 2.2rem;
+  grid-row: span 2;
+}
+.spawn-bar {
+  height: 14px;
+  background: #0005;
+  border-radius: 8px;
+  overflow: hidden;
+}
+#spawn-fill {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #6fd35a, #c4f57a);
+  border-radius: 8px;
+}
+.cauldron-hint {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: left;
+  margin-top: 4px;
+}
+.cauldron.bump .cauldron-icon {
+  animation: pop 0.25s ease-out;
+}
+
+/* ---------- Améliorations ---------- */
+.upgrades {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.upgrade {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--panel);
+  border-radius: 14px;
+  padding: 10px 12px;
+  text-align: left;
+  opacity: 0.6;
+}
+.upgrade.can {
+  opacity: 1;
+  background: var(--panel2);
+  box-shadow: 0 3px 0 #0005;
+}
+.upgrade:disabled {
+  opacity: 0.4;
+}
+.u-icon {
+  font-size: 1.6rem;
+}
+.u-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.u-text small {
+  color: var(--muted);
+  font-weight: 400;
+}
+.u-cost {
+  font-weight: 800;
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+/* ---------- Modales ---------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: #0009;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  z-index: 100;
+}
+.modal.hidden {
+  display: none;
+}
+.modal-card {
+  background: var(--bg2);
+  border-radius: 20px;
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  max-height: 85vh;
+  overflow: auto;
+  text-align: center;
+  animation: spawn 0.25s ease-out;
+}
+.modal-card h2 {
+  margin: 0 0 8px;
+}
+.muted {
+  color: var(--muted);
+}
+.big-gold {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--gold);
+}
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 16px;
+}
+.btn {
+  background: var(--accent);
+  color: #1b2a14;
+  font-weight: 800;
+  padding: 12px 22px;
+  border-radius: 12px;
+  box-shadow: 0 3px 0 #0005;
+}
+.btn.ghost {
+  background: var(--panel);
+  color: var(--muted);
+}
+.discovery {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 12px;
+  animation: pop 0.5s ease-out;
+}
+.discovery .p-icon {
+  font-size: 3rem;
+}
+.recipes {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+.recipes li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.recipes li > .potion {
+  width: 48px;
+  height: 48px;
+  flex: none;
+}
+.recipes li span {
+  display: flex;
+  flex-direction: column;
+}
+.recipes small {
+  color: var(--muted);
+}
+.recipes li.unknown {
+  opacity: 0.6;
+}
+
+/* ---------- Effets ---------- */
+.float-text {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  font-weight: 900;
+  font-size: 1.3rem;
+  color: var(--gold);
+  text-shadow: 0 2px 0 #0008;
+  pointer-events: none;
+  z-index: 60;
+  animation: float-up 1s ease-out forwards;
+}
+.shake {
+  animation: shake 0.35s;
+}
+
+@keyframes spawn {
+  from {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+}
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes float-up {
+  to {
+    transform: translate(-50%, -150%);
+    opacity: 0;
+  }
+}
+@keyframes shake {
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+@keyframes blink {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+  }
+}

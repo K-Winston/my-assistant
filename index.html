@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+    <meta name="theme-color" content="#2a1d3d" />
+    <meta name="description" content="Potion Tycoon — fusionnez des potions et faites prospérer votre boutique d'alchimiste." />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
+    <title>Potion Tycoon</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <div class="gold"><span class="coin">🪙</span><span id="gold">0</span></div>
+        <div class="rate"><span id="rate">0</span>/s</div>
+        <button id="btn-book" class="icon-btn" aria-label="Livre de recettes">📖</button>
+      </header>
+
+      <section class="customers" id="customers" aria-label="Clients"></section>
+
+      <section class="shelf-wrap">
+        <div class="board" id="board" aria-label="Étagère de potions"></div>
+      </section>
+
+      <section class="cauldron-row">
+        <button id="cauldron" class="cauldron" aria-label="Remuer le chaudron">
+          <span class="cauldron-icon">🫕</span>
+          <span class="spawn-bar"><span id="spawn-fill"></span></span>
+          <span class="cauldron-hint">Tapez pour remuer</span>
+        </button>
+      </section>
+
+      <section class="upgrades" id="upgrades" aria-label="Améliorations"></section>
+    </div>
+
+    <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-card" id="modal-card"></div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
