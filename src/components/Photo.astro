@@ -1,0 +1,36 @@
+---
+// Image optimisée (AVIF + WebP, plusieurs largeurs) générée par scripts/optimize-images.mjs
+// à partir de public/photos/<file>.jpg. Chargement différé sauf si priority = true (hero).
+import manifest from '../data/images.generated.json';
+
+interface Props {
+  file: string;
+  alt: string;
+  sizes?: string;
+  priority?: boolean;
+  class?: string;
+}
+const { file, alt, sizes = '100vw', priority = false, class: className } = Astro.props;
+const entry = (manifest as Record<string, { width: number; height: number; widths: number[] }>)[file];
+if (!entry) throw new Error(`Photo introuvable : public/photos/${file}.jpg (voir README, section Photos)`);
+
+const base = `/photos/_generated/${file}`;
+const srcset = (fmt: string) => entry.widths.map((w) => `${base}-${w}.${fmt} ${w}w`).join(', ');
+const fallbackWidth = entry.widths.find((w) => w >= 800) ?? entry.widths[entry.widths.length - 1];
+// Le texte alternatif ne doit pas afficher « [À COMPLÉTER » aux lecteurs d'écran : on le garde
+// tel quel (signal visible dans l'audit) mais on le rend lisible.
+const altText = alt.replace(/^\[À COMPLÉTER : (.*)\]$/, 'Photo à venir : $1');
+---
+<picture class={className}>
+  <source type="image/avif" srcset={srcset('avif')} sizes={sizes} />
+  <source type="image/webp" srcset={srcset('webp')} sizes={sizes} />
+  <img
+    src={`${base}-${fallbackWidth}.webp`}
+    alt={altText}
+    width={entry.width}
+    height={entry.height}
+    loading={priority ? 'eager' : 'lazy'}
+    decoding={priority ? 'sync' : 'async'}
+    fetchpriority={priority ? 'high' : undefined}
+  />
+</picture>

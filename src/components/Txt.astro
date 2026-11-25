@@ -1,0 +1,8 @@
+---
+// Affiche un texte du fichier de données ; s'il contient « [À COMPLÉTER … ] »,
+// il est surligné pour ne pas être oublié avant la mise en ligne.
+import { isTodo } from '../data/site';
+interface Props { value: string }
+const { value } = Astro.props;
+---
+{isTodo(value) ? <span class="todo">{value}</span> : value}

@@ -1,0 +1,86 @@
+---
+import { company, contact, nav, services } from '../data/site';
+import Txt from './Txt.astro';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer on-dark">
+  <div class="container footer-grid">
+    <div class="footer-id">
+      <p class="footer-name"><Txt value={company.name} /></p>
+      <p>{company.activity}<br />Artisan : <Txt value={company.owner} /></p>
+      <p>
+        SIRET : <Txt value={company.siret} /><br />
+        {company.insurance.label} : <Txt value={company.insurance.insurer} />,
+        contrat n° <Txt value={company.insurance.policyNumber} />
+      </p>
+    </div>
+    <nav aria-label="Prestations">
+      <p class="footer-title">Prestations</p>
+      <ul>
+        {services.map((s) => <li><a href={`/prestations/${s.slug}/`}>{s.title}</a></li>)}
+      </ul>
+    </nav>
+    <nav aria-label="Plan du site">
+      <p class="footer-title">Le site</p>
+      <ul>
+        {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+        <li><a href="/#contact">Contact et devis</a></li>
+      </ul>
+    </nav>
+    <div>
+      <p class="footer-title">Contact</p>
+      <ul>
+        <li><a href={`tel:${contact.phoneLink}`}><Txt value={contact.phoneDisplay} /></a></li>
+        <li><Txt value={contact.email} /></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>© {year} <Txt value={company.name} /></p>
+    <ul>
+      <li><a href="/mentions-legales/">Mentions légales</a></li>
+      <li><a href="/confidentialite/">Confidentialité</a></li>
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .site-footer { padding-top: var(--sp-8); font-size: var(--fs-sm); color: var(--c-on-dark-2); }
+  .footer-grid {
+    display: grid;
+    gap: var(--sp-6);
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    padding-bottom: var(--sp-7);
+  }
+  .footer-grid > :first-child { grid-column: span 1; }
+  @media (min-width: 64rem) { .footer-grid { grid-template-columns: 1.6fr 1fr 1fr 1fr; } }
+  .footer-name {
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1.1;
+    text-transform: uppercase;
+    color: var(--c-on-dark);
+  }
+  .footer-title { font-weight: 600; color: var(--c-on-dark); margin-bottom: var(--sp-2); }
+  ul { list-style: none; padding: 0; margin: 0; }
+  li { margin: 0; }
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    color: var(--c-on-dark-2);
+  }
+  a:hover { color: var(--c-accent); }
+  .footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--sp-3) var(--sp-6);
+    padding-block: var(--sp-4);
+    border-top: 1px solid var(--c-line-dark);
+  }
+  .footer-bottom p { margin: 0; }
+  .footer-bottom ul { display: flex; flex-wrap: wrap; gap: 0 var(--sp-5); }
+</style>
