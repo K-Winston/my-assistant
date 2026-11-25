@@ -6,7 +6,7 @@
   "scripts": {
     "images": "node scripts/optimize-images.mjs",
     "dev": "npm run images && astro dev",
-    "build": "npm run images && astro build",
+    "build": "npm run images && astro check && astro build",
     "preview": "astro preview"
   },
   "dependencies": {
@@ -17,6 +17,8 @@
     "sharp": "^0.35.5"
   },
   "devDependencies": {
-    "playwright": "^1.63.0"
+    "@astrojs/check": "^0.9.12",
+    "playwright": "^1.63.0",
+    "typescript": "^6.0.3"
   }
 }
