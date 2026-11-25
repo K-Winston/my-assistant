@@ -23,7 +23,7 @@ const business = {
   image: ogImage,
   telephone: clean(contact.phoneDisplay) ? contact.phoneLink : undefined,
   email: clean(contact.email),
-  founder: { '@type': 'Person', name: company.owner },
+  founder: clean(company.owner) ? { '@type': 'Person', name: company.owner } : undefined,
   address: {
     '@type': 'PostalAddress',
     streetAddress: clean(contact.address.street),

@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Txt from '../components/Txt.astro';
+import { company, contact, legal } from '../data/site';
+const crumbs = [{ name: 'Accueil', path: '/' }, { name: 'Mentions légales', path: '/mentions-legales/' }];
+---
+<Base title="Mentions légales" description={`Mentions légales du site de ${company.name}, maçonnerie générale tous corps d’état.`} breadcrumb={crumbs}>
+  <PageHead title="Mentions légales" crumbs={crumbs} />
+  <div class="section container prose">
+    <h2>Éditeur du site</h2>
+    <p>
+      <strong><Txt value={company.name} /></strong><br />
+      <Txt value={company.legalForm} /><br />
+      Activité : {company.activity}<br />
+      Adresse : <Txt value={contact.address.street} />, <Txt value={contact.address.postalCode} /> <Txt value={contact.address.city} /><br />
+      Téléphone : <Txt value={contact.phoneDisplay} /><br />
+      E-mail : <Txt value={contact.email} /><br />
+      SIRET : <Txt value={company.siret} /><br />
+      Immatriculation : <Txt value={company.rcsOrRm} /><br />
+      TVA intracommunautaire : <Txt value={company.vat} />
+    </p>
+
+    <h2>Directeur de la publication</h2>
+    <p><Txt value={legal.publicationDirector} /></p>
+
+    <h2>Assurance professionnelle</h2>
+    <p>
+      {company.insurance.label} souscrite auprès de <Txt value={company.insurance.insurer} />,
+      contrat n° <Txt value={company.insurance.policyNumber} />.<br />
+      Couverture géographique : <Txt value={company.insurance.coverage} />.
+    </p>
+
+    <h2>Hébergeur</h2>
+    <p>
+      <Txt value={legal.host.name} /><br />
+      <Txt value={legal.host.address} /><br />
+      <Txt value={legal.host.contact} />
+    </p>
+
+    <h2>Propriété intellectuelle</h2>
+    <p>Les textes et photographies de ce site sont la propriété de <Txt value={company.name} />, sauf mention contraire. Toute reproduction sans autorisation est interdite.</p>
+    <p>Polices de caractères : Barlow Condensed et Inter, sous licence SIL Open Font License 1.1.</p>
+
+    <h2>Données personnelles</h2>
+    <p>Le traitement des informations envoyées par le formulaire de contact est décrit dans la <a href="/confidentialite/">politique de confidentialité</a>.</p>
+
+    <h2>Cookies</h2>
+    <p>Ce site ne dépose aucun cookie de suivi ni de mesure d’audience.</p>
+
+    <p><em>Dernière mise à jour : <Txt value={legal.lastUpdate} /></em></p>
+  </div>
+</Base>

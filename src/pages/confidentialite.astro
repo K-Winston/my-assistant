@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Txt from '../components/Txt.astro';
+import { company, contact, legal } from '../data/site';
+const crumbs = [{ name: 'Accueil', path: '/' }, { name: 'Confidentialité', path: '/confidentialite/' }];
+---
+<Base title="Politique de confidentialité" description={`Comment ${company.name} utilise les informations envoyées par le formulaire de demande de devis, et vos droits (RGPD).`} breadcrumb={crumbs}>
+  <PageHead title="Politique de confidentialité" crumbs={crumbs} />
+  <div class="section container prose">
+    <h2>Responsable du traitement</h2>
+    <p>
+      <Txt value={company.owner} />, <Txt value={company.name} /><br />
+      <Txt value={contact.address.street} />, <Txt value={contact.address.postalCode} /> <Txt value={contact.address.city} /><br />
+      E-mail : <Txt value={contact.email} /> — Téléphone : <Txt value={contact.phoneDisplay} />
+    </p>
+
+    <h2>Données collectées</h2>
+    <p>Le formulaire de demande de devis collecte uniquement les informations que vous saisissez :</p>
+    <ul>
+      <li>votre nom ;</li>
+      <li>votre numéro de téléphone ;</li>
+      <li>la commune du chantier ;</li>
+      <li>le type de travaux ;</li>
+      <li>le message décrivant votre projet ;</li>
+      <li>votre accord (case à cocher).</li>
+    </ul>
+    <p>Aucune autre donnée n’est collectée par ce site : pas de cookie de suivi, pas d’outil de mesure d’audience, pas de publicité.</p>
+
+    <h2>Finalité et base légale</h2>
+    <p>Ces informations servent uniquement à vous recontacter au sujet de votre demande et à établir un devis. Le traitement repose sur votre consentement, donné en cochant la case du formulaire, et sur les mesures précontractuelles prises à votre demande.</p>
+    <p>Elles ne sont ni vendues, ni louées, ni utilisées à des fins publicitaires.</p>
+
+    <h2>Destinataires</h2>
+    <p>Les informations sont lues uniquement par <Txt value={company.owner} />. Pour acheminer le message, le formulaire utilise le service Web3Forms, qui transmet la demande par e-mail. Ce prestataire agit comme sous-traitant technique et peut être situé hors de l’Union européenne <span class="todo">[À COMPLÉTER : vérifier les garanties de transfert du prestataire retenu]</span>.</p>
+
+    <h2>Durée de conservation</h2>
+    <p>Les demandes sont conservées {legal.retention}, puis supprimées. Si la demande aboutit à un devis ou à des travaux, les documents commerciaux et comptables sont conservés pendant les durées prévues par la loi.</p>
+
+    <h2>Vos droits</h2>
+    <p>Conformément au Règlement général sur la protection des données (RGPD) et à la loi Informatique et Libertés, vous pouvez à tout moment :</p>
+    <ul>
+      <li>accéder à vos données et en obtenir une copie ;</li>
+      <li>les faire rectifier ou effacer ;</li>
+      <li>retirer votre consentement ;</li>
+      <li>vous opposer à leur traitement ou en demander la limitation ;</li>
+      <li>demander leur portabilité.</li>
+    </ul>
+    <p>Pour exercer ces droits, contactez <Txt value={contact.email} /> ou appelez le <Txt value={contact.phoneDisplay} />. Une réponse vous sera apportée dans un délai d’un mois.</p>
+    <p>Si vous estimez que vos droits ne sont pas respectés, vous pouvez adresser une réclamation à la CNIL : <a href="https://www.cnil.fr/fr/plaintes" rel="noopener">www.cnil.fr/fr/plaintes</a>.</p>
+
+    <h2>Sécurité</h2>
+    <p>Le site est servi exclusivement en HTTPS. Les informations du formulaire sont transmises de manière chiffrée.</p>
+
+    <p><em>Dernière mise à jour : <Txt value={legal.lastUpdate} /></em></p>
+  </div>
+</Base>
