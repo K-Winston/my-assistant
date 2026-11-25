@@ -173,7 +173,7 @@ Refonte de la page d'accueil, conduite avec le skill **Impeccable** (pbakaus/imp
 - **Revue finale indépendante** (relecteur d'Impeccable, en contexte neuf) :
   - 1er passage : verdict *fix*, 6 corrections demandées. 5 sont jugées résolues au 2e passage : PRODUCT.md, repères sur mobile, bouton d'action sur mobile, fond et hiérarchie de « Notre histoire ».
   - La régression signalée au 2e passage (nom sur deux lignes sur mobile) est corrigée et vérifiée à 360 et 390 px, mais ce correctif n'a pas été revu par le relecteur.
-  - **Point ouvert** : le sur-titre du hero (« Maçonnerie générale · Tous corps d'état »). Impeccable interdit tout sur-titre ; le brief du client l'exige. Il est conservé en attendant la décision du client. Alternative proposée par le relecteur : déplacer ce texte dans le cartouche.
+  - **Sur-titre du hero** (« Maçonnerie générale · Tous corps d'état ») : Impeccable interdit tout sur-titre, mais le brief l'exige. **Décision du client : il est conservé.** Cette exception est volontaire et n'est pas une règle du système de design (voir `DESIGN.md`).
 - **Contrôle** (`npm run check`) : Lighthouse **100 / 100 / 100 / 100** sur toutes les pages, sauf le SEO de `/merci/` (exclu de Google volontairement). LCP de l'accueil : 1,35 s. CLS = 0. 0 erreur axe, HTML ou console. 0 lien cassé sur 149. Responsive OK de 360 à 1440 px. Formulaire OK avec et sans JavaScript.
 
 ### Détecteur Impeccable (scripts installés)
