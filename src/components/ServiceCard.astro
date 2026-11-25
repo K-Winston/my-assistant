@@ -8,7 +8,7 @@ const H = headingLevel;
 <article class="card service-card">
   <Icon name={service.icon} />
   <H class="service-title">
-    <a href={`/prestations/${service.slug}/`}>{service.title}</a>
+    <a class="stretched-link" href={`/prestations/${service.slug}/`}>{service.title}</a>
   </H>
   <p>{service.summary}</p>
   <span class="service-more" aria-hidden="true">Voir le détail <Icon name="arrow" class="more-icon" /></span>
