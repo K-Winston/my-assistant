@@ -8,3 +8,4 @@ public/photos/_generated/
 .lighthouseci/
 audit-reports/
 src/data/images.generated.json
+demo/
