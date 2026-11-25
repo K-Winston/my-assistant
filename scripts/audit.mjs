@@ -1,7 +1,8 @@
 // Audit complet du build de production (dist/) :
-//   1. validation HTML (html-validate)       3. accessibilité (axe-core, WCAG 2.2 AA)
-//   2. liens cassés (internes + externes)    4. Lighthouse (4 catégories, mobile) par page
-//   5. erreurs console / violations CSP      6. poids des pages
+//   1. validation HTML (html-validate)       5. erreurs console / violations CSP
+//   2. liens cassés (internes + externes)    6. poids des pages
+//   3. accessibilité (axe-core, WCAG 2.2 AA) 7. responsive 360→1440 px, zones cliquables
+//   4. Lighthouse (4 catégories, mobile)     8. formulaire avec et sans JavaScript
 // Résultats : audit-reports/summary.json + tableau affiché dans le terminal.
 // Usage : node scripts/audit.mjs [--no-lighthouse] [--no-external]
 import { spawnSync, execFile } from 'node:child_process';
@@ -13,6 +14,8 @@ import { chromium } from 'playwright';
 import { AxeBuilder } from '@axe-core/playwright';
 import { start } from './serve.mjs';
 import { checkLinks } from './check-links.mjs';
+import { checkResponsive } from './check-responsive.mjs';
+import { checkForm } from './check-form.mjs';
 
 const args = new Set(process.argv.slice(2));
 const PORT = 4400;
@@ -31,6 +34,8 @@ const files = htmlFiles('dist').sort();
 // La page 404 est auditée via /404.html (servie avec un statut 200 pour que Lighthouse l'analyse).
 const toUrl = (f) => f.replace(/^.*?dist\//, '/').replace(/index\.html$/, '');
 const pages = files.map(toUrl);
+// Pages volontairement exclues de Google (noindex) : leur score SEO n'est pas compté.
+const NOINDEX = new Set(['/merci/']);
 const results = Object.fromEntries(pages.map((p) => [p, {}]));
 let failed = false;
 
@@ -53,6 +58,10 @@ try {
   // 2. Liens
   const links = await checkLinks(BASE, { external: !args.has('--no-external') });
   for (const b of links.broken) console.log(`  LIEN CASSÉ ${b.url} (${b.status}) depuis ${b.from}`);
+
+  // Responsive et formulaire
+  if (await checkResponsive(BASE)) failed = true;
+  if (await checkForm(BASE)) failed = true;
 
   // 3 + 5 + 6. axe, console, poids
   const browser = await chromium.launch();
@@ -112,7 +121,7 @@ try {
     const r = results[p]; const l = r.lighthouse || {};
     console.log(`| ${p} | ${l.perf ?? '–'} | ${l.a11y ?? '–'} | ${l.bp ?? '–'} | ${l.seo ?? '–'} | ${l.lcp ?? '–'} | ${l.cls ?? '–'} | ${r.axe} | ${r.htmlErrors} | ${r.console} | ${r.kb} |`);
     if (r.axe || r.htmlErrors || r.console || r.lighthouse === 'échec') failed = true;
-    if (l.perf !== undefined && Math.min(l.perf, l.a11y, l.bp, l.seo) < 95) failed = true;
+    if (l.perf !== undefined && Math.min(l.perf, l.a11y, l.bp, NOINDEX.has(p) ? 100 : l.seo) < 95) failed = true;
   }
   for (const w of links.warnings) console.log(`  ⚠ lien externe non vérifiable ${w.url} (${w.status}) depuis ${w.from}`);
   console.log(`\nLiens vérifiés : ${links.checked}, cassés : ${links.broken.length}, avertissements : ${links.warnings.length}`);

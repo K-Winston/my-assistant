@@ -7,7 +7,10 @@
     "images": "node scripts/optimize-images.mjs",
     "dev": "npm run images && astro dev",
     "build": "npm run images && astro check && astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "serve": "node scripts/serve.mjs",
+    "check": "npm run build && node scripts/audit.mjs",
+    "check:rapide": "npm run build && node scripts/audit.mjs --no-lighthouse --no-external"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.6",
@@ -21,7 +24,6 @@
     "@axe-core/playwright": "^4.14.1",
     "html-validate": "^11.22.1",
     "lighthouse": "^13.6.0",
-    "linkinator": "^8.1.0",
     "playwright": "^1.63.0",
     "typescript": "^6.0.3"
   }

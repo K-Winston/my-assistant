@@ -13,7 +13,9 @@
    ===================================================================== */
 
 export const company = {
-  /** Nom commercial affiché partout (logo, titres, mentions légales). */
+  /** Nom commercial affiché partout (logo, titres, mentions légales).
+   *  Il est ajouté à la fin des titres d'onglet (« … | Nom ») tant que le total
+   *  reste sous 70 caractères ; au-delà, le titre est affiché seul. */
   name: '[NOM DE L’ENTREPRISE]',
   /** Prénom et nom de l'artisan. */
   owner: 'Stéphane [À COMPLÉTER : nom de famille]',
@@ -53,7 +55,7 @@ export const contact = {
 export const site = {
   /** Texte du logo dans l'en-tête. */
   logoText: '[NOM DE L’ENTREPRISE]',
-  defaultTitle: 'Maçon tous corps d’état à Graveson et Saint-Rémy-de-Provence',
+  defaultTitle: 'Maçon tous corps d’état à Graveson, Saint-Rémy',
   defaultDescription:
     'Maçonnerie générale et tous corps d’état : fondations, extensions, toiture, électricité, plomberie et placo. Un seul artisan à Graveson, Maillane, Saint-Rémy-de-Provence et Bellegarde.',
   ogImage: '/og-image.jpg',
@@ -99,7 +101,7 @@ export interface Service {
   title: string;
   /** Résumé court affiché sur la carte de l'accueil. */
   summary: string;
-  /** Titre et description pour Google. */
+  /** Titre pour Google (70 caractères max) et description (≈ 155 caractères). */
   seoTitle: string;
   seoDescription: string;
   /** Paragraphes d'introduction de la page prestation. */
@@ -139,7 +141,7 @@ export const services: Service[] = [
     icon: 'wall',
     title: 'Maçonnerie & extensions',
     summary: 'Agrandissements, murs de clôture, pierre, enduits et ouvertures.',
-    seoTitle: 'Maçonnerie et extension de maison à Graveson et Saint-Rémy-de-Provence',
+    seoTitle: 'Maçonnerie et extension à Graveson et Saint-Rémy-de-Provence',
     seoDescription:
       'Agrandissement de maison, murs de clôture, travaux en pierre, enduits et création d’ouvertures à Graveson, Maillane, Saint-Rémy-de-Provence et Bellegarde.',
     intro: [
@@ -163,7 +165,7 @@ export const services: Service[] = [
     icon: 'roof',
     title: 'Toiture',
     summary: 'Charpente, couverture en tuiles, réparation et rénovation.',
-    seoTitle: 'Toiture, charpente et couverture à Graveson et Saint-Rémy-de-Provence',
+    seoTitle: 'Toiture et charpente à Graveson et Saint-Rémy-de-Provence',
     seoDescription:
       'Charpente, couverture en tuiles, réparation et rénovation de toiture à Graveson, Maillane, Saint-Rémy-de-Provence et Bellegarde.',
     intro: [
@@ -181,7 +183,7 @@ export const services: Service[] = [
     icon: 'electric',
     title: 'Électricité',
     summary: 'Installation, mise aux normes et rénovation électrique.',
-    seoTitle: 'Électricité : installation et mise aux normes à Graveson et Saint-Rémy',
+    seoTitle: 'Électricité et mise aux normes à Graveson et Saint-Rémy-de-Provence',
     seoDescription:
       'Installation électrique, mise aux normes et rénovation électrique dans le cadre de vos travaux à Graveson, Maillane, Saint-Rémy-de-Provence et Bellegarde.',
     intro: [
@@ -217,7 +219,7 @@ export const services: Service[] = [
     icon: 'drywall',
     title: 'Placo & aménagement',
     summary: 'Cloisons, doublages, faux plafonds et isolation intérieure.',
-    seoTitle: 'Placo, cloisons et isolation intérieure à Graveson et Saint-Rémy',
+    seoTitle: 'Placo et isolation intérieure à Graveson et Saint-Rémy-de-Provence',
     seoDescription:
       'Cloisons, doublages, faux plafonds et isolation intérieure en plaques de plâtre à Graveson, Maillane, Saint-Rémy-de-Provence et Bellegarde.',
     intro: [

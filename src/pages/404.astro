@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import PageHead from '../components/PageHead.astro';
 import { notFound, services } from '../data/site';
 ---
-<Base title={notFound.title} description={notFound.text} noindex>
+<Base title={notFound.title} description={notFound.text}>
   <PageHead title={notFound.title}>
     <p class="lead">{notFound.text}</p>
   </PageHead>

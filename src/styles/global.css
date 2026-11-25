@@ -106,7 +106,7 @@ strong { font-weight: 600; }
 .section-head p:last-child { margin-bottom: 0; }
 
 /* Texte à compléter : visible pour ne pas l'oublier avant la mise en ligne */
-.todo { background: #fff3d6; color: #5c3b00; padding: 0 0.2em; border-radius: var(--r-sm); }
+.todo { background: #fff3d6; color: #5c3b00; padding: 0 0.2em; border-radius: var(--r-sm); overflow-wrap: anywhere; }
 .on-dark .todo { background: #4a3a1e; color: #ffe2b0; }
 
 /* ---------- Boutons ---------- */
@@ -177,7 +177,7 @@ strong { font-weight: 600; }
   font-size: 1rem; /* 16 px minimum : évite le zoom automatique sur iPhone */
   color: var(--c-text);
   background: var(--c-card);
-  border: 1px solid #b9ae9b; /* plus foncé que --c-border : contraste 3:1 requis pour un champ */
+  border: 1px solid var(--c-field-border); /* contraste ≥ 3:1 exigé pour le contour d’un champ (WCAG 1.4.11) */
   border-radius: var(--r-sm);
 }
 .textarea { min-height: 9rem; resize: vertical; }
@@ -212,3 +212,28 @@ strong { font-weight: 600; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+
+/* ---------- Impression ----------
+   Version papier sobre : noir sur blanc, sans navigation ni formulaire.
+   Sur la page d'accueil, seuls l'en-tête d'identité et le bloc Contact
+   (coordonnées) sont imprimés. */
+@media print {
+  @page { margin: 1.5cm; }
+  :root { --section-y: 1rem; }
+  body { background: #fff; color: #000; font-size: 11pt; }
+  .on-dark, .story, .card { background: #fff !important; color: #000 !important; border-color: #999 !important; }
+  .on-dark .kicker, .kicker, .lead, .coord-label { color: #000 !important; }
+  .todo { background: none; color: #000; border: 1px dashed #000; }
+  .skip-link, .nav, .nav-toggle, .btn, .btn-row, .hero-media, .hero-badges,
+  .site-footer nav, .cta-band, .contact-form-wrap, picture, .crumbs { display: none !important; }
+  .site-header { position: static; border-bottom: 2px solid #000; }
+  .logo, .logo-mark { color: #000; fill: #000; stroke: #000; }
+  a { color: #000; text-decoration: none; }
+  h1, h2, h3 { break-after: avoid; color: #000; }
+  ul, li, .coords li { break-inside: avoid; }
+  .icon-line { color: #000; }
+  /* Page d'accueil : on n'imprime que le contact */
+  body:has(#contact) main > :not(#contact) { display: none !important; }
+  .print-only { display: block !important; }
+}
+.print-only { display: none; }

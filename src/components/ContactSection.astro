@@ -15,7 +15,7 @@ import Txt from './Txt.astro';
           <Icon name="phone" />
           <div>
             <span class="coord-label">Téléphone</span>
-            <a class="coord-value" href={`tel:${contact.phoneLink}`}><Txt value={contact.phoneDisplay} /></a>
+            <a class="coord-value" href={`tel:${contact.phoneLink}`}><Txt value={contact.phoneDisplay} nowrap /></a>
           </div>
         </li>
         <li>
@@ -47,6 +47,7 @@ import Txt from './Txt.astro';
           </div>
         </li>
       </ul>
+      <p class="print-only">Demande de devis en ligne : {new URL('/#contact', Astro.site).href}</p>
     </div>
     <div class="contact-form-wrap">
       <ContactForm />
@@ -66,5 +67,6 @@ import Txt from './Txt.astro';
 
   @media print {
     .contact-grid { grid-template-columns: 1fr; }
+    .coord-value { font-size: 12pt; }
   }
 </style>

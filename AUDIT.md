@@ -44,7 +44,35 @@ Lighthouse : Perf / Accessibilité / Bonnes pratiques / SEO. LCP et CLS mesurés
 - **npm audit** : 0 vulnérabilité dans les dépendances de production ; 3 **modérées** dans des outils de développement (`glob` / `minimatch`, via linkinator). Aucune haute ni critique.
 - **Revue de sécurité** : aucune vulnérabilité à haute confiance (détail plus bas).
 
-<!-- APRES -->
+### Après corrections
+
+| Page | Lighthouse avant (P / A / BP / SEO) | Lighthouse **après** | LCP après | CLS après | axe avant → après | HTML avant → après | Console |
+|---|---|---|---|---|---|---|---|
+| `/` | 99 / 100 / 100 / 100 | **99 / 100 / 100 / 100** | 1,96 s | 0 | 0 → 0 | 17 → **0** | 0 |
+| `/prestations/fondations-gros-oeuvre/` | 100 / 100 / 100 / 100 | **100 / 100 / 100 / 100** | 1,05 s | 0 | 0 → 0 | 15 → **0** | 0 |
+| `/prestations/maconnerie-extensions/` | 100 / 100 / 100 / 100 | **100 / 100 / 100 / 100** | 1,05 s | 0 | 0 → 0 | 15 → **0** | 0 |
+| `/prestations/toiture/` | 100 / 100 / 100 / 100 | **100 / 100 / 100 / 100** | 1,05 s | 0 | 0 → 0 | 15 → **0** | 0 |
+| `/prestations/electricite/` | 100 / 100 / 100 / 100 | **100 / 100 / 100 / 100** | 1,05 s | 0 | 0 → 0 | 15 → **0** | 0 |
+| `/prestations/plomberie/` | 100 / 100 / 100 / 100 | **100 / 100 / 100 / 100** | 1,05 s | 0 | 0 → 0 | 15 → **0** | 0 |
+| `/prestations/placo-amenagement/` | 100 / 100 / 100 / 100 | **100 / 100 / 100 / 100** | 1,74 s | 0 | 0 → 0 | 15 → **0** | 0 |
+| `/mentions-legales/` | 100 / 100 / 100 / 100 | **100 / 100 / 100 / 100** | 0,90 s | 0 | 0 → 0 | 7 → **0** | 0 |
+| `/confidentialite/` | 100 / 100 / 100 / 100 | **100 / 100 / 100 / 100** | 0,90 s | 0 | 0 → 0 | 7 → **0** | 0 |
+| `/merci/` | 100 / 100 / 100 / 66 | **100 / 100 / 100 / 66** (voulu, voir plus bas) | 0,91 s | 0 | 0 → 0 | 7 → **0** | 0 |
+| `/404` | 100 / 100 / 100 / 66 | **100 / 100 / 100 / 100** | 0,90 s | 0 | 0 → 0 | 7 → **0** | 0 |
+
+| Contrôle global | Avant | Après |
+|---|---|---|
+| Erreurs HTML (total) | 135 | **0** |
+| Erreurs axe (total) | 0 | **0** |
+| Liens cassés | 0 / 147 | **0 / 147** |
+| Vulnérabilités npm (haute / critique) | 0 / 0 (3 modérées, outils de dev) | **0 / 0 (0 au total)** |
+| Contour des champs (WCAG 1.4.11) | 2,2:1 ❌ | **3,9:1** ✅ |
+| Responsive 360 / 768 / 1280 / 1440 px | ✅ | ✅ |
+| Formulaire sans JavaScript | non testé | ✅ (envoi, puis redirection vers `/merci/`) |
+| Poids des pages (transféré, premier chargement) | – | 134 à 181 Ko, dont 117 Ko de polices mises en cache ensuite |
+
+**Objectifs** : Lighthouse ≥ 95 dans les 4 catégories sur chaque page ✅ (sauf le SEO de `/merci/`, exclu volontairement de Google) · 0 erreur axe ✅ · 0 lien cassé ✅ · 0 vulnérabilité haute ou critique ✅.
+
 
 ## Faiblesses relevées
 
@@ -85,7 +113,7 @@ Aucun défaut de code bloquant. En revanche, **la mise en ligne reste bloquée p
 - **Clavier et focus** : lien d’évitement « Aller au contenu », contour de focus de 3 px sur tous les éléments interactifs (`#8A5A1E` sur fond clair, `#E0A458` sur fond foncé), menu mobile avec `aria-expanded` et fermeture par Échap, ordre de tabulation logique, aucune case `tabindex` positive.
 - **Textes alternatifs** : toutes les images ont un `alt` (axe `image-alt` : 0). Les icônes décoratives sont `aria-hidden`. Les `alt` des photos restent à rédiger au moment de déposer les vraies photos (marqués `[À COMPLÉTER]` dans `site.ts`).
 - **Formulaire** : chaque champ a un `<label for>` (axe `label` : 0), champs obligatoires signalés (`required` + astérisque expliqué), aide liée par `aria-describedby`, message d’état dans une zone `role="status"`, `autocomplete` correct (`name`, `tel`, `address-level2`).
-- **Poids des pages** : de 40 à 230 Ko environ selon la page (polices 117 Ko au total, préchargées : 2 fichiers). Images en AVIF et WebP, 5 largeurs, `loading="lazy"` sauf l’image du hero (`fetchpriority="high"`, préchargée).
+- **Poids des pages** : de 134 à 181 Ko au premier chargement, dont 117 Ko de polices (5 fichiers woff2, 2 préchargés, mis en cache un an). Images en AVIF et WebP, 5 largeurs, `loading="lazy"` sauf l’image du hero (`fetchpriority="high"`, préchargée).
 - **Core Web Vitals** (Lighthouse, mobile simulé) : LCP de 0,9 à 2,0 s (objectif < 2,5 s), CLS = 0 sur toutes les pages (objectif < 0,1).
 - **En-têtes de sécurité** (`netlify.toml` et `vercel.json`) : CSP stricte (`default-src 'self'`, scripts et styles sans `unsafe-inline`, `connect-src` et `form-action` limités à `api.web3forms.com`, `frame-ancestors 'none'`, `object-src 'none'`, `base-uri 'self'`), `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy` restrictive, `X-Frame-Options: DENY`, HSTS, `Cross-Origin-Opener-Policy`. Aucune violation CSP en console sur les 11 pages.
 - **Secrets** : aucune clé dans le code. `.env` est ignoré par Git ; seul `.env.example` (vide) est versionné. La clé Web3Forms est publique par conception (elle figure dans le HTML du formulaire) et ne donne accès qu’à l’envoi de messages vers l’adresse configurée.

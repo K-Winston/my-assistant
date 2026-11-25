@@ -1,8 +1,10 @@
 ---
 // Affiche un texte du fichier de données ; s'il contient « [À COMPLÉTER … ] »,
 // il est surligné pour ne pas être oublié avant la mise en ligne.
+// nowrap : remplace les espaces par des espaces insécables (numéros de téléphone).
 import { isTodo } from '../data/site';
-interface Props { value: string }
-const { value } = Astro.props;
+interface Props { value: string; nowrap?: boolean }
+const { value, nowrap = false } = Astro.props;
+const text = nowrap ? value.replace(/ /g, '\u00a0') : value;
 ---
-{isTodo(value) ? <span class="todo">{value}</span> : value}
+{isTodo(value) ? <span class="todo">{text}</span> : text}

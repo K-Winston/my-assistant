@@ -2,6 +2,7 @@
 import { hero, contact } from '../data/site';
 import Icon from './Icon.astro';
 import Photo from './Photo.astro';
+import Txt from './Txt.astro';
 export const heroSizes = '(min-width: 64rem) 42vw, 100vw';
 ---
 <section class="hero on-dark" aria-labelledby="hero-titre">
@@ -13,7 +14,7 @@ export const heroSizes = '(min-width: 64rem) 42vw, 100vw';
       <div class="btn-row">
         <a class="btn btn-primary" href="/#contact">{hero.ctaQuote}</a>
         <a class="btn btn-secondary" href={`tel:${contact.phoneLink}`}>
-          <Icon name="phone" class="" />{hero.ctaCall}
+          <Icon name="phone" class="" />{hero.ctaCall}<span class="visually-hidden">{'\u00a0le\u00a0'}<Txt value={contact.phoneDisplay} nowrap /></span>
         </a>
       </div>
     </div>

@@ -46,6 +46,7 @@
   --c-light: #f5f1ea;         /* fond clair */
   --c-card: #ffffff;          /* cartes */
   --c-border: #e3dccf;        /* bordures des cartes */
+  --c-field-border: #8a806f;  /* contour des champs de formulaire (3,9:1 sur blanc) */
   --c-accent: #e0a458;        /* ocre : boutons, mots-clés */
   --c-on-accent: #1e1c19;     /* texte sur l'ocre */
   --c-accent-dark: #8a5a1e;   /* icônes, sur-titres sur fond clair */
