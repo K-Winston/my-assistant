@@ -1,0 +1,28 @@
+---
+import { services } from '../data/site';
+import ServiceCard from './ServiceCard.astro';
+---
+<section class="section" id="prestations" aria-labelledby="prestations-titre">
+  <div class="container">
+    <div class="section-head">
+      <p class="kicker">Prestations</p>
+      <h2 id="prestations-titre">Tous vos travaux, un seul artisan</h2>
+      <p class="lead">Du terrassement aux finitions intérieures, chaque corps d’état est réalisé par la même entreprise. Vous avez un seul interlocuteur du début à la fin du chantier.</p>
+    </div>
+    <ul class="services-grid">
+      {services.map((s) => <li><ServiceCard service={s} /></li>)}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .services-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--sp-4);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  }
+  .services-grid li { margin: 0; }
+</style>

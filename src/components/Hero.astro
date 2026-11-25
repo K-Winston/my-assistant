@@ -1,0 +1,85 @@
+---
+import { hero, contact } from '../data/site';
+import Icon from './Icon.astro';
+import Photo from './Photo.astro';
+export const heroSizes = '(min-width: 64rem) 42vw, 100vw';
+---
+<section class="hero on-dark" aria-labelledby="hero-titre">
+  <div class="container hero-grid">
+    <div class="hero-text">
+      <p class="kicker hero-kicker">{hero.kicker}</p>
+      <h1 id="hero-titre">{hero.title}</h1>
+      <p class="lead hero-lead">{hero.text}</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="/#contact">{hero.ctaQuote}</a>
+        <a class="btn btn-secondary" href={`tel:${contact.phoneLink}`}>
+          <Icon name="phone" class="" />{hero.ctaCall}
+        </a>
+      </div>
+    </div>
+    <div class="hero-media">
+      <Photo file={hero.photo.file} alt={hero.photo.alt} sizes={heroSizes} priority class="hero-photo" />
+    </div>
+  </div>
+  <div class="hero-badges">
+    <ul class="container badges">
+      {hero.badges.map((b) => (
+        <li><Icon name="check" class="badge-icon" />{b}</li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .hero { padding-top: clamp(2.5rem, 1.5rem + 4vw, 5rem); }
+  .hero-grid {
+    display: grid;
+    gap: var(--sp-7);
+    align-items: end;
+    padding-bottom: clamp(2.5rem, 1.5rem + 4vw, 5rem);
+  }
+  @media (min-width: 64rem) {
+    .hero-grid { grid-template-columns: 1.15fr 1fr; gap: var(--sp-8); align-items: center; }
+  }
+  .hero-kicker { font-size: var(--fs-base); }
+  .hero h1 { margin-bottom: var(--sp-5); max-width: 14ch; }
+  .hero-lead { max-width: 36rem; margin-bottom: var(--sp-6); }
+  .hero-media { position: relative; }
+  .hero-media :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--r-md);
+  }
+  @media (min-width: 64rem) {
+    .hero-media :global(img) { aspect-ratio: 4 / 5; }
+    /* Fil à plomb : repère graphique discret à côté de la photo */
+    .hero-media::before {
+      content: '';
+      position: absolute;
+      left: calc(-1 * var(--sp-5));
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--c-accent);
+    }
+  }
+  .hero-badges { border-top: 1px solid var(--c-line-dark); background: var(--c-dark-2); }
+  .badges {
+    list-style: none;
+    margin: 0 auto;
+    display: grid;
+    gap: var(--sp-2) var(--sp-6);
+    padding-block: var(--sp-4);
+  }
+  @media (min-width: 48rem) { .badges { grid-template-columns: repeat(3, auto); justify-content: start; } }
+  .badges li {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    margin: 0;
+    font-weight: 500;
+    color: var(--c-on-dark);
+  }
+  .badges :global(.badge-icon) { width: 1.25rem; height: 1.25rem; color: var(--c-accent); flex: none; }
+</style>

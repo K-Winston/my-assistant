@@ -1,7 +1,25 @@
 ---
 import Base from '../layouts/Base.astro';
-import { site } from '../data/site';
+import Hero, { heroSizes } from '../components/Hero.astro';
+import Services from '../components/Services.astro';
+import Story from '../components/Story.astro';
+import Realisations from '../components/Realisations.astro';
+import Area from '../components/Area.astro';
+import ContactSection from '../components/ContactSection.astro';
+import { site, hero } from '../data/site';
+import manifest from '../data/images.generated.json';
+
+const heroImg = (manifest as Record<string, { widths: number[] }>)[hero.photo.file];
+const preloadImage = {
+  srcset: heroImg.widths.map((w) => `/photos/_generated/${hero.photo.file}-${w}.avif ${w}w`).join(', '),
+  sizes: heroSizes,
+};
 ---
-<Base title={site.defaultTitle} description={site.defaultDescription}>
-  <section class="section container"><h1>Design system</h1><a class="btn btn-primary" href="#">Bouton</a></section>
+<Base title={site.defaultTitle} description={site.defaultDescription} localBusiness preloadImage={preloadImage}>
+  <Hero />
+  <Services />
+  <Story />
+  <Realisations />
+  <Area />
+  <ContactSection />
 </Base>

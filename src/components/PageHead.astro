@@ -1,0 +1,34 @@
+---
+// En-tête des pages intérieures (fond foncé, fil d'Ariane, titre h1).
+interface Props { title: string; crumbs?: { name: string; path: string }[]; kicker?: string }
+const { title, crumbs = [], kicker } = Astro.props;
+---
+<div class="page-head on-dark">
+  <div class="container">
+    {crumbs.length > 0 && (
+      <nav aria-label="Fil d’Ariane" class="crumbs">
+        <ol>
+          {crumbs.map((c, i) => (
+            <li>
+              {i < crumbs.length - 1 ? <a href={c.path}>{c.name}</a> : <span aria-current="page">{c.name}</span>}
+            </li>
+          ))}
+        </ol>
+      </nav>
+    )}
+    {kicker && <p class="kicker">{kicker}</p>}
+    <h1>{title}</h1>
+    <slot />
+  </div>
+</div>
+
+<style>
+  .page-head { padding-block: var(--sp-6) clamp(2.5rem, 1.5rem + 3vw, 4.5rem); }
+  .page-head h1 { font-size: clamp(2.5rem, 1.8rem + 3.2vw, 4.5rem); max-width: 18ch; margin-bottom: var(--sp-5); }
+  .page-head :global(.lead) { margin-bottom: 0; }
+  .crumbs ol { list-style: none; padding: 0; margin: 0 0 var(--sp-5); display: flex; flex-wrap: wrap; font-size: var(--fs-sm); }
+  .crumbs li { margin: 0; display: flex; align-items: center; color: var(--c-on-dark-2); }
+  .crumbs li + li::before { content: '/'; margin: 0 var(--sp-2); color: var(--c-line-dark); }
+  .crumbs a { color: var(--c-on-dark-2); display: inline-flex; align-items: center; min-height: var(--tap); }
+  .crumbs a:hover { color: var(--c-accent); }
+</style>

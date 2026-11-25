@@ -1,0 +1,30 @@
+---
+import { contact } from '../data/site';
+import Icon from './Icon.astro';
+import Txt from './Txt.astro';
+interface Props { title?: string; text?: string }
+const {
+  title = 'Un projet de travaux ?',
+  text = 'Décrivez votre chantier : Stéphane vous recontacte pour en parler et établir un devis.',
+} = Astro.props;
+---
+<section class="cta-band on-dark" aria-labelledby="cta-titre">
+  <div class="container cta-inner">
+    <div>
+      <h2 id="cta-titre">{title}</h2>
+      <p class="lead">{text}</p>
+    </div>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="/#contact">Demander un devis</a>
+      <a class="btn btn-secondary" href={`tel:${contact.phoneLink}`}><Icon name="phone" class="" />Appeler <span class="visually-hidden"><Txt value={contact.phoneDisplay} /></span></a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-band { padding-block: var(--sp-8); }
+  .cta-inner { display: grid; gap: var(--sp-5); align-items: center; }
+  @media (min-width: 64rem) { .cta-inner { grid-template-columns: 1fr auto; gap: var(--sp-8); } }
+  .cta-band h2 { margin-bottom: var(--sp-3); }
+  .cta-band .lead { margin: 0; }
+</style>

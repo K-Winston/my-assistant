@@ -1,0 +1,25 @@
+---
+import { story } from '../data/site';
+import Photo from './Photo.astro';
+---
+<section class="section story" id="histoire" aria-labelledby="histoire-titre">
+  <div class="container story-grid">
+    <div class="story-media">
+      <Photo file={story.photo.file} alt={story.photo.alt} sizes="(min-width: 64rem) 40vw, 100vw" />
+    </div>
+    <div class="story-text">
+      <p class="kicker">{story.kicker}</p>
+      <h2 id="histoire-titre">{story.title}</h2>
+      {story.paragraphs.map((p, i) => <p class={i === 0 ? 'lead story-first' : undefined}>{p}</p>)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .story { background: var(--c-card); border-block: 1px solid var(--c-border); }
+  .story-grid { display: grid; gap: var(--sp-7); align-items: center; }
+  @media (min-width: 64rem) { .story-grid { grid-template-columns: 5fr 6fr; gap: var(--sp-9); } }
+  .story-media :global(img) { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--r-md); }
+  @media (max-width: 63.99rem) { .story-media :global(img) { aspect-ratio: 3 / 2; } }
+  .story-first { color: var(--c-text); font-weight: 500; }
+</style>

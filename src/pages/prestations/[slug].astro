@@ -1,0 +1,109 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import Photo from '../../components/Photo.astro';
+import Icon from '../../components/Icon.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { services, type Service } from '../../data/site';
+
+export function getStaticPaths() {
+  return services.map((service) => ({ params: { slug: service.slug }, props: { service } }));
+}
+interface Props { service: Service }
+const { service } = Astro.props;
+const others = services.filter((s) => s.slug !== service.slug);
+const crumbs = [
+  { name: 'Accueil', path: '/' },
+  { name: 'Prestations', path: '/#prestations' },
+  { name: service.title, path: `/prestations/${service.slug}/` },
+];
+---
+<Base title={service.seoTitle} description={service.seoDescription} breadcrumb={crumbs}>
+  <PageHead title={service.title} crumbs={crumbs} kicker="Prestation">
+    <p class="lead">{service.summary}</p>
+  </PageHead>
+
+  <section class="section" aria-labelledby="presentation-titre">
+    <div class="container svc-grid">
+      <div>
+        <h2 id="presentation-titre" class="svc-h2">Présentation</h2>
+        {service.intro.map((p) => <p>{p}</p>)}
+      </div>
+      <div class="card included">
+        <h2 class="svc-h2">Ce qui est inclus</h2>
+        <ul class="check-list">
+          {service.included.map((item) => <li><Icon name="check" class="check-icon" />{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section svc-photos" aria-labelledby="photos-titre">
+    <div class="container">
+      <h2 id="photos-titre" class="svc-h2">En images</h2>
+      <div class="photo-grid">
+        {service.photos.map((ph) => (
+          <Photo file={ph.file} alt={ph.alt} sizes="(min-width: 48rem) 50vw, 100vw" />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+
+  <section class="section" aria-labelledby="autres-titre">
+    <div class="container">
+      <h2 id="autres-titre" class="svc-h2">Les autres prestations</h2>
+      <ul class="others">
+        {others.map((s) => (
+          <li><a href={`/prestations/${s.slug}/`}><Icon name={s.icon} />{s.title}</a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .svc-h2 { font-size: var(--fs-h3); }
+  .svc-grid { display: grid; gap: var(--sp-7); align-items: start; }
+  @media (min-width: 64rem) { .svc-grid { grid-template-columns: 3fr 2fr; gap: var(--sp-9); } }
+  .included { padding: var(--sp-6); }
+  .check-list { list-style: none; padding: 0; margin: 0; }
+  .check-list li {
+    display: flex;
+    gap: var(--sp-3);
+    align-items: flex-start;
+    padding-block: var(--sp-3);
+    margin: 0;
+    border-bottom: 1px solid var(--c-border);
+  }
+  .check-list li:last-child { border-bottom: 0; }
+  .check-list :global(.check-icon) { width: 1.25rem; height: 1.25rem; margin-top: 0.2rem; color: var(--c-accent-dark); flex: none; }
+  .svc-photos { padding-top: 0; }
+  .photo-grid { display: grid; gap: var(--sp-4); }
+  @media (min-width: 48rem) { .photo-grid { grid-template-columns: 1fr 1fr; } }
+  .photo-grid :global(img) { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--r-md); }
+  .others {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--sp-3);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  }
+  .others li { margin: 0; }
+  .others a {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    min-height: 3.5rem;
+    padding: var(--sp-3) var(--sp-4);
+    background: var(--c-card);
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-md);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .others a:hover { border-color: var(--c-accent-dark); }
+  .others :global(svg) { width: 1.75rem; height: 1.75rem; flex: none; }
+</style>

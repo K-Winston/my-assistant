@@ -1,0 +1,70 @@
+---
+import { contact, contactSection } from '../data/site';
+import ContactForm from './ContactForm.astro';
+import Icon from './Icon.astro';
+import Txt from './Txt.astro';
+---
+<section class="section contact" id="contact" aria-labelledby="contact-titre">
+  <div class="container contact-grid">
+    <div class="contact-info">
+      <p class="kicker">{contactSection.kicker}</p>
+      <h2 id="contact-titre">{contactSection.title}</h2>
+      <p class="lead">{contactSection.intro}</p>
+      <ul class="coords">
+        <li>
+          <Icon name="phone" />
+          <div>
+            <span class="coord-label">Téléphone</span>
+            <a class="coord-value" href={`tel:${contact.phoneLink}`}><Txt value={contact.phoneDisplay} /></a>
+          </div>
+        </li>
+        <li>
+          <Icon name="mail" />
+          <div>
+            <span class="coord-label">E-mail</span>
+            {contact.email.includes('[À COMPLÉTER') ? (
+              <span class="coord-value"><Txt value={contact.email} /></span>
+            ) : (
+              <a class="coord-value" href={`mailto:${contact.email}`}>{contact.email}</a>
+            )}
+          </div>
+        </li>
+        <li>
+          <Icon name="pin" />
+          <div>
+            <span class="coord-label">Adresse</span>
+            <span class="coord-value">
+              <Txt value={contact.address.street} /><br />
+              <Txt value={contact.address.postalCode} /> <Txt value={contact.address.city} />
+            </span>
+          </div>
+        </li>
+        <li>
+          <Icon name="clock" />
+          <div>
+            <span class="coord-label">Horaires</span>
+            {contact.hours.map((h) => <span class="coord-value"><Txt value={h} /></span>)}
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="contact-form-wrap">
+      <ContactForm />
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-grid { display: grid; gap: var(--sp-7); }
+  @media (min-width: 64rem) { .contact-grid { grid-template-columns: 2fr 3fr; gap: var(--sp-8); } }
+  .coords { list-style: none; padding: 0; margin: var(--sp-6) 0 0; display: grid; gap: var(--sp-5); }
+  .coords li { display: flex; gap: var(--sp-4); align-items: flex-start; margin: 0; }
+  .coords :global(svg) { width: 1.75rem; height: 1.75rem; flex: none; }
+  .coord-label { display: block; font-size: var(--fs-sm); color: var(--c-text-2); }
+  .coord-value { display: block; font-weight: 600; font-size: var(--fs-lg); }
+  a.coord-value { display: inline-flex; align-items: center; min-height: var(--tap); }
+
+  @media print {
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+</style>

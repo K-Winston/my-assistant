@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import { notFound, services } from '../data/site';
+---
+<Base title={notFound.title} description={notFound.text} noindex>
+  <PageHead title={notFound.title}>
+    <p class="lead">{notFound.text}</p>
+  </PageHead>
+  <section class="section container">
+    <div class="btn-row">
+      <a class="btn btn-primary" href="/">{notFound.back}</a>
+      <a class="btn btn-secondary" href="/#contact">Demander un devis</a>
+    </div>
+    <h2 class="nf-h2">Nos prestations</h2>
+    <ul>
+      {services.map((s) => <li><a href={`/prestations/${s.slug}/`}>{s.title}</a></li>)}
+    </ul>
+  </section>
+</Base>
+<style>
+  .nf-h2 { font-size: var(--fs-h3); margin-top: var(--sp-8); }
+  li a { display: inline-flex; align-items: center; min-height: var(--tap); }
+</style>

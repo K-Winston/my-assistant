@@ -1,0 +1,134 @@
+---
+// Formulaire de demande de devis.
+// - Sans JavaScript : envoi classique vers Web3Forms, puis redirection vers /merci/.
+// - Avec JavaScript : envoi en arrière-plan et message de confirmation dans la page.
+// La clé Web3Forms se règle dans le fichier .env (PUBLIC_WEB3FORMS_KEY), voir README.
+import { contactSection, company, area } from '../data/site';
+
+const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+const redirect = new URL('/merci/', Astro.site).href;
+const f = contactSection.form;
+---
+<form
+  class="contact-form card"
+  action="https://api.web3forms.com/submit"
+  method="POST"
+  data-contact-form
+  data-msg-sending={f.sending}
+  data-msg-success={f.success}
+  data-msg-error={f.error}
+>
+  <input type="hidden" name="access_key" value={accessKey} />
+  <input type="hidden" name="subject" value={`Demande de devis depuis le site ${company.name}`} />
+  <input type="hidden" name="from_name" value="Site internet" />
+  <input type="hidden" name="redirect" value={redirect} />
+  {/* Piège à robots (honeypot) : invisible pour les visiteurs, rempli seulement par les robots */}
+  <div class="hp" aria-hidden="true">
+    <label for="botcheck">Ne pas remplir ce champ</label>
+    <input type="checkbox" name="botcheck" id="botcheck" tabindex="-1" autocomplete="off" />
+  </div>
+
+  {!accessKey && (
+    <p class="form-config"><span class="todo">[À COMPLÉTER : clé Web3Forms dans le fichier .env — le formulaire ne peut pas encore envoyer de message]</span></p>
+  )}
+
+  <p class="form-legend">Les champs marqués <span class="req" aria-hidden="true">*</span><span class="visually-hidden">d'un astérisque</span> sont obligatoires.</p>
+
+  <div class="form-row">
+    <div class="field">
+      <label for="nom">Nom <span class="req" aria-hidden="true">*</span></label>
+      <input class="input" id="nom" name="nom" type="text" autocomplete="name" required maxlength="100" />
+    </div>
+    <div class="field">
+      <label for="telephone">Téléphone <span class="req" aria-hidden="true">*</span></label>
+      <input class="input" id="telephone" name="telephone" type="tel" autocomplete="tel" inputmode="tel" required maxlength="30" pattern="[0-9+ .\(\)\-]{10,30}" aria-describedby="telephone-aide" />
+      <p class="hint" id="telephone-aide">Exemple : 06 12 34 56 78</p>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="field">
+      <label for="commune">Commune du chantier <span class="req" aria-hidden="true">*</span></label>
+      <input class="input" id="commune" name="commune" type="text" autocomplete="address-level2" required maxlength="100" list="communes" />
+      <datalist id="communes">
+        {area.towns.map((t) => <option value={t} />)}
+      </datalist>
+    </div>
+    <div class="field">
+      <label for="travaux">Type de travaux <span class="req" aria-hidden="true">*</span></label>
+      <select class="select" id="travaux" name="type_de_travaux" required>
+        <option value="">Choisir…</option>
+        {f.workTypes.map((t) => <option value={t}>{t}</option>)}
+      </select>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="message">Votre projet <span class="req" aria-hidden="true">*</span></label>
+    <textarea class="textarea" id="message" name="message" required maxlength="3000" rows="6" aria-describedby="message-aide"></textarea>
+    <p class="hint" id="message-aide">Nature des travaux, surface approximative, délai souhaité…</p>
+  </div>
+
+  <div class="field checkbox">
+    <input id="consentement" name="consentement_rgpd" type="checkbox" value="oui" required />
+    <label for="consentement">
+      {f.consent} <a href="/confidentialite/">Voir la politique de confidentialité</a>. <span class="req" aria-hidden="true">*</span>
+    </label>
+  </div>
+
+  <button class="btn btn-primary form-submit" type="submit">{f.submit}</button>
+  <p class="form-status" role="status" aria-live="polite" data-form-status></p>
+</form>
+
+<style>
+  .contact-form { padding: clamp(1.25rem, 0.8rem + 2vw, 2.25rem); }
+  .form-row { display: grid; gap: 0 var(--sp-5); }
+  @media (min-width: 40rem) { .form-row { grid-template-columns: 1fr 1fr; } }
+  .form-legend { font-size: var(--fs-sm); color: var(--c-text-2); }
+  .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .form-submit { width: 100%; }
+  @media (min-width: 40rem) { .form-submit { width: auto; } }
+  .form-status { margin: var(--sp-4) 0 0; font-weight: 600; }
+  .form-status:empty { display: none; }
+  .form-status[data-state='success'] { color: var(--c-success); }
+  .form-status[data-state='error'] { color: var(--c-error); }
+  .checkbox label a { color: var(--c-accent-dark); font-weight: 600; }
+  .contact-form button[disabled] { opacity: 0.7; cursor: progress; }
+</style>
+
+<script>
+  // Amélioration progressive : envoi sans quitter la page si le JavaScript est actif.
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  const status = form?.querySelector<HTMLElement>('[data-form-status]');
+  if (form && status) {
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const label = button.textContent ?? '';
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      delete data.redirect;
+      button.disabled = true;
+      button.textContent = form.dataset.msgSending ?? '';
+      status.removeAttribute('data-state');
+      status.textContent = '';
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok || json.success === false) throw new Error(json.message || res.statusText);
+        form.reset();
+        status.dataset.state = 'success';
+        status.textContent = form.dataset.msgSuccess ?? '';
+      } catch {
+        status.dataset.state = 'error';
+        status.textContent = form.dataset.msgError ?? '';
+      } finally {
+        button.disabled = false;
+        button.textContent = label;
+      }
+    });
+  }
+</script>

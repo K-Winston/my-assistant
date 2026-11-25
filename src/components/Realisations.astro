@@ -1,0 +1,61 @@
+---
+import { realisations } from '../data/site';
+import Photo from './Photo.astro';
+import Txt from './Txt.astro';
+---
+<section class="section" id="realisations" aria-labelledby="realisations-titre">
+  <div class="container">
+    <div class="section-head">
+      <p class="kicker">{realisations.kicker}</p>
+      <h2 id="realisations-titre">{realisations.title}</h2>
+      <p class="lead">{realisations.intro}</p>
+    </div>
+    <ul class="real-list">
+      {realisations.items.map((r) => (
+        <li class="card real">
+          <div class="real-pair">
+            <figure>
+              <Photo file={r.before.file} alt={r.before.alt} sizes="(min-width: 64rem) 17vw, 50vw" />
+              <figcaption>Avant</figcaption>
+            </figure>
+            <figure>
+              <Photo file={r.after.file} alt={r.after.alt} sizes="(min-width: 64rem) 17vw, 50vw" />
+              <figcaption>Après</figcaption>
+            </figure>
+          </div>
+          <h3 class="real-title"><Txt value={r.title} /></h3>
+          <p class="real-town"><Txt value={r.town} /></p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .real-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--sp-5);
+  }
+  @media (min-width: 48rem) and (max-width: 63.99rem) { .real-list { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 64rem) { .real-list { grid-template-columns: repeat(3, 1fr); } }
+  .real { margin: 0; padding: var(--sp-3) var(--sp-3) var(--sp-5); }
+  .real-pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-2); margin-bottom: var(--sp-4); }
+  figure { margin: 0; position: relative; }
+  figure :global(img) { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--r-sm); }
+  figcaption {
+    position: absolute;
+    left: var(--sp-2);
+    bottom: var(--sp-2);
+    padding: 0.125rem var(--sp-2);
+    background: var(--c-dark);
+    color: var(--c-on-dark);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    border-radius: var(--r-sm);
+  }
+  .real-title { font-size: var(--fs-h4); margin: 0 var(--sp-2) var(--sp-1); }
+  .real-town { margin: 0 var(--sp-2); color: var(--c-text-2); font-size: var(--fs-sm); }
+</style>

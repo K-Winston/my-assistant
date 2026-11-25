@@ -1,0 +1,64 @@
+---
+import { area, contact } from '../data/site';
+import Icon from './Icon.astro';
+---
+<section class="section area on-dark" id="secteur" aria-labelledby="secteur-titre">
+  <div class="container area-grid">
+    <div>
+      <p class="kicker">{area.kicker}</p>
+      <h2 id="secteur-titre">{area.title}</h2>
+      <p class="lead">{area.intro}</p>
+      <ul class="towns">
+        {area.towns.map((t) => <li><Icon name="pin" class="town-icon" />{t}</li>)}
+      </ul>
+      <p class="area-around">{area.aroundText}</p>
+    </div>
+    <aside class="reviews" aria-labelledby="avis-titre">
+      <h3 id="avis-titre">{area.reviews.title}</h3>
+      <p>{area.reviews.text}</p>
+      {contact.googleReviewsUrl ? (
+        <a class="btn btn-primary" href={contact.googleReviewsUrl} rel="noopener" target="_blank">
+          {area.reviews.cta}<Icon name="external" class="" /><span class="visually-hidden"> (nouvel onglet)</span>
+        </a>
+      ) : (
+        <p><span class="todo">[À COMPLÉTER : lien vers la fiche Google]</span></p>
+      )}
+    </aside>
+  </div>
+</section>
+
+<style>
+  .area-grid { display: grid; gap: var(--sp-7); align-items: start; }
+  @media (min-width: 64rem) { .area-grid { grid-template-columns: 3fr 2fr; gap: var(--sp-9); } }
+  .towns {
+    list-style: none;
+    padding: 0;
+    margin: var(--sp-6) 0;
+    display: grid;
+    gap: var(--sp-2) var(--sp-6);
+  }
+  @media (min-width: 40rem) { .towns { grid-template-columns: 1fr 1fr; } }
+  .towns li {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    margin: 0;
+    padding-block: var(--sp-3);
+    border-bottom: 1px solid var(--c-line-dark);
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: var(--fs-h3);
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+  .towns :global(.town-icon) { width: 1.5rem; height: 1.5rem; color: var(--c-accent); flex: none; }
+  .area-around { color: var(--c-on-dark-2); }
+  .reviews {
+    padding: var(--sp-6);
+    border: 1px solid var(--c-line-dark);
+    border-radius: var(--r-md);
+    background: var(--c-dark-2);
+  }
+  .reviews h3 { margin-bottom: var(--sp-3); }
+  .reviews p { color: var(--c-on-dark-2); }
+</style>
