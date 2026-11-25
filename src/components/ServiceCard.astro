@@ -21,7 +21,7 @@ const H = headingLevel;
     flex-direction: column;
     gap: var(--sp-3);
     height: 100%;
-    transition: border-color 0.15s;
+    transition: border-color var(--dur-ui) ease;
   }
   .service-card:hover { border-color: var(--c-accent-dark); }
   .service-card:focus-within { outline: 3px solid var(--c-accent-dark); outline-offset: 2px; }
@@ -39,5 +39,15 @@ const H = headingLevel;
     font-weight: 600;
     color: var(--c-accent-dark);
   }
-  .service-more :global(.more-icon) { width: 1.1rem; height: 1.1rem; }
+  .service-more :global(.more-icon) {
+    width: 1.1rem;
+    height: 1.1rem;
+    transition: transform var(--dur-ui) var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .service-card:hover :global(.more-icon) { transform: translateX(4px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .service-card:hover :global(.more-icon) { transform: none; }
+  }
 </style>

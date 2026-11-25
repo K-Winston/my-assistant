@@ -125,8 +125,14 @@ strong { font-weight: 600; }
   line-height: 1.2;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+  transition:
+    background-color var(--dur-ui) ease,
+    color var(--dur-ui) ease,
+    border-color var(--dur-ui) ease,
+    transform var(--dur-press) var(--ease-out);
 }
+/* Retour au clic : le bouton s'enfonce légèrement */
+.btn:active { transform: scale(0.97); }
 .btn svg { width: 1.15em; height: 1.15em; flex: none; }
 .btn-primary { background: var(--c-accent); color: var(--c-on-accent); border-color: var(--c-accent); }
 .btn-primary:hover { background: #ebb673; border-color: #ebb673; }
@@ -209,8 +215,26 @@ strong { font-weight: 600; }
 .prose h2 { font-size: var(--fs-h3); margin-top: var(--sp-7); }
 .prose h3 { font-size: var(--fs-h4); margin-top: var(--sp-5); }
 
+/* ---------- Apparition au défilement ----------
+   Le script src/scripts/reveal.ts marque « pending » les éléments [data-reveal]
+   situés sous la ligne de flottaison au chargement, puis « shown » quand ils
+   entrent dans l'écran (une seule fois). Sans JavaScript, tout est visible. */
+[data-reveal='pending'] {
+  opacity: 0;
+  transform: translateY(16px);
+}
+[data-reveal='shown'] {
+  transition:
+    opacity 500ms var(--ease-out) var(--reveal-delay, 0ms),
+    transform var(--dur-enter) var(--ease-out) var(--reveal-delay, 0ms);
+}
+
+/* « Réduire les animations » : moins et plus doux, pas zéro.
+   On garde les fondus (ils aident à comprendre), on retire tout déplacement. */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { transition: none !important; animation: none !important; }
+  [data-reveal='pending'] { transform: none; }
+  [data-reveal='shown'] { transition: opacity 300ms ease; }
+  .btn:active { transform: none; }
 }
 
 /* ---------- Impression ----------
@@ -238,5 +262,7 @@ strong { font-weight: 600; }
   /* Page d'accueil : on n'imprime que le contact */
   body:has(#contact) main > :not(#contact) { display: none !important; }
   .print-only { display: block !important; }
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 .print-only { display: none; }

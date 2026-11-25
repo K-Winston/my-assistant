@@ -90,6 +90,14 @@ const f = contactSection.form;
   @media (min-width: 40rem) { .form-submit { width: auto; } }
   .form-status { margin: var(--sp-4) 0 0; font-weight: 600; }
   .form-status:empty { display: none; }
+  .form-status {
+    transition:
+      opacity 300ms var(--ease-out),
+      transform 300ms var(--ease-out);
+  }
+  @starting-style {
+    .form-status { opacity: 0; transform: translateY(4px); }
+  }
   .form-status[data-state='success'] { color: var(--c-success); }
   .form-status[data-state='error'] { color: var(--c-error); }
   .checkbox label a { color: var(--c-accent-dark); font-weight: 600; }

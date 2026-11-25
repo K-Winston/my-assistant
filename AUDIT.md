@@ -135,3 +135,24 @@ Ces points bloquent la mise en ligne mais ne relèvent pas du code. La liste com
 - Lien de la fiche Google (avis clients).
 - Photos réelles et leurs descriptions (`alt`), titres et communes des 3 réalisations.
 - Nom de domaine définitif (`SITE_URL`).
+
+## Ajout des animations (après la livraison)
+
+Animations conçues avec les skills `animate`, `choreograph` et `find-animation-opportunities` (Emil Kowalski) et `motion-design` (LottieFiles), installés dans `.claude/skills/`. Tout est en CSS natif, avec un script de 0,4 Ko pour l'apparition au défilement. Aucune bibliothèque (GSAP écarté : trop lourd pour le besoin).
+
+| Animation | Raison | Réglages |
+|---|---|---|
+| Entrée du hero (titre, texte, boutons, photo, repères) | Première impression, vue une fois par visite | 500 à 900 ms, courbe `--ease-out`, décalages de 0 à 220 ms, uniquement `opacity` et `transform` |
+| Fil à plomb ocre qui se déroule à côté de la photo (ordinateur) | Signature visuelle liée au métier | `scaleY` 0 → 1 depuis le haut, 900 ms |
+| Apparition au défilement (titres de section, cartes, réalisations, communes, contact) | Évite que tout surgisse d'un coup ; une seule fois par élément | Fondu + 16 px, 500 à 600 ms, décalages irréguliers de 40 à 120 ms. Seuls les éléments sous la ligne de flottaison sont concernés |
+| Bouton enfoncé au clic | Retour immédiat de l'action | `scale(0.97)`, 160 ms |
+| Flèche « Voir le détail » au survol | Indique que la carte est cliquable | 4 px, 200 ms, souris uniquement (`hover: hover`) |
+| Ouverture du menu mobile, message de confirmation du formulaire | Évite un changement brutal | Fondu + 8 px / 4 px, 200 à 300 ms (`@starting-style`) |
+
+- **« Réduire les animations »** (réglage du système) : plus aucun déplacement, seulement des fondus courts. Ce n'est pas une suppression totale, comme le recommandent les skills.
+- **Sans JavaScript** : tout est visible immédiatement.
+- **Impression** : les animations sont désactivées.
+
+**Contrôle après ajout** (`npm run check`) : Lighthouse **100 / 100 / 100 / 100** sur toutes les pages (sauf le SEO de `/merci/`, volontairement exclu de Google). LCP de l'accueil : 1,06 s. CLS = 0 partout. 0 erreur axe, 0 erreur HTML, 0 erreur console, 0 lien cassé sur 148. Responsive et formulaire OK.
+
+Robustesse : le script d'audit refait jusqu'à 3 tentatives quand Lighthouse échoue au hasard (erreur `NO_NAVSTART` lors de l'enregistrement de la trace, sans lien avec le site).

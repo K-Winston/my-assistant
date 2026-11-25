@@ -5,14 +5,14 @@ import Txt from './Txt.astro';
 ---
 <section class="section" id="realisations" aria-labelledby="realisations-titre">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head" data-reveal>
       <p class="kicker">{realisations.kicker}</p>
       <h2 id="realisations-titre">{realisations.title}</h2>
       <p class="lead">{realisations.intro}</p>
     </div>
     <ul class="real-list">
       {realisations.items.map((r) => (
-        <li class="card real">
+        <li class="card real" data-reveal>
           <div class="real-pair">
             <figure>
               <Photo file={r.before.file} alt={r.before.alt} sizes="(min-width: 64rem) 17vw, 50vw" />
@@ -41,6 +41,8 @@ import Txt from './Txt.astro';
   }
   @media (min-width: 48rem) and (max-width: 63.99rem) { .real-list { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 64rem) { .real-list { grid-template-columns: repeat(3, 1fr); } }
+  .real:nth-child(2) { --reveal-delay: 60ms; }
+  .real:nth-child(3) { --reveal-delay: 105ms; }
   .real { margin: 0; padding: var(--sp-3) var(--sp-3) var(--sp-5); }
   .real-pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-2); margin-bottom: var(--sp-4); }
   figure { margin: 0; position: relative; }

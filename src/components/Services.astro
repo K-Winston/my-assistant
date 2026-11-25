@@ -4,13 +4,13 @@ import ServiceCard from './ServiceCard.astro';
 ---
 <section class="section" id="prestations" aria-labelledby="prestations-titre">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head" data-reveal>
       <p class="kicker">Prestations</p>
       <h2 id="prestations-titre">Tous vos travaux, un seul artisan</h2>
       <p class="lead">Du terrassement aux finitions intérieures, chaque corps d’état est réalisé par la même entreprise. Vous avez un seul interlocuteur du début à la fin du chantier.</p>
     </div>
     <ul class="services-grid">
-      {services.map((s) => <li><ServiceCard service={s} /></li>)}
+      {services.map((s) => <li data-reveal><ServiceCard service={s} /></li>)}
     </ul>
   </div>
 </section>
@@ -25,4 +25,9 @@ import ServiceCard from './ServiceCard.astro';
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
   }
   .services-grid li { margin: 0; }
+  /* Décalage par colonne, irrégulier (les cartes d'une même rangée arrivent en vague) */
+  @media (min-width: 40rem) {
+    .services-grid li:nth-child(3n + 2) { --reveal-delay: 50ms; }
+    .services-grid li:nth-child(3n + 3) { --reveal-delay: 90ms; }
+  }
 </style>

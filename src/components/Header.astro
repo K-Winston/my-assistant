@@ -108,7 +108,20 @@ import Icon from './Icon.astro';
       background: var(--c-dark);
       border-bottom: 1px solid var(--c-line-dark);
     }
-    .nav.is-open { display: block; }
+    .nav.is-open {
+      display: block;
+      transition:
+        opacity var(--dur-ui) var(--ease-out),
+        transform var(--dur-ui) var(--ease-out);
+    }
+    @starting-style {
+      .nav.is-open { opacity: 0; transform: translateY(-8px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      @starting-style {
+        .nav.is-open { transform: none; }
+      }
+    }
     .nav-list li { margin: 0; border-bottom: 1px solid var(--c-line-dark); }
     .nav-list a { min-height: 3.25rem; font-size: 1.125rem; }
     .nav-cta { margin-top: var(--sp-5); width: 100%; }

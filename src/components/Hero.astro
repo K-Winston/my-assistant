@@ -83,4 +83,49 @@ export const heroSizes = '(min-width: 64rem) 42vw, 100vw';
     color: var(--c-on-dark);
   }
   .badges :global(.badge-icon) { width: 1.25rem; height: 1.25rem; color: var(--c-accent); flex: none; }
+
+  /* ---------- Entrée du hero (une fois, au chargement) ----------
+     Chorégraphie (skill choreograph) :
+       titre      = élément principal : 0 ms, monte de 18 px, 600 ms
+       sur-titre  = décoration : fondu seul, en même temps que le titre
+       texte      = support : +90 ms, monte de 10 px
+       boutons    = support : +150 ms, monte de 8 px
+       photo      = support : +60 ms, fondu + léger zoom arrière (1,02 → 1)
+       fil à plomb (trait ocre) = signature : se déroule de haut en bas, +120 ms, 900 ms
+       repères    = décoration : fondu seul, +220 ms
+     Décalages courts et irréguliers ; rien ne bloque le clic. */
+  @keyframes hero-rise {
+    from { opacity: 0; transform: translateY(var(--rise, 12px)); }
+  }
+  @keyframes hero-fade {
+    from { opacity: 0; }
+  }
+  @keyframes hero-settle {
+    from { opacity: 0; transform: scale(1.02); }
+  }
+  @keyframes plumb-line {
+    from { transform: scaleY(0); }
+  }
+  .hero h1 { --rise: 18px; animation: hero-rise var(--dur-enter) var(--ease-out) both; }
+  .hero-kicker { animation: hero-fade 500ms var(--ease-out) both; }
+  .hero-lead { --rise: 10px; animation: hero-rise 550ms var(--ease-out) 90ms both; }
+  .hero .btn-row { --rise: 8px; animation: hero-rise 500ms var(--ease-out) 150ms both; }
+  .hero-media :global(img) { animation: hero-settle 900ms var(--ease-out) 60ms both; }
+  .hero-media { overflow: visible; }
+  .hero-media :global(picture) { display: block; overflow: hidden; border-radius: var(--r-md); }
+  @media (min-width: 64rem) {
+    .hero-media::before {
+      transform-origin: top;
+      animation: plumb-line 900ms var(--ease-out) 120ms both;
+    }
+  }
+  .badges { animation: hero-fade 500ms var(--ease-out) 220ms both; }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* Tout apparaît ensemble, en fondu, sans mouvement */
+    .hero h1, .hero-kicker, .hero-lead, .hero .btn-row, .hero-media :global(img), .badges {
+      animation: hero-fade 300ms ease both;
+    }
+    .hero-media::before { animation: none; }
+  }
 </style>

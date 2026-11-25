@@ -29,7 +29,7 @@ const crumbs = [
         <h2 id="presentation-titre" class="svc-h2">Présentation</h2>
         {service.intro.map((p) => <p>{p}</p>)}
       </div>
-      <div class="card included">
+      <div class="card included" data-reveal>
         <h2 class="svc-h2">Ce qui est inclus</h2>
         <ul class="check-list">
           {service.included.map((item) => <li><Icon name="check" class="check-icon" />{item}</li>)}
@@ -41,7 +41,7 @@ const crumbs = [
   <section class="section svc-photos" aria-labelledby="photos-titre">
     <div class="container">
       <h2 id="photos-titre" class="svc-h2">En images</h2>
-      <div class="photo-grid">
+      <div class="photo-grid" data-reveal>
         {service.photos.map((ph) => (
           <Photo file={ph.file} alt={ph.alt} sizes="(min-width: 48rem) 50vw, 100vw" />
         ))}
@@ -67,7 +67,7 @@ const crumbs = [
   .svc-h2 { font-size: var(--fs-h3); }
   .svc-grid { display: grid; gap: var(--sp-7); align-items: start; }
   @media (min-width: 64rem) { .svc-grid { grid-template-columns: 3fr 2fr; gap: var(--sp-9); } }
-  .included { padding: var(--sp-6); }
+  .included { padding: var(--sp-6); --reveal-delay: 80ms; }
   .check-list { list-style: none; padding: 0; margin: 0; }
   .check-list li {
     display: flex;

@@ -156,7 +156,21 @@ Stack : Astro 7 (sortie 100 % statique), CSS natif, environ 1,3 Ko de JavaScript
 
 ---
 
-## 7. Liste complète des éléments `[À COMPLÉTER]`
+## 7. Animations
+
+Les animations sont en CSS natif. Les réglages (courbes, durées) sont dans `src/styles/tokens.css` (`--ease-out`, `--dur-enter`…) ; le détail se trouve dans `AUDIT.md`.
+
+- **Entrée de la page d'accueil** : `src/components/Hero.astro`, en bas du fichier.
+- **Apparition au défilement** : ajoutez l'attribut `data-reveal` à un bloc pour qu'il apparaisse quand on fait défiler la page jusqu'à lui (script `src/scripts/reveal.ts`).
+- Les visiteurs qui ont activé « réduire les animations » sur leur appareil ne voient que des fondus, sans mouvement.
+
+## 8. Skills Claude Code installés
+
+Le dossier `.claude/skills/` contient 36 skills de design et d'animation (Anthropic, Vercel, GreenSock/GSAP, LottieFiles, Emil Kowalski…), chargés automatiquement par Claude Code dans ce projet. Leur origine et leur licence sont listées dans `.claude/skills/SOURCES.md`.
+
+Exemples d'utilisation : demandez « revois les animations » (`review-animations`), « fais une critique du design » (`design-critique`), « audit d'accessibilité » (`accessibility-review`).
+
+## 9. Liste complète des éléments `[À COMPLÉTER]`
 
 Générée avec `npm run a-completer` (relancez la commande pour une liste à jour après vos modifications).
 

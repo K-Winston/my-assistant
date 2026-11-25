@@ -97,6 +97,13 @@
   --r-sm: 2px;
   --r-md: 4px;
 
+  /* Mouvement (courbes issues des skills animate / emil-design-eng) */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);      /* entrées, retours au clic */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);  /* déplacements à l'écran */
+  --dur-press: 160ms;     /* bouton enfoncé */
+  --dur-ui: 200ms;        /* menu, survol */
+  --dur-enter: 600ms;     /* apparitions (hero, défilement) */
+
   /* Divers */
   --tap: 44px;                /* taille minimale des zones cliquables */
   --focus: 3px solid var(--c-accent);

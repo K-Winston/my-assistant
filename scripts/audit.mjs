@@ -95,9 +95,16 @@ try {
     for (const p of pages) {
       const file = join(OUT, `lh${p.replace(/\//g, '_') || '_'}.json`);
       // Appel asynchrone : le serveur local tourne dans ce même processus et doit rester disponible.
-      const ok = await execFileAsync('npx', ['lighthouse', BASE + p, '--quiet', '--output=json', `--output-path=${file}`,
-        '--chrome-flags=--headless=new --no-sandbox', '--only-categories=performance,accessibility,best-practices,seo'],
-        { env: { ...process.env, CHROME_PATH: chromePath }, timeout: 180000 }).then(() => true, (e) => { console.log(`  LH ${p} échec : ${e.message.split('\n')[0]}`); return false; });
+      // Lighthouse échoue parfois de façon aléatoire (trace NO_NAVSTART, lancement de Chrome) : 3 tentatives.
+      let ok = false;
+      for (let attempt = 1; attempt <= 3 && !ok; attempt++) {
+        ok = await execFileAsync('npx', ['lighthouse', BASE + p, '--quiet', '--output=json', `--output-path=${file}`,
+          '--chrome-flags=--headless=new --no-sandbox', '--only-categories=performance,accessibility,best-practices,seo'],
+          { env: { ...process.env, CHROME_PATH: chromePath }, timeout: 180000 }).then(() => true, (e) => {
+            console.log(`  LH ${p} échec (tentative ${attempt}/3) : ${(e.stderr || e.message).trim().split('\n').pop()}`);
+            return false;
+          });
+      }
       const lh = ok && existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : null;
       if (!lh || lh.runtimeError) { results[p].lighthouse = 'échec'; continue; }
       const c = lh.categories;
