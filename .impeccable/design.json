@@ -1,0 +1,542 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-25T09:40:54+00:00",
+  "title": "Design System: Site vitrine — maçonnerie générale, tous corps d’état",
+  "extensions": {
+    "colorMeta": {
+      "anthracite": {
+        "role": "neutral",
+        "displayName": "Anthracite calque",
+        "canonical": "#1e1c19",
+        "tonalRamp": [
+          "#282724",
+          "#48443f",
+          "#686259",
+          "#898073",
+          "#a39d92",
+          "#bdb9b3",
+          "#d8d6d2",
+          "#f3f2f2"
+        ],
+        "purpose": "Fond de l’en-tête, du hero, des bandeaux et du pied de page ; texte principal sur crème."
+      },
+      "anthracite-2": {
+        "role": "neutral",
+        "displayName": "Anthracite relevé",
+        "canonical": "#2a2722",
+        "tonalRamp": [
+          "#292724",
+          "#49453e",
+          "#696358",
+          "#8a8171",
+          "#a59d91",
+          "#bebab2",
+          "#d8d6d2",
+          "#f3f2f1"
+        ],
+        "purpose": "Second plan sur fond foncé : encart avis, champ du cartouche."
+      },
+      "creme": {
+        "role": "neutral",
+        "displayName": "Papier crème",
+        "canonical": "#f5f1ea",
+        "tonalRamp": [
+          "#2f291e",
+          "#554832",
+          "#7e6844",
+          "#a88953",
+          "#bda479",
+          "#cdbea3",
+          "#e0d8ca",
+          "#f5f3ef"
+        ],
+        "purpose": "Fond par défaut des sections de contenu."
+      },
+      "blanc-carte": {
+        "role": "neutral",
+        "displayName": "Blanc carte",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#262626",
+          "#434343",
+          "#616161",
+          "#7e7e7e",
+          "#9b9b9b",
+          "#b8b8b8",
+          "#d5d5d5",
+          "#f2f2f2"
+        ],
+        "purpose": "Cartes, champs, survol de légende."
+      },
+      "bordure-carte": {
+        "role": "neutral",
+        "displayName": "Bordure pierre",
+        "canonical": "#e3dccf",
+        "tonalRamp": [
+          "#2d2820",
+          "#514736",
+          "#76674b",
+          "#9d875e",
+          "#b4a282",
+          "#c8bda8",
+          "#ddd8cd",
+          "#f4f3f0"
+        ],
+        "purpose": "Contour des cartes et filets sur crème."
+      },
+      "contour-champ": {
+        "role": "neutral",
+        "displayName": "Contour de champ",
+        "canonical": "#8a806f",
+        "tonalRamp": [
+          "#292724",
+          "#49453e",
+          "#696358",
+          "#8b8171",
+          "#a59d91",
+          "#bebab1",
+          "#d8d6d2",
+          "#f3f2f1"
+        ],
+        "purpose": "Contour des champs (≥ 3:1) et filets de légende."
+      },
+      "ocre": {
+        "role": "primary",
+        "displayName": "Ocre de chantier",
+        "canonical": "#e0a458",
+        "tonalRamp": [
+          "#372815",
+          "#664721",
+          "#996728",
+          "#d0872c",
+          "#dca35a",
+          "#e1bd8f",
+          "#ead8c0",
+          "#f8f3ed"
+        ],
+        "purpose": "Repère actif, fil à plomb, bouton principal ; texte anthracite dessus."
+      },
+      "ocre-clair": {
+        "role": "primary",
+        "displayName": "Ocre clair",
+        "canonical": "#ebb673",
+        "tonalRamp": [
+          "#392814",
+          "#69481e",
+          "#9e6823",
+          "#d78824",
+          "#e2a354",
+          "#e5bd8b",
+          "#ecd8be",
+          "#f8f3ec"
+        ],
+        "purpose": "Survol du bouton principal (littéral dans le code)."
+      },
+      "ocre-fonce": {
+        "role": "primary",
+        "displayName": "Ocre brûlé",
+        "canonical": "#8a5a1e",
+        "tonalRamp": [
+          "#362817",
+          "#644723",
+          "#95662c",
+          "#ca8631",
+          "#d8a25e",
+          "#dfbc91",
+          "#e9d7c1",
+          "#f7f3ed"
+        ],
+        "purpose": "Accent sur fond clair : icônes, flèches, liens, focus."
+      },
+      "texte": {
+        "role": "neutral",
+        "displayName": "Texte",
+        "canonical": "#1e1c19",
+        "tonalRamp": [
+          "#282724",
+          "#48443f",
+          "#686259",
+          "#898073",
+          "#a39d92",
+          "#bdb9b3",
+          "#d8d6d2",
+          "#f3f2f2"
+        ],
+        "purpose": "Texte principal sur fond clair."
+      },
+      "texte-2": {
+        "role": "neutral",
+        "displayName": "Texte secondaire",
+        "canonical": "#5a544b",
+        "tonalRamp": [
+          "#282724",
+          "#48443f",
+          "#686259",
+          "#898073",
+          "#a39d92",
+          "#bdb9b3",
+          "#d8d6d2",
+          "#f3f2f2"
+        ],
+        "purpose": "Chapôs, descriptions, aides."
+      },
+      "sur-fonce": {
+        "role": "neutral",
+        "displayName": "Texte sur foncé",
+        "canonical": "#f5f1ea",
+        "tonalRamp": [
+          "#2f291e",
+          "#554832",
+          "#7e6844",
+          "#a88953",
+          "#bda479",
+          "#cdbea3",
+          "#e0d8ca",
+          "#f5f3ef"
+        ],
+        "purpose": "Texte principal sur anthracite."
+      },
+      "sur-fonce-2": {
+        "role": "neutral",
+        "displayName": "Texte secondaire sur foncé",
+        "canonical": "#c9c1b3",
+        "tonalRamp": [
+          "#2a2722",
+          "#4c463b",
+          "#6e6453",
+          "#92836a",
+          "#ab9f8b",
+          "#c2bbae",
+          "#dad7d0",
+          "#f4f3f1"
+        ],
+        "purpose": "Chapôs et pied de page sur anthracite ; cadre du cartouche."
+      },
+      "filet-fonce": {
+        "role": "neutral",
+        "displayName": "Filet sombre",
+        "canonical": "#3d3830",
+        "tonalRamp": [
+          "#292723",
+          "#49453d",
+          "#6a6357",
+          "#8c816f",
+          "#a69d8f",
+          "#bfbab1",
+          "#d9d6d1",
+          "#f3f2f1"
+        ],
+        "purpose": "Filets, cadres et séparateurs sur fond foncé."
+      },
+      "trait-coupe": {
+        "role": "tertiary",
+        "displayName": "Trait de coupe",
+        "canonical": "#ddd5c7",
+        "tonalRamp": [
+          "#2c2820",
+          "#504737",
+          "#74664d",
+          "#9b8661",
+          "#b2a184",
+          "#c7bca9",
+          "#ddd7cd",
+          "#f4f3f0"
+        ],
+        "purpose": "Trait principal du dessin de coupe."
+      },
+      "hachure": {
+        "role": "tertiary",
+        "displayName": "Hachure",
+        "canonical": "#6e665a",
+        "tonalRamp": [
+          "#292724",
+          "#48443e",
+          "#696258",
+          "#8a8072",
+          "#a49d91",
+          "#beb9b2",
+          "#d8d6d2",
+          "#f3f2f1"
+        ],
+        "purpose": "Hachures de matériaux, cotes, niveau ±0,00."
+      },
+      "ligne-rappel": {
+        "role": "tertiary",
+        "displayName": "Ligne de rappel",
+        "canonical": "#8f8677",
+        "tonalRamp": [
+          "#292724",
+          "#48453f",
+          "#686359",
+          "#898172",
+          "#a49d92",
+          "#beb9b2",
+          "#d8d6d2",
+          "#f3f2f1"
+        ],
+        "purpose": "Lignes reliant un niveau à son étiquette."
+      },
+      "erreur": {
+        "role": "semantic",
+        "displayName": "Erreur",
+        "canonical": "#a3261b",
+        "tonalRamp": [
+          "#381815",
+          "#672520",
+          "#9b3026",
+          "#d33628",
+          "#df6257",
+          "#e3948d",
+          "#ebc2bf",
+          "#f8edec"
+        ],
+        "purpose": "Champs invalides, astérisques obligatoires."
+      },
+      "succes": {
+        "role": "semantic",
+        "displayName": "Succès",
+        "canonical": "#2f6b2a",
+        "tonalRamp": [
+          "#1d311c",
+          "#31592e",
+          "#42843d",
+          "#52b24a",
+          "#78c471",
+          "#a2d29e",
+          "#cae3c8",
+          "#eff6ef"
+        ],
+        "purpose": "Message d’envoi réussi."
+      },
+      "quadrillage": {
+        "role": "tertiary",
+        "displayName": "Quadrillage du calque",
+        "canonical": "rgba(245, 241, 234, 0.045)",
+        "purpose": "Trame 24 px du calque du hero, à peine visible."
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Titre du hero, pleine largeur, capitales."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Titres de section (h2)."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Titres de légende, communes, h2 des pages prestations (h3)."
+      },
+      "title-sm": {
+        "displayName": "Title small",
+        "purpose": "Titres de réalisations, h4."
+      },
+      "label-repere": {
+        "displayName": "Label repère",
+        "purpose": "Étiquettes-liens de la coupe, capitales +0.03em."
+      },
+      "quote": {
+        "displayName": "Quote",
+        "purpose": "Phrase de transmission dans l’histoire, max 30ch."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Chapô sous un titre de section, texte secondaire."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Texte courant, paragraphes limités à 40rem."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Libellés de champs, boutons."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Légendes, aides de champ, étiquettes Avant/Après."
+      }
+    },
+    "shadows": [
+      {
+        "name": "poignee",
+        "value": "0 2px 10px rgba(30, 28, 25, 0.35)",
+        "purpose": "Poignée du comparateur avant/après posée sur photo ; seule ombre du système."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Entrées, retours au clic, flèches de légende."
+      },
+      {
+        "name": "ease-in-out",
+        "value": "cubic-bezier(0.77, 0, 0.175, 1)",
+        "purpose": "Déplacements à l’écran ; tracé de la charpente."
+      },
+      {
+        "name": "dur-press",
+        "value": "160ms",
+        "purpose": "Bouton enfoncé (scale 0.97)."
+      },
+      {
+        "name": "dur-ui",
+        "value": "200ms",
+        "purpose": "Survol, menu, mise en évidence d’un niveau de la coupe."
+      },
+      {
+        "name": "dur-enter",
+        "value": "600ms",
+        "purpose": "Apparitions du hero."
+      },
+      {
+        "name": "construction-coupe",
+        "value": "fondations 0ms → murs 160 → plomberie 300 → électricité 400 → placo 500 → charpente tracée 600–1300 → couverture 1100 → fil à plomb 1300 → étiquettes 1350+",
+        "purpose": "Moment signature : la maison se construit de bas en haut ; en mouvement réduit, fondus 300ms seuls."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact",
+        "value": "30rem"
+      },
+      {
+        "name": "sm",
+        "value": "40rem"
+      },
+      {
+        "name": "md",
+        "value": "48rem"
+      },
+      {
+        "name": "lg",
+        "value": "64rem"
+      }
+    ],
+    "layout": {
+      "maxWidth": "76rem",
+      "textWidth": "40rem",
+      "headerHeight": "4.5rem",
+      "grid": "24px (quadrillage du calque)",
+      "focus": "3px solid, ocre-fonce sur clair / ocre sur foncé"
+    }
+  },
+  "components": [
+    {
+      "name": "Bouton principal",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Action principale (demander un devis) : ocre, texte anthracite.",
+      "html": "<a class=\"ds-btn ds-btn-primary\" href=\"#\">Demander un devis</a>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:44px;padding:.75rem 1.5rem;border:2px solid transparent;border-radius:var(--r-sm,2px);font-family:var(--f-body,'Inter',system-ui,sans-serif);font-size:1.0625rem;font-weight:600;line-height:1.2;text-decoration:none;cursor:pointer;transition:background-color 200ms ease,color 200ms ease,border-color 200ms ease,transform 160ms cubic-bezier(0.23,1,0.32,1);} .ds-btn:active{transform:scale(0.97);} .ds-btn:focus-visible{outline:3px solid #8a5a1e;outline-offset:3px;} .ds-btn-primary{background:var(--c-accent,#e0a458);color:var(--c-on-accent,#1e1c19);border-color:var(--c-accent,#e0a458);} .ds-btn-primary:hover{background:#ebb673;border-color:#ebb673;} @media (prefers-reduced-motion:reduce){.ds-btn:active{transform:none;}}"
+    },
+    {
+      "name": "Bouton secondaire",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Action secondaire (appeler) : contour, se remplit au survol.",
+      "html": "<a class=\"ds-btn-secondary\" href=\"#\">Appeler</a>",
+      "css": ".ds-btn-secondary{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.75rem 1.5rem;background:transparent;color:#1e1c19;border:2px solid #1e1c19;border-radius:2px;font-family:'Inter',system-ui,sans-serif;font-size:1.0625rem;font-weight:600;line-height:1.2;text-decoration:none;transition:background-color 200ms ease,color 200ms ease,transform 160ms cubic-bezier(0.23,1,0.32,1);} .ds-btn-secondary:hover{background:#1e1c19;color:#f5f1ea;} .ds-btn-secondary:active{transform:scale(0.97);} .ds-btn-secondary:focus-visible{outline:3px solid #8a5a1e;outline-offset:3px;}"
+    },
+    {
+      "name": "Champ de saisie",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Champ de formulaire : fond blanc, contour ≥ 3:1, 48px.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">Commune du chantier</span><input class=\"ds-input\" type=\"text\" placeholder=\"Graveson\"></label>",
+      "css": ".ds-field{display:grid;gap:.5rem;font-family:'Inter',system-ui,sans-serif;} .ds-field-label{font-weight:600;font-size:.9375rem;color:#1e1c19;} .ds-input{width:100%;min-height:48px;padding:.75rem 1rem;font:inherit;font-size:1rem;color:#1e1c19;background:#fff;border:1px solid #8a806f;border-radius:2px;} .ds-input:focus-visible{outline:3px solid #8a5a1e;outline-offset:1px;border-color:#1e1c19;} .ds-input[aria-invalid='true']{border-color:#a3261b;}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "nav-lien",
+      "description": "En-tête collant anthracite : logo condensé, liens crème, ocre au survol.",
+      "html": "<header class=\"ds-nav\"><a class=\"ds-logo\" href=\"#\"><svg viewBox=\"0 0 32 32\" width=\"32\" height=\"32\" aria-hidden=\"true\"><rect x=\"2\" y=\"20\" width=\"28\" height=\"9\"/><rect x=\"6\" y=\"11\" width=\"20\" height=\"8\"/><path d=\"M4 10 16 2l12 8\" fill=\"none\"/></svg><span>Entreprise</span></a><ul class=\"ds-nav-list\"><li><a href=\"#\">Prestations</a></li><li><a href=\"#\">Réalisations</a></li><li><a href=\"#\">Secteur</a></li></ul></header>",
+      "css": ".ds-nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:4.5rem;padding:0 1.5rem;background:#1e1c19;border-bottom:1px solid #3d3830;font-family:'Inter',system-ui,sans-serif;} .ds-logo{display:inline-flex;align-items:center;gap:.75rem;min-height:44px;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:1.375rem;text-transform:uppercase;text-decoration:none;color:#f5f1ea;} .ds-logo svg{fill:#e0a458;stroke:#e0a458;stroke-width:2;stroke-linejoin:round;} .ds-nav-list{display:flex;gap:1.5rem;list-style:none;margin:0;padding:0;} .ds-nav-list a{display:flex;align-items:center;min-height:44px;color:#f5f1ea;font-weight:500;text-decoration:none;transition:color 200ms ease;} .ds-nav-list a:hover{color:#e0a458;} .ds-nav a:focus-visible{outline:3px solid #e0a458;outline-offset:3px;border-radius:2px;}"
+    },
+    {
+      "name": "Carte",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Conteneur blanc à filet pierre, coins 4px, sans ombre.",
+      "html": "<div class=\"ds-card\"><h3>Ce qui est inclus</h3><p>Terrassement, semelles, dallage.</p></div>",
+      "css": ".ds-card{background:#fff;border:1px solid #e3dccf;border-radius:4px;padding:1.5rem;color:#1e1c19;font-family:'Inter',system-ui,sans-serif;transition:border-color 200ms ease;} .ds-card:hover{border-color:#8a5a1e;} .ds-card h3{margin:0 0 .75rem;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:1.5rem;line-height:1.05;text-transform:uppercase;} .ds-card p{margin:0;color:#5a544b;}"
+    },
+    {
+      "name": "Repère cerclé",
+      "kind": "chip",
+      "refersTo": "repere",
+      "description": "Étiquette-lien de la coupe : lettre cerclée A–F + métier ; ocre quand actif.",
+      "html": "<div class=\"ds-repere-wrap\"><a class=\"ds-repere\" href=\"#\"><span class=\"ds-repere-mark\">F</span>Toiture</a><a class=\"ds-repere\" href=\"#\"><span class=\"ds-repere-mark\">A</span>Fondations</a></div>",
+      "css": ".ds-repere-wrap{display:grid;gap:.25rem;padding:1rem;background:#1e1c19;} .ds-repere{display:inline-flex;align-items:center;gap:.45em;min-height:44px;color:#f5f1ea;text-decoration:none;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:1.2rem;text-transform:uppercase;letter-spacing:.03em;transition:color 200ms ease;} .ds-repere-mark{display:inline-grid;place-items:center;width:1.55em;height:1.55em;border:1.5px solid currentColor;border-radius:50%;font-size:.8em;line-height:1;transition:background-color 200ms ease,color 200ms ease,border-color 200ms ease;} .ds-repere:hover,.ds-repere:focus-visible{color:#e0a458;outline:none;} .ds-repere:hover .ds-repere-mark,.ds-repere:focus-visible .ds-repere-mark{background:#e0a458;border-color:#e0a458;color:#1e1c19;}"
+    },
+    {
+      "name": "Cartouche",
+      "kind": "custom",
+      "refersTo": "cartouche",
+      "description": "Bloc à cellules filetées du cartouche de plan : accroche, garanties, devis.",
+      "html": "<aside class=\"ds-cartouche\"><p class=\"ds-cart-lead\">Un seul artisan pour tout le chantier.</p><ul class=\"ds-cart-cells\"><li><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12.5l4.5 4.5L19 7\"/></svg>Garantie décennale</li><li><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12.5l4.5 4.5L19 7\"/></svg>Un seul interlocuteur</li></ul><p class=\"ds-cart-call\">Ou appelez : <a href=\"#\">06 00 00 00 00</a></p></aside>",
+      "css": ".ds-cartouche{border:1px solid #c9c1b3;background:#1e1c19;font-family:'Inter',system-ui,sans-serif;font-size:.9375rem;color:#c9c1b3;max-width:26rem;} .ds-cartouche>*{margin:0;padding:1rem 1.5rem;} .ds-cartouche>*+*{border-top:1px solid #3d3830;} .ds-cart-lead{font-size:1.0625rem;color:#f5f1ea;line-height:1.55;} .ds-cart-cells{list-style:none;display:grid;gap:.5rem;} .ds-cart-cells li{display:flex;gap:.5rem;align-items:center;} .ds-cart-cells svg{color:#e0a458;flex:none;} .ds-cart-call a{color:#f5f1ea;font-weight:600;} .ds-cart-call a:hover{text-decoration-thickness:2px;} .ds-cart-call a:focus-visible{outline:3px solid #e0a458;outline-offset:3px;}"
+    },
+    {
+      "name": "Ligne de légende",
+      "kind": "custom",
+      "refersTo": "legende-ligne",
+      "description": "Rangée de la légende des prestations : repère, titre, texte, flèche ; toute la rangée cliquable.",
+      "html": "<ol class=\"ds-legend\"><li class=\"ds-legend-row\"><span class=\"ds-legend-mark\">A</span><a class=\"ds-legend-title\" href=\"#\">Fondations &amp; gros œuvre</a><span class=\"ds-legend-text\">Terrassement, semelles, dallages.</span><svg class=\"ds-legend-arrow\" viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 12h16M14 6l6 6-6 6\"/></svg></li></ol>",
+      "css": ".ds-legend{list-style:none;margin:0;padding:0;border-top:2px solid #1e1c19;background:#f5f1ea;font-family:'Inter',system-ui,sans-serif;} .ds-legend-row{position:relative;display:grid;grid-template-columns:2.25rem 1fr 1.4fr auto;align-items:center;column-gap:1.5rem;padding:1.5rem .75rem;border-bottom:1px solid #8a806f;transition:background-color 200ms ease;} .ds-legend-row:hover{background:#fff;} .ds-legend-row:focus-within{outline:3px solid #8a5a1e;outline-offset:-3px;} .ds-legend-mark{display:grid;place-items:center;width:2.25rem;height:2.25rem;border:1.5px solid #1e1c19;border-radius:50%;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:1.05rem;transition:background-color 200ms ease,border-color 200ms ease;} .ds-legend-row:hover .ds-legend-mark{background:#e0a458;border-color:#e0a458;} .ds-legend-title{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:600;font-size:1.75rem;line-height:1.05;text-transform:uppercase;color:#1e1c19;text-decoration:none;} .ds-legend-title::after{content:'';position:absolute;inset:0;} .ds-legend-title:focus-visible{outline:none;} .ds-legend-text{color:#5a544b;} .ds-legend-arrow{color:#8a5a1e;transition:transform 200ms cubic-bezier(0.23,1,0.32,1);} .ds-legend-row:hover .ds-legend-arrow{transform:translateX(6px);} @media (prefers-reduced-motion:reduce){.ds-legend-row:hover .ds-legend-arrow{transform:none;}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "La feuille de plan",
+    "overview": "Le site se lit comme un tirage d’architecte posé sur la table de chantier. Le haut de la page est un calque anthracite quadrillé où une coupe de maison en trait crème, tracée comme une coupe de principe, empile les six métiers dans l’ordre où ils se construisent : terre et fondations, murs, réseaux, doublages, charpente et couverture. Chaque niveau porte un repère cerclé A à F, et ces repères sont la navigation. L’ocre n’apparaît que là où l’œil doit se poser : le repère actif, le fil à plomb, le bouton de devis.\n\nLe reste de la page passe sur papier crème et garde le vocabulaire du plan sans le décor : légendes à filets, cartouche à cellules, titres en capitales condensées comme un lettrage de plan, photos aux coins à peine cassés. La densité est celle d’un document technique bien tenu : des filets fins plutôt que des boîtes, des rangées plutôt que des grilles de cartes, beaucoup d’air vertical entre les sections.\n\nRejets confirmés par la charte et le brief : pas de dégradés décoratifs, pas d’emoji, pas d’icônes pleines ; pas de hero texte et photo suivi d’une grille de six cartes.",
+    "keyCharacteristics": [
+      "Deux supports seulement : calque anthracite (#1e1c19) et papier crème (#f5f1ea), avec des cartes blanches ponctuelles.",
+      "Le dessin est le système : hachures, lignes de cote, lignes de rappel, repères cerclés A–F, cartouche.",
+      "Ocre rare et fonctionnel ; ocre foncé pour les icônes et liens sur fond clair.",
+      "Capitales Barlow Condensed pour les titres, Inter pour tout le texte courant.",
+      "Plat : profondeur portée par le trait, le filet et l’opacité, jamais par l’ombre."
+    ],
+    "rules": [
+      {
+        "name": "The Repère Actif Rule",
+        "body": "L’ocre signale ce qui est actif ou ce qu’il faut faire : le niveau survolé ou sélectionné, le fil à plomb, le bouton de devis. Il ne remplit jamais une surface de section.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ocre Foncé sur Crème Rule",
+        "body": "Sur fond clair, l’accent passe en ocre brûlé ; l’ocre pur n’y sert que de fond de bouton ou de repère rempli, avec texte anthracite.",
+        "section": "colors"
+      },
+      {
+        "name": "The Lettrage de Plan Rule",
+        "body": "Tous les titres h1–h4 sont en Barlow Condensed majuscules, `text-wrap: balance`. Le texte courant, les boutons et les libellés restent en Inter casse normale : jamais de paragraphe en condensé.",
+        "section": "typography"
+      },
+      {
+        "name": "The Trait Pas Ombre Rule",
+        "body": "On sépare par un filet, on hiérarchise par la graisse du trait ou l’opacité ; on n’ajoute pas d’ombre portée à une carte, un bouton ou un panneau.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** utiliser le vocabulaire du plan pour structurer : filets, repères cerclés A–F, cartouche, lignes de rappel, hachures.",
+      "**Do** réserver l’ocre au repère actif, au fil à plomb et à l’action principale, avec du texte anthracite dessus.",
+      "**Do** passer en ocre brûlé pour toute icône, flèche ou lien accentué sur fond crème.",
+      "**Do** dessiner les icônes en trait de 1.5px, sans remplissage, extrémités arrondies.",
+      "**Do** garder les coins à 2px (contrôles, photos) ou 4px (cartes), et garder les cadres de plan à angles vifs.",
+      "**Do** donner 44px minimum à toute zone cliquable et un focus visible de 3px.",
+      "**Do** prévoir une version réduite de chaque animation qui garde les fondus et retire les déplacements.",
+      "**Do** laisser visibles les mentions « [À COMPLÉTER : …] » plutôt qu’inventer un contenu."
+    ],
+    "donts": [
+      "**Don't** utiliser de dégradé décoratif, d’emoji ou d’icône pleine.",
+      "**Don't** ajouter d’ombre portée à une carte, un bouton ou un panneau (seule la poignée du comparateur en porte une).",
+      "**Don't** composer une section en grille de cartes identiques quand une légende en rangées dit la même chose.",
+      "**Don't** poser du texte blanc sur l’ocre, ni de l’ocre pur comme couleur de texte sur crème.",
+      "**Don't** écrire du texte courant en Barlow Condensed ni des titres en casse normale.",
+      "**Don't** ajouter un sur-titre au-dessus d’un titre de section."
+    ]
+  }
+}

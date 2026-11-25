@@ -1,26 +1,64 @@
 ---
+// Notre histoire : mise en page éditoriale. La première phrase (la transmission) est le titre visuel,
+// les deux paragraphes suivent en colonnes, deux photos encadrent le texte.
 import { story } from '../data/site';
 import Photo from './Photo.astro';
+const [first, ...rest] = story.paragraphs;
 ---
 <section class="section story" id="histoire" aria-labelledby="histoire-titre">
   <div class="container story-grid">
-    <div class="story-media" data-reveal>
-      <Photo file={story.photo.file} alt={story.photo.alt} sizes="(min-width: 64rem) 40vw, 100vw" />
+    <h2 id="histoire-titre" class="story-title">{story.title}</h2>
+    <figure class="story-portrait">
+      <Photo file={story.photo.file} alt={story.photo.alt} sizes="(min-width: 64rem) 30vw, 100vw" />
+    </figure>
+    <p class="story-quote">{first}</p>
+    <div class="story-body">
+      {rest.map((p) => <p>{p}</p>)}
     </div>
-    <div class="story-text" data-reveal>
-      <p class="kicker">{story.kicker}</p>
-      <h2 id="histoire-titre">{story.title}</h2>
-      {story.paragraphs.map((p, i) => <p class={i === 0 ? 'lead story-first' : undefined}>{p}</p>)}
-    </div>
+    <figure class="story-wide">
+      <Photo file={story.photoWide.file} alt={story.photoWide.alt} sizes="(min-width: 64rem) 66vw, 100vw" />
+    </figure>
   </div>
 </section>
 
 <style>
-  .story { background: var(--c-card); border-block: 1px solid var(--c-border); }
-  .story-grid { display: grid; gap: var(--sp-7); align-items: center; }
-  @media (min-width: 64rem) { .story-grid { grid-template-columns: 5fr 6fr; gap: var(--sp-9); } }
-  .story-media :global(img) { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--r-md); }
-  @media (max-width: 63.99rem) { .story-media :global(img) { aspect-ratio: 3 / 2; } }
-  .story-text { --reveal-delay: 80ms; }
-  .story-first { color: var(--c-text); font-weight: 500; }
+  .story { border-block: 1px solid var(--c-border); }
+  .story-grid { display: grid; gap: var(--sp-6); }
+  @media (min-width: 64rem) {
+    .story-grid {
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-areas:
+        'title  title  title  title  title  title  title  .      portrait portrait portrait portrait'
+        'quote  quote  quote  quote  quote  quote  quote  quote  portrait portrait portrait portrait'
+        'wide   wide   wide   wide   wide   wide   wide   wide   body     body     body     body';
+      column-gap: var(--sp-5);
+      row-gap: var(--sp-6);
+      align-items: start;
+    }
+    .story-title { grid-area: title; }
+    .story-portrait { grid-area: portrait; }
+    .story-quote { grid-area: quote; }
+    .story-body { grid-area: body; align-self: end; }
+    .story-wide { grid-area: wide; }
+  }
+  .story-title { margin: 0; max-width: 16ch; }
+  /* La transmission, en grand : c'est le cœur du site */
+  .story-quote {
+    margin: 0;
+    max-width: 30ch;
+    font-family: var(--f-body);
+    font-weight: 500;
+    font-size: clamp(1.3rem, 1.05rem + 1vw, 1.75rem);
+    line-height: 1.35;
+    text-wrap: balance;
+    color: var(--c-text);
+  }
+  .story-body p { color: var(--c-text-2); }
+  .story-body p:first-child { color: var(--c-text); font-weight: 500; }
+  figure { margin: 0; }
+  .story-portrait :global(img) { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--r-sm); }
+  .story-wide :global(img) { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: var(--r-sm); }
+  @media (max-width: 63.99rem) {
+    .story-portrait :global(img) { aspect-ratio: 3 / 2; }
+  }
 </style>

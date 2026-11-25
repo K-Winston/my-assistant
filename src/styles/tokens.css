@@ -49,12 +49,17 @@
   --c-field-border: #8a806f;  /* contour des champs de formulaire (3,9:1 sur blanc) */
   --c-accent: #e0a458;        /* ocre : boutons, mots-clés */
   --c-on-accent: #1e1c19;     /* texte sur l'ocre */
+  --c-accent-hover: #ebb673;  /* ocre au survol des boutons */
   --c-accent-dark: #8a5a1e;   /* icônes, sur-titres sur fond clair */
   --c-text: #1e1c19;          /* texte principal sur fond clair */
   --c-text-2: #5a544b;        /* texte secondaire */
   --c-on-dark: #f5f1ea;       /* texte sur fond foncé */
   --c-on-dark-2: #c9c1b3;     /* texte secondaire sur fond foncé */
   --c-line-dark: #3d3830;     /* filets sur fond foncé */
+  --c-coupe-line: #ddd5c7;    /* traits de la coupe (sur fond foncé) */
+  --c-coupe-hatch: #6e665a;   /* hachures et cotes */
+  --c-coupe-leader: #8f8677;  /* lignes de rappel vers les étiquettes */
+  --c-grid: rgba(245, 241, 234, 0.045); /* quadrillage du calque */
   --c-error: #a3261b;
   --c-success: #2f6b2a;
 

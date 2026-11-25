@@ -26,6 +26,12 @@ body {
 }
 
 img, svg { display: block; max-width: 100%; }
+
+/* Éléments du navigateur aux couleurs du site */
+::selection { background: var(--c-accent); color: var(--c-on-accent); }
+html { scrollbar-color: var(--c-field-border) var(--c-light); accent-color: var(--c-accent-dark); }
+input, textarea, select { caret-color: var(--c-accent-dark); }
+.on-dark { scrollbar-color: var(--c-line-dark) var(--c-dark); }
 img { height: auto; }
 
 h1, h2, h3, h4 {
@@ -135,7 +141,7 @@ strong { font-weight: 600; }
 .btn:active { transform: scale(0.97); }
 .btn svg { width: 1.15em; height: 1.15em; flex: none; }
 .btn-primary { background: var(--c-accent); color: var(--c-on-accent); border-color: var(--c-accent); }
-.btn-primary:hover { background: #ebb673; border-color: #ebb673; }
+.btn-primary:hover { background: var(--c-accent-hover); border-color: var(--c-accent-hover); }
 .btn-secondary { background: transparent; color: var(--c-text); border-color: var(--c-text); }
 .btn-secondary:hover { background: var(--c-text); color: var(--c-light); }
 .on-dark .btn-secondary { color: var(--c-on-dark); border-color: var(--c-on-dark-2); }
@@ -215,25 +221,9 @@ strong { font-weight: 600; }
 .prose h2 { font-size: var(--fs-h3); margin-top: var(--sp-7); }
 .prose h3 { font-size: var(--fs-h4); margin-top: var(--sp-5); }
 
-/* ---------- Apparition au défilement ----------
-   Le script src/scripts/reveal.ts marque « pending » les éléments [data-reveal]
-   situés sous la ligne de flottaison au chargement, puis « shown » quand ils
-   entrent dans l'écran (une seule fois). Sans JavaScript, tout est visible. */
-[data-reveal='pending'] {
-  opacity: 0;
-  transform: translateY(16px);
-}
-[data-reveal='shown'] {
-  transition:
-    opacity 500ms var(--ease-out) var(--reveal-delay, 0ms),
-    transform var(--dur-enter) var(--ease-out) var(--reveal-delay, 0ms);
-}
-
 /* « Réduire les animations » : moins et plus doux, pas zéro.
    On garde les fondus (ils aident à comprendre), on retire tout déplacement. */
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal='pending'] { transform: none; }
-  [data-reveal='shown'] { transition: opacity 300ms ease; }
   .btn:active { transform: none; }
 }
 
@@ -251,7 +241,7 @@ strong { font-weight: 600; }
   .site-header *, .site-footer * { color: #000 !important; }
   .site-footer { padding-top: 1rem; border-top: 2px solid #000; }
   .site-footer .footer-grid > div:last-child, .footer-bottom ul { display: none !important; }
-  .skip-link, .nav, .nav-toggle, .btn, .btn-row, .hero-media, .hero-badges,
+  .skip-link, .nav, .nav-toggle, .btn, .btn-row, .sheet-drawing, .cartouche-form, .ba-control,
   .site-footer nav, .cta-band, .contact-form-wrap, picture, .crumbs { display: none !important; }
   .site-header { position: static; border-bottom: 2px solid #000; }
   .logo, .logo-mark { color: #000; fill: #000; stroke: #000; }
@@ -262,7 +252,6 @@ strong { font-weight: 600; }
   /* Page d'accueil : on n'imprime que le contact */
   body:has(#contact) main > :not(#contact) { display: none !important; }
   .print-only { display: block !important; }
-  [data-reveal] { opacity: 1 !important; transform: none !important; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 .print-only { display: none; }

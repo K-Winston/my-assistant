@@ -1,0 +1,277 @@
+---
+// Coupe de principe de la maison, des fondations (repère A) à la toiture (repère F).
+// - variant "hero" : grande coupe animée avec étiquettes cliquables (page d'accueil).
+// - variant "compact" : petite coupe décorative, un niveau mis en évidence (pages prestations).
+// Les étiquettes sont de vrais liens HTML posés sur le dessin ; le dessin lui-même est décoratif.
+import { services } from '../data/site';
+
+interface Props {
+  variant?: 'hero' | 'compact';
+  /** slug de la prestation à mettre en évidence (variant compact) */
+  focus?: string;
+  caption?: string;
+}
+const { variant = 'hero', focus, caption } = Astro.props;
+
+// Niveau du dessin correspondant à chaque prestation
+const layerOf: Record<string, string> = {
+  'fondations-gros-oeuvre': 'fondations',
+  'maconnerie-extensions': 'maconnerie',
+  plomberie: 'plomberie',
+  electricite: 'electricite',
+  'placo-amenagement': 'placo',
+  toiture: 'toiture',
+};
+const labels = [...services].sort((a, b) => b.mark.localeCompare(a.mark)); // F (haut) → A (bas)
+const focusLayer = focus ? layerOf[focus] : undefined;
+---
+<figure class:list={['coupe', `coupe--${variant}`]} data-focus={focusLayer}>
+  <div class="coupe-sheet">
+    <svg class="coupe-svg" viewBox="0 0 760 540" fill="none" stroke="currentColor" aria-hidden="true" focusable="false">
+      <defs>
+        <pattern id="h-sol" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="14" class="hatch" />
+        </pattern>
+        <pattern id="h-beton" width="16" height="16" patternUnits="userSpaceOnUse">
+          <circle cx="4" cy="5" r="1.1" class="dot" /><circle cx="12" cy="11" r="1.4" class="dot" /><path d="M9 3l2 2-2 1z" class="dot" />
+        </pattern>
+        <pattern id="h-maconnerie" width="24" height="16" patternUnits="userSpaceOnUse">
+          <path d="M0 0.5H24M0 8.5H24M6 0.5V8.5M18 8.5V16" class="hatch" />
+        </pattern>
+        <pattern id="h-isolant" width="12" height="20" patternUnits="userSpaceOnUse">
+          <path d="M0 0 C6 5 6 5 12 10 C6 15 6 15 0 20" class="hatch" />
+        </pattern>
+      </defs>
+
+      <!-- Repères fixes : cotes verticales et niveau ±0,00 -->
+      <g class="static">
+        <path d="M26 66V482M20 72l12-12M20 228l12-12M20 412l12-12M20 426l12-12M20 488l12-12" />
+        <path d="M84 404l8 10 8-10z" />
+      </g>
+
+      <!-- A. Fondations : terre, semelles, dallage -->
+      <g class="layer layer-fondations">
+        <rect x="0" y="420" width="540" height="120" fill="url(#h-sol)" class="soil" />
+        <path d="M0 420H540" class="ground" />
+        <rect x="100" y="420" width="52" height="62" fill="url(#h-beton)" />
+        <rect x="448" y="420" width="52" height="62" fill="url(#h-beton)" />
+        <rect x="116" y="406" width="368" height="14" fill="url(#h-beton)" />
+        <path d="M500 470H556" class="leader" /><circle cx="500" cy="470" r="3" class="pin" />
+      </g>
+
+      <!-- B. Maçonnerie : murs porteurs -->
+      <g class="layer layer-maconnerie">
+        <rect x="116" y="222" width="24" height="184" fill="url(#h-maconnerie)" />
+        <rect x="460" y="222" width="24" height="184" fill="url(#h-maconnerie)" />
+        <path d="M484 395H556" class="leader" /><circle cx="484" cy="395" r="3" class="pin" />
+      </g>
+
+      <!-- C. Plomberie : arrivée d'eau, lavabo, évacuation -->
+      <g class="layer layer-plomberie">
+        <path d="M392 330h56q0 20-28 20t-28-20z" />
+        <path d="M440 500V330M440 330v-14h-12" class="pipe" />
+        <path d="M414 350V432H360V500" class="drain" />
+        <path d="M448 335H556" class="leader" /><circle cx="448" cy="335" r="3" class="pin" />
+      </g>
+
+      <!-- D. Électricité : tableau, câble, luminaire, prise -->
+      <g class="layer layer-electricite">
+        <rect x="154" y="292" width="20" height="30" />
+        <path d="M164 292V248H286V360" class="cable" />
+        <path d="M226 248v10" /><circle cx="226" cy="264" r="6" />
+        <rect x="282" y="360" width="10" height="14" />
+        <path d="M232 264H556" class="leader" /><circle cx="232" cy="264" r="3" class="pin" />
+      </g>
+
+      <!-- E. Placo : doublages, faux plafond, cloison isolée -->
+      <g class="layer layer-placo">
+        <path d="M146 236V406M454 236V406M146 236H454" />
+        <rect x="296" y="236" width="12" height="170" fill="url(#h-isolant)" />
+        <path d="M454 262L496 210H556" class="leader" /><circle cx="454" cy="262" r="3" class="pin" />
+      </g>
+
+      <!-- F. Toiture : charpente et couverture en tuiles -->
+      <g class="layer layer-toiture">
+        <path d="M110 222H490M86 226L300 82L514 226M300 82V222M300 196L214 140M300 196L386 140" class="frame" pathLength="1" />
+        <path d="M66 234L300 66L534 234" class="tiles" />
+        <path d="M410 145L470 100H556" class="leader" /><circle cx="410" cy="145" r="3" class="pin" />
+      </g>
+
+      <!-- Repères posés sur le dessin (petit écran, quand les étiquettes passent sous le dessin) -->
+      <g class="marks">
+        <circle cx="500" cy="470" r="13" /><text x="500" y="475">A</text>
+        <circle cx="484" cy="378" r="13" /><text x="484" y="383">B</text>
+        <circle cx="448" cy="312" r="13" /><text x="448" y="317">C</text>
+        <circle cx="232" cy="286" r="13" /><text x="232" y="291">D</text>
+        <circle cx="454" cy="262" r="13" /><text x="454" y="267">E</text>
+        <circle cx="410" cy="122" r="13" /><text x="410" y="127">F</text>
+      </g>
+
+      <!-- Fil à plomb -->
+      <g class="plumb">
+        <path d="M60 240V384" class="plumb-line" />
+        <path d="M54 384h12l-6 16z" class="plumb-bob" />
+      </g>
+    </svg>
+
+    {variant === 'hero' && (
+      <ul class="coupe-labels">
+        {labels.map((s) => (
+          <li class={`lbl lbl-${s.mark}`}>
+            <a href={`/prestations/${s.slug}/`} data-layer={layerOf[s.slug]}>
+              <span class="lbl-mark" aria-hidden="true">{s.mark}</span>
+              <span class="lbl-name">{s.short}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .coupe { margin: 0; color: var(--c-coupe-line); }
+  .coupe-sheet { position: relative; }
+  .coupe-svg { width: 100%; height: auto; overflow: visible; }
+  .coupe-svg :global(*) { vector-effect: non-scaling-stroke; }
+  .coupe-svg { stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; }
+  .coupe-svg .hatch { stroke: var(--c-coupe-hatch); stroke-width: 1; }
+  .coupe-svg .dot { fill: var(--c-coupe-hatch); stroke: none; }
+  .coupe-svg .soil { stroke: none; }
+  .coupe-svg .ground { stroke-width: 2.5; }
+  .coupe-svg .tiles { stroke-width: 7; stroke-dasharray: 11 3; stroke-linecap: butt; }
+  .coupe-svg .frame { stroke-width: 2; }
+  .coupe-svg .pipe { stroke-width: 3; }
+  .coupe-svg .drain { stroke-dasharray: 6 4; }
+  .coupe-svg .cable { stroke-dasharray: 2 4; stroke-width: 2; }
+  .coupe-svg .leader { stroke-width: 1; stroke: var(--c-coupe-leader); }
+  .coupe-svg .pin { fill: currentColor; stroke: none; }
+  .coupe-svg .static { color: var(--c-coupe-hatch); }
+  .coupe-svg .static path { stroke-width: 1; }
+  .coupe-svg .plumb { color: var(--c-accent); }
+  .coupe-svg .plumb-line { stroke-dasharray: 3 4; stroke-width: 1.25; }
+  .coupe-svg .plumb-bob { fill: currentColor; stroke: none; }
+  .layer { transition: opacity var(--dur-ui) ease, color var(--dur-ui) ease; }
+
+  /* Étiquettes (liens) posées à droite du dessin, à la hauteur de leur repère */
+  .coupe-labels { list-style: none; margin: 0; padding: 0; }
+  .lbl { position: absolute; left: 73.5%; margin: 0; transform: translateY(-50%); }
+  .lbl-F { top: 18.5%; }
+  .lbl-E { top: 38.9%; }
+  .lbl-D { top: 48.9%; }
+  .lbl-C { top: 62%; }
+  .lbl-B { top: 73.1%; }
+  .lbl-A { top: 87%; }
+  .lbl a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    min-height: var(--tap);
+    padding-right: 0.25rem;
+    color: var(--c-on-dark);
+    text-decoration: none;
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: clamp(0.8rem, 0.55rem + 1.1vw, 1.2rem);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .lbl-mark {
+    display: inline-grid;
+    place-items: center;
+    width: 1.55em;
+    height: 1.55em;
+    border: 1.5px solid currentColor;
+    border-radius: 50%;
+    font-size: 0.8em;
+    line-height: 1;
+    transition: background-color var(--dur-ui) ease, color var(--dur-ui) ease, border-color var(--dur-ui) ease;
+  }
+  .lbl a:hover, .lbl a:focus-visible { color: var(--c-accent); }
+  .lbl a:hover .lbl-mark, .lbl a:focus-visible .lbl-mark {
+    background: var(--c-accent);
+    border-color: var(--c-accent);
+    color: var(--c-on-accent);
+  }
+
+  /* Petit écran : les étiquettes passent en liste sous le dessin (zones de toucher ≥ 44 px) */
+  @media (max-width: 39.99rem) {
+    .coupe-labels { display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--sp-3); margin-top: var(--sp-2); }
+    .lbl { position: static; transform: none; }
+    .lbl a { font-size: 1rem; }
+    .coupe--hero .coupe-sheet { overflow: hidden; }
+    .coupe--hero .leader, .coupe--hero .pin { display: none; }
+    .coupe--hero .marks { display: inline; }
+    .coupe--hero .coupe-svg { width: 136%; max-width: none; } /* recadre sur le dessin (0 → 558) */
+  }
+
+  figcaption { margin-top: var(--sp-3); font-size: var(--fs-xs); color: var(--c-on-dark-2); }
+
+  /* Mise en évidence d'un niveau : au survol d'une étiquette (accueil) ou fixée (pages prestations) */
+  .coupe:has([data-layer='fondations']:is(:hover, :focus-visible)) .layer:not(.layer-fondations),
+  .coupe:has([data-layer='maconnerie']:is(:hover, :focus-visible)) .layer:not(.layer-maconnerie),
+  .coupe:has([data-layer='plomberie']:is(:hover, :focus-visible)) .layer:not(.layer-plomberie),
+  .coupe:has([data-layer='electricite']:is(:hover, :focus-visible)) .layer:not(.layer-electricite),
+  .coupe:has([data-layer='placo']:is(:hover, :focus-visible)) .layer:not(.layer-placo),
+  .coupe:has([data-layer='toiture']:is(:hover, :focus-visible)) .layer:not(.layer-toiture),
+  .coupe[data-focus='fondations'] .layer:not(.layer-fondations),
+  .coupe[data-focus='maconnerie'] .layer:not(.layer-maconnerie),
+  .coupe[data-focus='plomberie'] .layer:not(.layer-plomberie),
+  .coupe[data-focus='electricite'] .layer:not(.layer-electricite),
+  .coupe[data-focus='placo'] .layer:not(.layer-placo),
+  .coupe[data-focus='toiture'] .layer:not(.layer-toiture) { opacity: 0.25; }
+
+  .coupe:has([data-layer='fondations']:is(:hover, :focus-visible)) .layer-fondations,
+  .coupe:has([data-layer='maconnerie']:is(:hover, :focus-visible)) .layer-maconnerie,
+  .coupe:has([data-layer='plomberie']:is(:hover, :focus-visible)) .layer-plomberie,
+  .coupe:has([data-layer='electricite']:is(:hover, :focus-visible)) .layer-electricite,
+  .coupe:has([data-layer='placo']:is(:hover, :focus-visible)) .layer-placo,
+  .coupe:has([data-layer='toiture']:is(:hover, :focus-visible)) .layer-toiture,
+  .coupe[data-focus='fondations'] .layer-fondations,
+  .coupe[data-focus='maconnerie'] .layer-maconnerie,
+  .coupe[data-focus='plomberie'] .layer-plomberie,
+  .coupe[data-focus='electricite'] .layer-electricite,
+  .coupe[data-focus='placo'] .layer-placo,
+  .coupe[data-focus='toiture'] .layer-toiture { color: var(--c-accent); }
+
+  .coupe--compact .leader, .coupe--compact .pin { display: none; }
+  .marks { display: none; }
+  .marks circle { fill: var(--c-dark); stroke: var(--c-on-dark); stroke-width: 1.5; }
+  .marks text { fill: var(--c-on-dark); stroke: none; font: 700 15px var(--f-display); text-anchor: middle; }
+
+  /* ---------- Le moment animé : la maison se construit de bas en haut ----------
+     fondations 0 ms → murs 160 → plomberie 300 → électricité 400 → placo 500
+     → charpente tracée 600–1300 → couverture 1100 → fil à plomb 1300 → étiquettes 1350+ */
+  @keyframes build-in { from { opacity: 0; transform: translateY(10px); } }
+  @keyframes draw { from { stroke-dasharray: 1; stroke-dashoffset: 1; } to { stroke-dasharray: 1; stroke-dashoffset: 0; } }
+  @keyframes fade { from { opacity: 0; } }
+  @keyframes drop { from { transform: scaleY(0); } }
+  @keyframes bob { from { opacity: 0; transform: translateY(-140px); } }
+
+  .coupe--hero .layer { animation: build-in 650ms var(--ease-out) both; }
+  .coupe--hero .layer-maconnerie { animation-delay: 160ms; }
+  .coupe--hero .layer-plomberie { animation-delay: 300ms; }
+  .coupe--hero .layer-electricite { animation-delay: 400ms; }
+  .coupe--hero .layer-placo { animation-delay: 500ms; }
+  .coupe--hero .layer-toiture { animation: fade 200ms ease 600ms both; }
+  .coupe--hero .layer-toiture .frame { animation: draw 700ms var(--ease-in-out) 600ms both; }
+  .coupe--hero .layer-toiture .tiles { animation: fade 400ms var(--ease-out) 1100ms both; }
+  .coupe--hero .plumb-line { transform-box: fill-box; transform-origin: top; animation: drop 500ms var(--ease-out) 1300ms both; }
+  .coupe--hero .plumb-bob { animation: bob 500ms var(--ease-out) 1300ms both; }
+  .coupe--hero .lbl { animation: fade 400ms var(--ease-out) both; }
+  .coupe--hero .lbl-A { animation-delay: 1350ms; }
+  .coupe--hero .lbl-B { animation-delay: 1400ms; }
+  .coupe--hero .lbl-C { animation-delay: 1440ms; }
+  .coupe--hero .lbl-D { animation-delay: 1470ms; }
+  .coupe--hero .lbl-E { animation-delay: 1500ms; }
+  .coupe--hero .lbl-F { animation-delay: 1520ms; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .coupe--hero .layer, .coupe--hero .layer-toiture .frame, .coupe--hero .layer-toiture .tiles,
+    .coupe--hero .plumb-line, .coupe--hero .plumb-bob, .coupe--hero .lbl {
+      animation: fade 300ms ease both;
+    }
+  }
+</style>

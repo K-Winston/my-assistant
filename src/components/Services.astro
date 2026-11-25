@@ -1,33 +1,96 @@
 ---
+// Prestations : la légende de la coupe. Une ligne par métier, avec son repère (A = fondations … F = toiture).
 import { services } from '../data/site';
-import ServiceCard from './ServiceCard.astro';
+import Icon from './Icon.astro';
+const ordered = [...services].sort((a, b) => a.mark.localeCompare(b.mark));
 ---
-<section class="section" id="prestations" aria-labelledby="prestations-titre">
+<section class="section services" id="prestations" aria-labelledby="prestations-titre">
   <div class="container">
-    <div class="section-head" data-reveal>
-      <p class="kicker">Prestations</p>
+    <div class="services-head">
       <h2 id="prestations-titre">Tous vos travaux, un seul artisan</h2>
       <p class="lead">Du terrassement aux finitions intérieures, chaque corps d’état est réalisé par la même entreprise. Vous avez un seul interlocuteur du début à la fin du chantier.</p>
     </div>
-    <ul class="services-grid">
-      {services.map((s) => <li data-reveal><ServiceCard service={s} /></li>)}
-    </ul>
+    <ol class="legend">
+      {ordered.map((s) => (
+        <li class="legend-row">
+          <span class="legend-mark" aria-hidden="true">{s.mark}</span>
+          <h3 class="legend-title">
+            <a class="stretched-link" href={`/prestations/${s.slug}/`}>{s.title}</a>
+          </h3>
+          <p class="legend-text">{s.summary}</p>
+          <Icon name="arrow" class="legend-arrow" />
+        </li>
+      ))}
+    </ol>
   </div>
 </section>
 
 <style>
-  .services-grid {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  .services-head {
     display: grid;
-    gap: var(--sp-4);
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+    gap: var(--sp-4) var(--sp-8);
+    margin-bottom: var(--sp-7);
+    align-items: end;
   }
-  .services-grid li { margin: 0; }
-  /* Décalage par colonne, irrégulier (les cartes d'une même rangée arrivent en vague) */
-  @media (min-width: 40rem) {
-    .services-grid li:nth-child(3n + 2) { --reveal-delay: 50ms; }
-    .services-grid li:nth-child(3n + 3) { --reveal-delay: 90ms; }
+  @media (min-width: 64rem) { .services-head { grid-template-columns: 1fr 1fr; } }
+  .services-head h2 { margin: 0; max-width: 14ch; }
+  .services-head .lead { margin: 0; }
+
+  .legend { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--c-text); }
+  .legend-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2.25rem 1fr auto;
+    grid-template-areas:
+      'mark title arrow'
+      '.    text  text';
+    align-items: center;
+    column-gap: var(--sp-4);
+    row-gap: var(--sp-1);
+    margin: 0;
+    padding: var(--sp-5) var(--sp-3);
+    border-bottom: 1px solid var(--c-field-border);
+    transition: background-color var(--dur-ui) ease;
+  }
+  @media (min-width: 48rem) {
+    .legend-row {
+      grid-template-columns: 2.5rem minmax(14rem, 1.1fr) 1.4fr auto;
+      grid-template-areas: 'mark title text arrow';
+      column-gap: var(--sp-5);
+    }
+  }
+  .legend-row:hover { background: var(--c-card); }
+  .legend-row:focus-within { outline: 3px solid var(--c-accent-dark); outline-offset: -3px; }
+  .legend-mark {
+    grid-area: mark;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1.5px solid var(--c-text);
+    border-radius: 50%;
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: 1.05rem;
+    transition: background-color var(--dur-ui) ease, color var(--dur-ui) ease, border-color var(--dur-ui) ease;
+  }
+  .legend-row:hover .legend-mark { background: var(--c-accent); border-color: var(--c-accent); }
+  .legend-title { grid-area: title; margin: 0; font-size: var(--fs-h3); }
+  .legend-title a { text-decoration: none; }
+  .legend-title a::after { content: ''; position: absolute; inset: 0; }
+  .legend-title a:focus-visible { outline: none; }
+  .legend-text { grid-area: text; margin: 0; color: var(--c-text-2); }
+  .legend-row :global(.legend-arrow) {
+    grid-area: arrow;
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--c-accent-dark);
+    transition: transform var(--dur-ui) var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .legend-row:hover :global(.legend-arrow) { transform: translateX(6px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .legend-row:hover :global(.legend-arrow) { transform: none; }
   }
 </style>

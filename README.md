@@ -20,11 +20,11 @@ Ouvrez-le avec n’importe quel éditeur de texte (sur GitHub, le bouton crayon 
 | L’e-mail, l’adresse, les horaires | `contact` (lignes 41 à 50) |
 | Le lien vers les avis Google | `contact.googleReviewsUrl` (ligne 52) |
 | SIRET, TVA, assurance décennale | `company` (lignes 24 à 33) |
-| Les textes d’une prestation | `services` (à partir de la ligne 114), un bloc par métier |
-| Le texte « Notre histoire » | `story` (ligne 237) |
-| Les 3 réalisations avant/après | `realisations` (ligne 248) |
-| Les communes desservies | `area.towns` (ligne 278) |
-| Les textes du formulaire | `contactSection` (ligne 287) |
+| Les textes d’une prestation | `services` (à partir de la ligne 122), un bloc par métier |
+| Le texte « Notre histoire » | `story` (ligne 257) |
+| Les 3 réalisations avant/après | `realisations` (ligne 269) |
+| Les communes desservies | `area.towns` (ligne 297) |
+| Les textes du formulaire | `contactSection` (ligne 306) |
 
 Attention : si votre texte contient une apostrophe, utilisez l’apostrophe typographique `’` (comme dans `l’entreprise`), ou écrivez `\'`.
 
@@ -37,7 +37,7 @@ Tant qu’un texte contient `[À COMPLÉTER …]`, il apparaît **surligné en j
 
 | Emplacement | Nom du fichier |
 |---|---|
-| Grande photo d’accueil | `hero.jpg` |
+| Grande photo de chantier (section « Notre histoire ») | `chantier.jpg` |
 | Notre histoire | `histoire.jpg` |
 | Réalisation 1, 2, 3 | `realisation-1-avant.jpg`, `realisation-1-apres.jpg`, … jusqu’à `realisation-3-apres.jpg` |
 | Photos des pages prestations (2 par page) | `prestation-fondations-gros-oeuvre-1.jpg`, `-2.jpg`, et de même pour `maconnerie-extensions`, `toiture`, `electricite`, `plomberie`, `placo-amenagement` |
@@ -152,21 +152,25 @@ netlify.toml / vercel.json ← déploiement et en-têtes de sécurité
 AUDIT.md                   ← résultats de l’audit qualité
 ```
 
-Stack : Astro 7 (sortie 100 % statique), CSS natif, environ 1,3 Ko de JavaScript côté navigateur (menu mobile et envoi du formulaire), aucune dépendance chargée depuis un site tiers.
+Stack : Astro 7 (sortie 100 % statique), CSS natif, environ 2 Ko de JavaScript côté navigateur (menu mobile, formulaire, comparateur avant/après), aucune dépendance chargée depuis un site tiers.
 
 ---
 
-## 7. Animations
+## 7. La coupe de la maison et les animations
 
-Les animations sont en CSS natif. Les réglages (courbes, durées) sont dans `src/styles/tokens.css` (`--ease-out`, `--dur-enter`…) ; le détail se trouve dans `AUDIT.md`.
+La page d'accueil est construite comme une feuille de plan : la **coupe de la maison** (`src/components/Coupe.astro`) montre les six métiers à leur place, des fondations (repère A) à la toiture (repère F). Chaque repère est un lien vers la prestation. Les noms courts et les repères se changent dans `src/data/site.ts` (`short` et `mark` de chaque prestation). Sur chaque page prestation, une petite coupe met le niveau concerné en ocre.
 
-- **Entrée de la page d'accueil** : `src/components/Hero.astro`, en bas du fichier.
-- **Apparition au défilement** : ajoutez l'attribut `data-reveal` à un bloc pour qu'il apparaisse quand on fait défiler la page jusqu'à lui (script `src/scripts/reveal.ts`).
+Le seul moment animé du site est la construction de la coupe au chargement : la maison se monte de bas en haut, puis le fil à plomb descend. Réglages dans `Coupe.astro` (bas du fichier) et `src/styles/tokens.css` (`--ease-out`, `--dur-enter`…).
+
+- Le **comparateur avant/après** des réalisations se manipule à la souris, au doigt ou au clavier (curseur). Sans JavaScript, les deux photos s'affichent côte à côte.
+- Le **cartouche** de l'accueil (encadré en bas à droite) permet de choisir le type de travaux : le formulaire de devis s'ouvre déjà rempli.
 - Les visiteurs qui ont activé « réduire les animations » sur leur appareil ne voient que des fondus, sans mouvement.
 
 ## 8. Skills Claude Code installés
 
-Le dossier `.claude/skills/` contient 36 skills de design et d'animation (Anthropic, Vercel, GreenSock/GSAP, LottieFiles, Emil Kowalski…), chargés automatiquement par Claude Code dans ce projet. Leur origine et leur licence sont listées dans `.claude/skills/SOURCES.md`.
+Le dossier `.claude/skills/` contient 37 skills de design et d'animation (Anthropic, Vercel, GreenSock/GSAP, LottieFiles, Emil Kowalski…), chargés automatiquement par Claude Code dans ce projet. Leur origine et leur licence sont listées dans `.claude/skills/SOURCES.md`.
+
+Le skill **Impeccable** (`/impeccable`) a servi à la refonte : critique, contrat de direction (`.impeccable/briefs/accueil.md`) et système de design (`DESIGN.md`). Ses scripts n'ont pas été installés (voir `SOURCES.md`).
 
 Exemples d'utilisation : demandez « revois les animations » (`review-animations`), « fais une critique du design » (`design-critique`), « audit d'accessibilité » (`accessibility-review`).
 
@@ -212,16 +216,17 @@ Générée avec `npm run a-completer` (relancez la commande pour une liste à jo
 
 | Ligne | Élément |
 |---|---|
-| 135, 136 | Descriptions (`alt`) des 2 photos « Fondations & gros œuvre » |
-| 159, 160 | Descriptions des 2 photos « Maçonnerie & extensions » |
-| 177, 178 | Descriptions des 2 photos « Toiture » |
-| 195, 196 | Descriptions des 2 photos « Électricité » |
-| 213, 214 | Descriptions des 2 photos « Plomberie » |
-| 231, 232 | Descriptions des 2 photos « Placo & aménagement » |
-| 245 | Description de la photo « Notre histoire » |
-| 254 à 257 | Réalisation 1 : titre, commune, descriptions avant/après |
-| 260 à 263 | Réalisation 2 : titre, commune, descriptions avant/après |
-| 266 à 269 | Réalisation 3 : titre, commune, descriptions avant/après |
+| 145, 146 | Descriptions (`alt`) des 2 photos « Fondations & gros œuvre » |
+| 171, 172 | Descriptions des 2 photos « Maçonnerie & extensions » |
+| 191, 192 | Descriptions des 2 photos « Toiture » |
+| 211, 212 | Descriptions des 2 photos « Électricité » |
+| 231, 232 | Descriptions des 2 photos « Plomberie » |
+| 251, 252 | Descriptions des 2 photos « Placo & aménagement » |
+| 264 | Description de la photo portrait « Notre histoire » |
+| 266 | Description de la grande photo de chantier (« Notre histoire ») |
+| 274 à 277 | Réalisation 1 : titre, commune, descriptions avant/après |
+| 280 à 283 | Réalisation 2 : titre, commune, descriptions avant/après |
+| 286 à 289 | Réalisation 3 : titre, commune, descriptions avant/après |
 | — | Les 20 fichiers photo de `public/photos/` et `public/og-image.jpg` (actuellement des images de remplacement) |
 
 ### Configuration

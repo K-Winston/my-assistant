@@ -5,15 +5,14 @@ import Icon from './Icon.astro';
 <section class="section area on-dark" id="secteur" aria-labelledby="secteur-titre">
   <div class="container area-grid">
     <div>
-      <p class="kicker">{area.kicker}</p>
       <h2 id="secteur-titre">{area.title}</h2>
       <p class="lead">{area.intro}</p>
       <ul class="towns">
-        {area.towns.map((t) => <li data-reveal><Icon name="pin" class="town-icon" />{t}</li>)}
+        {area.towns.map((t) => <li><Icon name="pin" class="town-icon" />{t}</li>)}
       </ul>
       <p class="area-around">{area.aroundText}</p>
     </div>
-    <aside class="reviews" aria-labelledby="avis-titre" data-reveal>
+    <aside class="reviews" aria-labelledby="avis-titre">
       <h3 id="avis-titre">{area.reviews.title}</h3>
       <p>{area.reviews.text}</p>
       {contact.googleReviewsUrl ? (
@@ -52,10 +51,6 @@ import Icon from './Icon.astro';
     line-height: 1.1;
   }
   .towns :global(.town-icon) { width: 1.5rem; height: 1.5rem; color: var(--c-accent); flex: none; }
-  .towns li:nth-child(2) { --reveal-delay: 40ms; }
-  .towns li:nth-child(3) { --reveal-delay: 70ms; }
-  .towns li:nth-child(4) { --reveal-delay: 95ms; }
-  .reviews { --reveal-delay: 120ms; }
   .area-around { color: var(--c-on-dark-2); }
   .reviews {
     padding: var(--sp-6);

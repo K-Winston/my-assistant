@@ -26,7 +26,7 @@ export async function checkForm(BASE) {
     });
     await page.goto(`${BASE}/#contact`);
     await fill(page);
-    await Promise.all([page.waitForURL('**/merci/'), page.click('button[type=submit]')]);
+    await Promise.all([page.waitForURL('**/merci/'), page.click('[data-contact-form] button[type=submit]')]);
     for (const f of ['nom', 'telephone', 'commune', 'type_de_travaux', 'message', 'consentement_rgpd', 'access_key', 'redirect']) {
       if (!posted || !posted.has(f)) errors.push(`sans JS : champ « ${f} » non envoyé`);
     }
@@ -42,7 +42,7 @@ export async function checkForm(BASE) {
     let sent = false;
     await page.route('https://api.web3forms.com/**', (route) => { sent = true; route.abort(); });
     await page.goto(`${BASE}/#contact`);
-    await page.click('button[type=submit]');
+    await page.click('[data-contact-form] button[type=submit]');
     await page.waitForTimeout(300);
     if (sent) errors.push('un formulaire vide a été envoyé');
     await ctx.close();
@@ -56,7 +56,7 @@ export async function checkForm(BASE) {
       route.fulfill({ status: 200, contentType: 'application/json', body: '{"success":true}' }));
     await page.goto(`${BASE}/#contact`);
     await fill(page);
-    await page.click('button[type=submit]');
+    await page.click('[data-contact-form] button[type=submit]');
     const status = page.locator('[data-form-status]');
     await status.waitFor({ state: 'visible' });
     if ((await status.getAttribute('data-state')) !== 'success') errors.push('avec JS : pas de message de succès');
@@ -65,7 +65,7 @@ export async function checkForm(BASE) {
     await page.unroute('https://api.web3forms.com/**');
     await page.route('https://api.web3forms.com/**', (route) => route.abort());
     await fill(page);
-    await page.click('button[type=submit]');
+    await page.click('[data-contact-form] button[type=submit]');
     await page.locator('[data-form-status][data-state="error"]').waitFor();
     await ctx.close();
   }

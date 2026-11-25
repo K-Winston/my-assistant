@@ -108,6 +108,11 @@ const f = contactSection.form;
   // Amélioration progressive : envoi sans quitter la page si le JavaScript est actif.
   const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
   const status = form?.querySelector<HTMLElement>('[data-form-status]');
+  // Type de travaux choisi dans le cartouche de l'accueil (?travaux=…)
+  const chosen = new URLSearchParams(location.search).get('travaux');
+  const select = form?.querySelector<HTMLSelectElement>('#travaux');
+  if (chosen && select && [...select.options].some((o) => o.value === chosen)) select.value = chosen;
+
   if (form && status) {
     const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
     const label = button.textContent ?? '';

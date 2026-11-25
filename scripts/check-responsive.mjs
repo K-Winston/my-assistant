@@ -27,9 +27,9 @@ export async function checkResponsive(BASE) {
             const s = getComputedStyle(el);
             if (r.width === 0 || s.visibility === 'hidden' || el.closest('.hp') || el.classList.contains('skip-link')) return false;
             if (el.type === 'hidden') return false;
-            // Lien « étiré » : la zone cliquable est toute la carte parente
+            // Lien « étiré » : la zone cliquable est toute la carte (ou la ligne de légende) parente
             if (el.classList.contains('stretched-link')) {
-              const card = el.closest('.card').getBoundingClientRect();
+              const card = el.closest('.card, .legend-row').getBoundingClientRect();
               return card.height < 44 || card.width < 44;
             }
             // Liens dans un paragraphe de texte : exemptés (WCAG 2.5.8, « inline »)

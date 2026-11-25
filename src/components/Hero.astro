@@ -1,131 +1,126 @@
 ---
-import { hero, contact } from '../data/site';
+// Hero : une feuille de plan. Titre pleine largeur, coupe de la maison (navigation vers
+// les prestations), cartouche en bas à droite comme sur un vrai plan (accroche, garanties,
+// début du formulaire de devis, appel).
+import { hero, contact, contactSection } from '../data/site';
+import Coupe from './Coupe.astro';
 import Icon from './Icon.astro';
-import Photo from './Photo.astro';
 import Txt from './Txt.astro';
-export const heroSizes = '(min-width: 64rem) 42vw, 100vw';
 ---
 <section class="hero on-dark" aria-labelledby="hero-titre">
-  <div class="container hero-grid">
-    <div class="hero-text">
-      <p class="kicker hero-kicker">{hero.kicker}</p>
-      <h1 id="hero-titre">{hero.title}</h1>
-      <p class="lead hero-lead">{hero.text}</p>
-      <div class="btn-row">
-        <a class="btn btn-primary" href="/#contact">{hero.ctaQuote}</a>
-        <a class="btn btn-secondary" href={`tel:${contact.phoneLink}`}>
-          <Icon name="phone" class="" />{hero.ctaCall}<span class="visually-hidden">{'\u00a0le\u00a0'}<Txt value={contact.phoneDisplay} nowrap /></span>
-        </a>
+  <div class="container">
+    <div class="sheet">
+      <header class="sheet-title">
+        <p class="kicker hero-kicker">{hero.kicker}</p>
+        <h1 id="hero-titre">{hero.title}</h1>
+      </header>
+
+      <div class="sheet-drawing">
+        <Coupe variant="hero" caption={hero.coupeCaption} />
       </div>
+
+      <aside class="cartouche" aria-label="Résumé et demande de devis">
+        <p class="cartouche-lead">{hero.text}</p>
+        <ul class="cartouche-cells">
+          {hero.badges.map((b) => (
+            <li><Icon name="check" class="cell-icon" />{b}</li>
+          ))}
+        </ul>
+        <form class="cartouche-form" action="/#contact" method="get">
+          <label for="devis-rapide">{hero.quickLabel}</label>
+          <div class="cartouche-row">
+            <select class="select" id="devis-rapide" name="travaux">
+              {contactSection.form.workTypes.map((t) => <option value={t}>{t}</option>)}
+            </select>
+            <button class="btn btn-primary" type="submit">{hero.ctaQuote}</button>
+          </div>
+        </form>
+        <p class="cartouche-call">
+          {hero.callText}
+          <a class="call-link" href={`tel:${contact.phoneLink}`}>
+            <Icon name="phone" class="call-icon" /><Txt value={contact.phoneDisplay} nowrap />
+          </a>
+        </p>
+      </aside>
     </div>
-    <div class="hero-media">
-      <Photo file={hero.photo.file} alt={hero.photo.alt} sizes={heroSizes} priority class="hero-photo" />
-    </div>
-  </div>
-  <div class="hero-badges">
-    <ul class="container badges">
-      {hero.badges.map((b) => (
-        <li><Icon name="check" class="badge-icon" />{b}</li>
-      ))}
-    </ul>
   </div>
 </section>
 
 <style>
-  .hero { padding-top: clamp(2.5rem, 1.5rem + 4vw, 5rem); }
-  .hero-grid {
+  .hero { padding-block: clamp(1.5rem, 1rem + 2vw, 2.5rem) clamp(2rem, 1rem + 3vw, 3.5rem); }
+
+  /* La feuille : cadre fin et quadrillage de calque */
+  .sheet {
+    position: relative;
     display: grid;
-    gap: var(--sp-7);
-    align-items: end;
-    padding-bottom: clamp(2.5rem, 1.5rem + 4vw, 5rem);
+    gap: var(--sp-6);
+    padding: clamp(1rem, 0.5rem + 2vw, 2rem);
+    border: 1px solid var(--c-line-dark);
+    background-image:
+      linear-gradient(var(--c-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--c-grid) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: -1px -1px;
   }
   @media (min-width: 64rem) {
-    .hero-grid { grid-template-columns: 1.15fr 1fr; gap: var(--sp-8); align-items: center; }
-  }
-  .hero-kicker { font-size: var(--fs-base); }
-  .hero h1 { margin-bottom: var(--sp-5); max-width: 14ch; }
-  .hero-lead { max-width: 36rem; margin-bottom: var(--sp-6); }
-  .hero-media { position: relative; }
-  .hero-media :global(img) {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    border-radius: var(--r-md);
-  }
-  @media (min-width: 64rem) {
-    .hero-media :global(img) { aspect-ratio: 4 / 5; }
-    /* Fil à plomb : repère graphique discret à côté de la photo */
-    .hero-media::before {
-      content: '';
-      position: absolute;
-      left: calc(-1 * var(--sp-5));
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: var(--c-accent);
+    .sheet {
+      grid-template-columns: 7fr 5fr;
+      grid-template-areas:
+        'title title'
+        'drawing cartouche';
+      column-gap: var(--sp-7);
+      row-gap: var(--sp-4);
     }
+    .sheet-title { grid-area: title; }
+    .sheet-drawing { grid-area: drawing; align-self: end; }
+    .cartouche { grid-area: cartouche; align-self: end; }
   }
-  .hero-badges { border-top: 1px solid var(--c-line-dark); background: var(--c-dark-2); }
-  .badges {
-    list-style: none;
-    margin: 0 auto;
-    display: grid;
-    gap: var(--sp-2) var(--sp-6);
-    padding-block: var(--sp-4);
+
+  .hero-kicker { font-size: var(--fs-sm); margin-bottom: var(--sp-2); }
+  @media (min-width: 48rem) { .hero-kicker { font-size: var(--fs-base); } }
+  .hero h1 { margin: 0; max-width: none; font-size: clamp(2.75rem, 1.2rem + 6.4vw, 6rem); letter-spacing: -0.005em; }
+  .sheet-drawing { min-width: 0; }
+
+  /* Cartouche : cellules à filets, comme le cartouche d'un plan */
+  .cartouche {
+    border: 1px solid var(--c-on-dark-2);
+    background: var(--c-dark);
+    font-size: var(--fs-sm);
   }
-  @media (min-width: 48rem) { .badges { grid-template-columns: repeat(3, auto); justify-content: start; } }
-  .badges li {
-    display: flex;
+  .cartouche > * { margin: 0; padding: var(--sp-4) var(--sp-5); }
+  .cartouche > * + * { border-top: 1px solid var(--c-line-dark); }
+  .cartouche-lead { max-width: none; font-size: var(--fs-base); color: var(--c-on-dark); line-height: 1.55; }
+  .cartouche-cells { list-style: none; display: grid; gap: var(--sp-2); }
+  .cartouche-cells li { display: flex; gap: var(--sp-2); align-items: center; margin: 0; color: var(--c-on-dark-2); }
+  .cartouche-cells :global(.cell-icon) { width: 1.1rem; height: 1.1rem; color: var(--c-accent); flex: none; }
+  .cartouche-form { display: grid; gap: var(--sp-2); }
+  .cartouche-form label { font-weight: 600; color: var(--c-on-dark); }
+  .cartouche-row { display: grid; gap: var(--sp-2); }
+  .cartouche .select {
+    background-color: var(--c-dark-2);
+    color: var(--c-on-dark);
+    border-color: var(--c-on-dark-2);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%23f5f1ea' stroke-width='1.6'/%3E%3C/svg%3E");
+  }
+  .cartouche .select:focus-visible { outline-color: var(--c-accent); border-color: var(--c-on-dark); }
+  .cartouche-call { display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--sp-3); color: var(--c-on-dark-2); }
+  .call-link {
+    display: inline-flex;
     align-items: center;
-    gap: var(--sp-3);
-    margin: 0;
-    font-weight: 500;
+    gap: var(--sp-2);
+    min-height: var(--tap);
+    font-weight: 600;
     color: var(--c-on-dark);
   }
-  .badges :global(.badge-icon) { width: 1.25rem; height: 1.25rem; color: var(--c-accent); flex: none; }
+  .call-link :global(.call-icon) { width: 1.1rem; height: 1.1rem; color: var(--c-accent); }
 
-  /* ---------- Entrée du hero (une fois, au chargement) ----------
-     Chorégraphie (skill choreograph) :
-       titre      = élément principal : 0 ms, monte de 18 px, 600 ms
-       sur-titre  = décoration : fondu seul, en même temps que le titre
-       texte      = support : +90 ms, monte de 10 px
-       boutons    = support : +150 ms, monte de 8 px
-       photo      = support : +60 ms, fondu + léger zoom arrière (1,02 → 1)
-       fil à plomb (trait ocre) = signature : se déroule de haut en bas, +120 ms, 900 ms
-       repères    = décoration : fondu seul, +220 ms
-     Décalages courts et irréguliers ; rien ne bloque le clic. */
-  @keyframes hero-rise {
-    from { opacity: 0; transform: translateY(var(--rise, 12px)); }
-  }
-  @keyframes hero-fade {
-    from { opacity: 0; }
-  }
-  @keyframes hero-settle {
-    from { opacity: 0; transform: scale(1.02); }
-  }
-  @keyframes plumb-line {
-    from { transform: scaleY(0); }
-  }
-  .hero h1 { --rise: 18px; animation: hero-rise var(--dur-enter) var(--ease-out) both; }
+  /* Entrée : titre, puis cartouche ; la coupe a sa propre construction (Coupe.astro) */
+  @keyframes hero-rise { from { opacity: 0; transform: translateY(14px); } }
+  @keyframes hero-fade { from { opacity: 0; } }
+  .hero h1 { animation: hero-rise var(--dur-enter) var(--ease-out) both; }
   .hero-kicker { animation: hero-fade 500ms var(--ease-out) both; }
-  .hero-lead { --rise: 10px; animation: hero-rise 550ms var(--ease-out) 90ms both; }
-  .hero .btn-row { --rise: 8px; animation: hero-rise 500ms var(--ease-out) 150ms both; }
-  .hero-media :global(img) { animation: hero-settle 900ms var(--ease-out) 60ms both; }
-  .hero-media { overflow: visible; }
-  .hero-media :global(picture) { display: block; overflow: hidden; border-radius: var(--r-md); }
-  @media (min-width: 64rem) {
-    .hero-media::before {
-      transform-origin: top;
-      animation: plumb-line 900ms var(--ease-out) 120ms both;
-    }
-  }
-  .badges { animation: hero-fade 500ms var(--ease-out) 220ms both; }
-
+  .cartouche { animation: hero-rise 600ms var(--ease-out) 200ms both; }
   @media (prefers-reduced-motion: reduce) {
-    /* Tout apparaît ensemble, en fondu, sans mouvement */
-    .hero h1, .hero-kicker, .hero-lead, .hero .btn-row, .hero-media :global(img), .badges {
-      animation: hero-fade 300ms ease both;
-    }
-    .hero-media::before { animation: none; }
+    .hero h1, .hero-kicker, .cartouche { animation: hero-fade 300ms ease both; }
   }
 </style>

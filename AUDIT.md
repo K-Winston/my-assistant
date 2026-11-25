@@ -156,3 +156,22 @@ Animations conçues avec les skills `animate`, `choreograph` et `find-animation-
 **Contrôle après ajout** (`npm run check`) : Lighthouse **100 / 100 / 100 / 100** sur toutes les pages (sauf le SEO de `/merci/`, volontairement exclu de Google). LCP de l'accueil : 1,06 s. CLS = 0 partout. 0 erreur axe, 0 erreur HTML, 0 erreur console, 0 lien cassé sur 148. Responsive et formulaire OK.
 
 Robustesse : le script d'audit refait jusqu'à 3 tentatives quand Lighthouse échoue au hasard (erreur `NO_NAVSTART` lors de l'enregistrement de la trace, sans lien avec le site).
+
+## Refonte « feuille de plan » avec Impeccable
+
+Refonte de la page d'accueil, conduite avec le skill **Impeccable** (pbakaus/impeccable, partie instructions uniquement).
+
+- **Direction** : choisie par le client (« la refonte avec la coupe »). Contrat de direction dans `.impeccable/briefs/accueil.md`, contexte produit dans `PRODUCT.md`, système de design dans `DESIGN.md` et `.impeccable/design.json`.
+- **Ce qui change** :
+  - Le hero devient une feuille de plan sur fond quadrillé, avec la coupe de la maison : repères A à F cliquables, fil à plomb, cotes, hachures par matériau.
+  - Un cartouche remplace la rangée de badges : accroche, 3 garanties, choix du type de travaux qui pré-remplit le formulaire, appel.
+  - Les prestations forment la légende du plan (les 6 cartes identiques disparaissent).
+  - « Notre histoire » passe en mise en page de magazine, et les réalisations ont un comparateur avant/après.
+  - Chaque page prestation affiche une petite coupe avec son niveau en ocre.
+  - Sur mobile, un bouton « Devis » apparaît dans l'en-tête.
+- **Retiré** : les sur-titres au-dessus des titres de section et les apparitions génériques au défilement. Il reste un seul moment animé : la maison qui se construit de bas en haut.
+- **Revue finale indépendante** (relecteur d'Impeccable, en contexte neuf) :
+  - 1er passage : verdict *fix*, 6 corrections demandées. 5 sont jugées résolues au 2e passage : PRODUCT.md, repères sur mobile, bouton d'action sur mobile, fond et hiérarchie de « Notre histoire ».
+  - La régression signalée au 2e passage (nom sur deux lignes sur mobile) est corrigée et vérifiée à 360 et 390 px, mais ce correctif n'a pas été revu par le relecteur.
+  - **Point ouvert** : le sur-titre du hero (« Maçonnerie générale · Tous corps d'état »). Impeccable interdit tout sur-titre ; le brief du client l'exige. Il est conservé en attendant la décision du client. Alternative proposée par le relecteur : déplacer ce texte dans le cartouche.
+- **Contrôle** (`npm run check`) : Lighthouse **100 / 100 / 100 / 100** sur toutes les pages, sauf le SEO de `/merci/` (exclu de Google volontairement). LCP de l'accueil : 1,35 s. CLS = 0. 0 erreur axe, HTML ou console. 0 lien cassé sur 149. Responsive OK de 360 à 1440 px. Formulaire OK avec et sans JavaScript.

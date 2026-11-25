@@ -12,7 +12,10 @@ Copiés le 25/11/2026 depuis les dépôts officiels de leurs auteurs. Ce sont de
 | motion-design | lottiefiles/motion-design-skill (d77a9fc) | MIT |
 | emil-design-eng, animate, choreograph, improve-animations, review-animations, find-animation-opportunities, animation-performance, animation-vocabulary, remove-animations, gestures, apple-design, ask-emil, ask-sonner, break-ui, learn-taste, pick-ui-library, prototype | emilkowalski/skill (64eb3de) | MIT |
 | design-motion-principles | kylezantos/design-motion-principles (4a9ca87) | MIT |
+| impeccable (SKILL.md + reference/ uniquement) | pbakaus/impeccable (9e460a8) | Apache 2.0 |
 
 Non installés (hors sujet pour un site web) : write-swift, mobile-native, animate-expo (Emil Kowalski, applications mobiles natives).
+
+Impeccable : les scripts et le programme compilé téléchargeable (`scripts/`) n'ont volontairement pas été copiés. Le skill fonctionne alors en mode « launcher unavailable » prévu par son auteur (lecture directe de PRODUCT.md / DESIGN.md).
 
 Mise à jour : recopier le dossier `skills/<nom>` depuis le dépôt source.

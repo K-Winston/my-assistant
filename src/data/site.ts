@@ -90,7 +90,11 @@ export const hero = {
   ctaQuote: 'Demander un devis',
   ctaCall: 'Appeler',
   badges: ['Garantie décennale', 'Un seul interlocuteur', 'Savoir-faire transmis par un compagnon'],
-  photo: { file: 'hero', alt: 'Chantier de maçonnerie en cours' },
+  /** Petit formulaire du cartouche : choisir le type de travaux avant d'ouvrir le formulaire de devis. */
+  quickLabel: 'Type de travaux',
+  callText: 'Ou appelez Stéphane',
+  /** Légende sous la coupe de la maison. */
+  coupeCaption: 'Coupe de principe. Chaque repère ouvre la prestation correspondante.',
 };
 
 export type IconName = 'foundation' | 'wall' | 'roof' | 'electric' | 'plumbing' | 'drywall';
@@ -98,6 +102,10 @@ export type IconName = 'foundation' | 'wall' | 'roof' | 'electric' | 'plumbing' 
 export interface Service {
   slug: string;
   icon: IconName;
+  /** Nom court affiché sur la coupe de la maison (page d'accueil). */
+  short: string;
+  /** Repère sur la coupe : A = en bas (fondations) … F = en haut (toiture). */
+  mark: 'A' | 'B' | 'C' | 'D' | 'E' | 'F';
   title: string;
   /** Résumé court affiché sur la carte de l'accueil. */
   summary: string;
@@ -115,6 +123,8 @@ export const services: Service[] = [
   {
     slug: 'fondations-gros-oeuvre',
     icon: 'foundation',
+    short: 'Fondations',
+    mark: 'A',
     title: 'Fondations & gros œuvre',
     summary: 'Terrassement, fondations, dalles, murs porteurs et élévations.',
     seoTitle: 'Fondations et gros œuvre à Graveson et Saint-Rémy-de-Provence',
@@ -139,6 +149,8 @@ export const services: Service[] = [
   {
     slug: 'maconnerie-extensions',
     icon: 'wall',
+    short: 'Maçonnerie',
+    mark: 'B',
     title: 'Maçonnerie & extensions',
     summary: 'Agrandissements, murs de clôture, pierre, enduits et ouvertures.',
     seoTitle: 'Maçonnerie et extension à Graveson et Saint-Rémy-de-Provence',
@@ -163,6 +175,8 @@ export const services: Service[] = [
   {
     slug: 'toiture',
     icon: 'roof',
+    short: 'Toiture',
+    mark: 'F',
     title: 'Toiture',
     summary: 'Charpente, couverture en tuiles, réparation et rénovation.',
     seoTitle: 'Toiture et charpente à Graveson et Saint-Rémy-de-Provence',
@@ -181,6 +195,8 @@ export const services: Service[] = [
   {
     slug: 'electricite',
     icon: 'electric',
+    short: 'Électricité',
+    mark: 'D',
     title: 'Électricité',
     summary: 'Installation, mise aux normes et rénovation électrique.',
     seoTitle: 'Électricité et mise aux normes à Graveson et Saint-Rémy-de-Provence',
@@ -199,6 +215,8 @@ export const services: Service[] = [
   {
     slug: 'plomberie',
     icon: 'plumbing',
+    short: 'Plomberie',
+    mark: 'C',
     title: 'Plomberie',
     summary: 'Réseaux d’eau, salles de bain, sanitaires et évacuations.',
     seoTitle: 'Plomberie et salle de bain à Graveson et Saint-Rémy-de-Provence',
@@ -217,6 +235,8 @@ export const services: Service[] = [
   {
     slug: 'placo-amenagement',
     icon: 'drywall',
+    short: 'Placo',
+    mark: 'E',
     title: 'Placo & aménagement',
     summary: 'Cloisons, doublages, faux plafonds et isolation intérieure.',
     seoTitle: 'Placo et isolation intérieure à Graveson et Saint-Rémy-de-Provence',
@@ -235,7 +255,6 @@ export const services: Service[] = [
 ];
 
 export const story = {
-  kicker: 'Notre histoire',
   title: 'Un savoir-faire transmis de père en fils',
   paragraphs: [
     'Le père de Stéphane a fait tout son parcours chez les Compagnons du Devoir, en maçonnerie.',
@@ -243,10 +262,11 @@ export const story = {
     'C’est cette façon de travailler qu’il applique aujourd’hui à chaque chantier : un seul artisan, qui connaît chaque étape, des fondations à la toiture.',
   ],
   photo: { file: 'histoire', alt: '[À COMPLÉTER : description de la photo, ex. Stéphane sur un chantier]' },
+  /** Grande photo de chantier, en largeur. */
+  photoWide: { file: 'chantier', alt: '[À COMPLÉTER : description de la photo, ex. mur en pierre en cours de montage]' },
 };
 
 export const realisations = {
-  kicker: 'Réalisations',
   title: 'Avant, après',
   intro: 'Quelques chantiers réalisés dans le secteur.',
   items: [
@@ -272,7 +292,6 @@ export const realisations = {
 };
 
 export const area = {
-  kicker: 'Secteur d’intervention',
   title: 'Graveson et alentours',
   intro: 'L’entreprise intervient principalement dans les communes suivantes et dans les villages voisins.',
   towns: ['Graveson', 'Maillane', 'Saint-Rémy-de-Provence', 'Bellegarde'],
@@ -285,7 +304,6 @@ export const area = {
 };
 
 export const contactSection = {
-  kicker: 'Contact',
   title: 'Demander un devis',
   intro: 'Décrivez votre projet en quelques lignes. Stéphane vous recontacte pour en parler.',
   form: {

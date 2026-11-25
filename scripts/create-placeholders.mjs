@@ -8,7 +8,7 @@ import { join } from 'node:path';
 const dir = 'public/photos';
 const slugs = ['fondations-gros-oeuvre', 'maconnerie-extensions', 'toiture', 'electricite', 'plomberie', 'placo-amenagement'];
 const items = [
-  ['hero.jpg', 1920, 1280, '#3A352E', '#47413A'],
+  ['chantier.jpg', 1920, 1280, '#3A352E', '#47413A'],
   ['histoire.jpg', 1200, 1500, '#CFC5B4', '#BFB3A0'],
   ...[1, 2, 3].flatMap((n) => [
     [`realisation-${n}-avant.jpg`, 1200, 900, '#C4B9A6', '#B3A792'],
