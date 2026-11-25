@@ -116,13 +116,13 @@ export const pages = {
 export const hero = {
   kicker: 'Maçonnerie générale · Tous corps d’état',
   title: 'Des fondations à la toiture.',
-  text: 'Un seul artisan pour tout votre chantier : gros œuvre, toiture, électricité, plomberie et placo. Un savoir-faire transmis de père en fils, à Graveson, Maillane, Saint-Rémy-de-Provence et Bellegarde.',
+  text: 'Je m’occupe de tout votre chantier : gros œuvre, toiture, électricité, plomberie et placo. Un savoir-faire que mon père m’a transmis, au service de vos travaux à Graveson, Maillane, Saint-Rémy-de-Provence et Bellegarde.',
   ctaQuote: 'Demander un devis',
   ctaCall: 'Appeler',
   badges: ['Garantie décennale', 'Un seul interlocuteur', 'Savoir-faire transmis par un compagnon'],
   /** Petit formulaire du cartouche : choisir le type de travaux avant d'ouvrir le formulaire de devis. */
   quickLabel: 'Type de travaux',
-  callText: 'Ou appelez Stéphane',
+  callText: 'Ou appelez-moi directement',
   /** Légende sous la coupe de la maison. */
   coupeCaption: 'Coupe de principe. Chaque repère ouvre la prestation correspondante.',
 };
