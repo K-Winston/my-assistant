@@ -1,12 +1,9 @@
 ---
-import { contact } from '../data/site';
+import { contact, ctaBand } from '../data/site';
 import Icon from './Icon.astro';
 import Txt from './Txt.astro';
 interface Props { title?: string; text?: string }
-const {
-  title = 'Un projet de travaux ?',
-  text = 'Décrivez votre chantier : Stéphane vous recontacte pour en parler et établir un devis.',
-} = Astro.props;
+const { title = ctaBand.title, text = ctaBand.text } = Astro.props;
 ---
 <section class="cta-band on-dark" aria-labelledby="cta-titre">
   <div class="container cta-inner">

@@ -90,13 +90,14 @@ export const pages = {
     seoTitle: 'Maçonnerie, toiture, électricité, plomberie, placo à Graveson',
     seoDescription:
       'Les six métiers de l’entreprise, des fondations à la toiture : gros œuvre, maçonnerie et extensions, toiture, électricité, plomberie, placo. Graveson, Maillane, Saint-Rémy-de-Provence, Bellegarde.',
-    lead: 'Un seul artisan pour chaque niveau de la maison. Choisissez un repère sur la coupe ou dans la liste.',
+    lead: 'Chaque métier a sa place dans la maison, et je les exerce tous. Choisissez un repère sur la coupe ou dans la liste.',
   },
   histoire: {
     title: 'Notre histoire',
     seoTitle: 'Notre histoire : un savoir-faire transmis de père en fils',
     seoDescription:
       'Le père de Stéphane a fait son parcours chez les Compagnons du Devoir, en maçonnerie. Stéphane a appris à ses côtés tous les métiers du bâtiment.',
+    lead: 'Un métier appris sur les chantiers, aux côtés d’un compagnon.',
   },
   realisations: {
     title: 'Réalisations',
@@ -160,8 +161,8 @@ export const services: Service[] = [
     seoDescription:
       'Terrassement, fondations, dalles, murs porteurs et élévations par un maçon tous corps d’état à Graveson, Maillane, Saint-Rémy-de-Provence et Bellegarde.',
     intro: [
-      'Le gros œuvre porte tout le reste de la maison. C’est la partie du chantier où l’on ne transige pas : implantation, profondeur des fondations, ferraillage et niveaux sont contrôlés à chaque étape.',
-      'Comme le même artisan réalise ensuite les murs, la toiture et les réseaux, les réservations et les attentes sont prévues dès le départ.',
+      'Tout ce qui viendra ensuite repose sur les fondations. J’y prends donc le temps qu’il faut : implantation, profondeur, ferraillage et niveaux sont vérifiés à chaque étape.',
+      'Comme je ferai aussi les murs, la toiture et les réseaux, je prévois dès le départ les réservations et les passages dont ils auront besoin. Vous n’aurez rien à casser plus tard.',
     ],
     included: [
       'Terrassement et préparation du terrain',
@@ -186,8 +187,8 @@ export const services: Service[] = [
     seoDescription:
       'Agrandissement de maison, murs de clôture, travaux en pierre, enduits et création d’ouvertures à Graveson, Maillane, Saint-Rémy-de-Provence et Bellegarde.',
     intro: [
-      'Agrandir une maison, monter un mur de clôture, reprendre une façade ou créer une ouverture dans un mur porteur : c’est le cœur du métier de maçon.',
-      'Pour une extension, le chantier est suivi de bout en bout, du terrassement jusqu’aux finitions intérieures, sans avoir à coordonner plusieurs entreprises.',
+      'Agrandir une maison, monter un mur de clôture, reprendre une façade en pierre, ouvrir un mur porteur : c’est le cœur du métier, celui que mon père m’a transmis.',
+      'Pour une extension, vous n’avez pas plusieurs entreprises à faire se succéder. Je mène le chantier du terrassement jusqu’aux finitions intérieures.',
     ],
     included: [
       'Agrandissements et extensions',
@@ -212,8 +213,8 @@ export const services: Service[] = [
     seoDescription:
       'Charpente, couverture en tuiles, réparation et rénovation de toiture à Graveson, Maillane, Saint-Rémy-de-Provence et Bellegarde.',
     intro: [
-      'Une toiture protège tout le travail réalisé en dessous. Charpente et couverture sont traitées ensemble, pour une construction neuve, une extension ou la rénovation d’un toit existant.',
-      'Une tuile déplacée ou une fuite peut aussi faire l’objet d’une simple réparation.',
+      'Le toit protège tout le travail fait en dessous. Je traite la charpente et la couverture ensemble, pour une construction neuve, une extension ou un toit à rénover.',
+      'Une tuile déplacée, une fuite ? Une simple réparation est aussi possible.',
     ],
     included: ['Charpente', 'Couverture en tuiles', 'Réparation de toiture', 'Rénovation de toiture'],
     photos: [
@@ -232,8 +233,8 @@ export const services: Service[] = [
     seoDescription:
       'Installation électrique, mise aux normes et rénovation électrique dans le cadre de vos travaux à Graveson, Maillane, Saint-Rémy-de-Provence et Bellegarde.',
     intro: [
-      'L’électricité se prévoit en même temps que les murs et les cloisons. Les gaines, boîtiers et passages sont posés au bon moment du chantier, sans saignées à refaire après coup.',
-      'Pour une maison existante, le tableau et les circuits peuvent être repris et mis aux normes.',
+      'Une installation électrique se prévoit en même temps que les murs et les cloisons. Je pose les gaines, les boîtiers et les passages au bon moment du chantier, sans saignées à rouvrir une fois les murs finis.',
+      'Dans une maison existante, je reprends le tableau et les circuits pour les mettre aux normes.',
     ],
     included: ['Installation électrique', 'Mise aux normes', 'Rénovation électrique'],
     photos: [
@@ -252,8 +253,8 @@ export const services: Service[] = [
     seoDescription:
       'Réseaux d’eau, création de salle de bain, sanitaires et évacuations dans le cadre de vos travaux à Graveson, Maillane, Saint-Rémy-de-Provence et Bellegarde.',
     intro: [
-      'Arrivées d’eau, évacuations, salle de bain : la plomberie est réalisée par le même artisan que la maçonnerie, ce qui facilite les passages dans les dalles et les murs.',
-      'Les réseaux sont posés avant les doublages et les finitions.',
+      'Arrivées d’eau, évacuations, salle de bain : je fais la plomberie en même temps que la maçonnerie. Les passages dans les dalles et les murs sont prévus avant d’être coulés ou montés.',
+      'Les réseaux sont posés avant les doublages et les finitions, pour ne rien avoir à défaire.',
     ],
     included: ['Réseaux d’eau', 'Salles de bain', 'Sanitaires', 'Évacuations'],
     photos: [
@@ -272,8 +273,8 @@ export const services: Service[] = [
     seoDescription:
       'Cloisons, doublages, faux plafonds et isolation intérieure en plaques de plâtre à Graveson, Maillane, Saint-Rémy-de-Provence et Bellegarde.',
     intro: [
-      'Cloisons, doublages et faux plafonds donnent leur forme aux pièces. Ils viennent en fin de gros œuvre, une fois les réseaux électriques et de plomberie en place.',
-      'L’isolation intérieure est posée en même temps que les doublages.',
+      'Cloisons, doublages et faux plafonds donnent leur forme aux pièces. Je les pose en fin de gros œuvre, une fois l’électricité et la plomberie en place.',
+      'L’isolation intérieure se pose en même temps que les doublages.',
     ],
     included: ['Cloisons', 'Doublages', 'Faux plafonds', 'Isolation intérieure'],
     photos: [
@@ -286,18 +287,32 @@ export const services: Service[] = [
 export const story = {
   title: 'Un savoir-faire transmis de père en fils',
   paragraphs: [
-    'Le père de Stéphane a fait tout son parcours chez les Compagnons du Devoir, en maçonnerie.',
-    'Dès son plus jeune âge, Stéphane l’a suivi sur les chantiers. À ses côtés, il a appris l’exigence du travail bien fait et tous les métiers du bâtiment.',
-    'C’est cette façon de travailler qu’il applique aujourd’hui à chaque chantier : un seul artisan, qui connaît chaque étape, des fondations à la toiture.',
+    'Mon père a fait tout son parcours chez les Compagnons du Devoir, en maçonnerie.',
+    'Tout petit déjà, je le suivais sur les chantiers. À ses côtés, j’ai appris l’exigence du travail bien fait, et j’ai appris tous les métiers du bâtiment.',
+    'C’est cette exigence que je mets aujourd’hui dans chacun de vos chantiers. Je connais chaque étape, des fondations à la toiture, et c’est moi que vous avez au téléphone du début à la fin.',
   ],
+  /** Signature sous le récit. */
+  signature: 'Stéphane',
   photo: { file: 'histoire', alt: '[À COMPLÉTER : description de la photo, ex. Stéphane sur un chantier]' },
   /** Grande photo de chantier, en largeur. */
   photoWide: { file: 'chantier', alt: '[À COMPLÉTER : description de la photo, ex. mur en pierre en cours de montage]' },
 };
 
+/** Section « Prestations » (accueil et page Prestations). */
+export const servicesSection = {
+  title: 'Tous vos travaux, un seul artisan',
+  lead: 'Sur un chantier classique, chaque métier passe à son tour et c’est à vous de tout coordonner. Avec moi, c’est la même personne du premier coup de pelle à la dernière tuile. Je sais ce qui viendra après, et je le prépare dès le début.',
+};
+
+/** Bandeau « Un projet de travaux ? » en bas des pages. */
+export const ctaBand = {
+  title: 'Un projet de travaux ?',
+  text: 'Racontez-moi votre projet : je vous rappelle pour en parler et préparer un devis.',
+};
+
 export const realisations = {
   title: 'Avant, après',
-  intro: 'Quelques chantiers réalisés dans le secteur.',
+  intro: 'Quelques chantiers menés près de chez vous.',
   items: [
     {
       title: '[À COMPLÉTER : titre du chantier 1]',
@@ -322,23 +337,23 @@ export const realisations = {
 
 export const area = {
   title: 'Graveson et alentours',
-  intro: 'L’entreprise intervient principalement dans les communes suivantes et dans les villages voisins.',
+  intro: 'J’interviens surtout dans ces communes et dans les villages voisins.',
   towns: ['Graveson', 'Maillane', 'Saint-Rémy-de-Provence', 'Bellegarde'],
-  aroundText: 'Votre commune n’est pas dans la liste ? Appelez pour en parler.',
+  aroundText: 'Votre commune n’est pas dans la liste ? Appelez-moi, on en parle.',
   reviews: {
     title: 'Avis clients',
-    text: 'Les avis laissés par les clients sont publiés sur la fiche Google de l’entreprise.',
+    text: 'Ce que mes clients disent de mon travail est publié sur ma fiche Google.',
     cta: 'Lire les avis sur Google',
   },
 };
 
 export const contactSection = {
   title: 'Demander un devis',
-  intro: 'Décrivez votre projet en quelques lignes. Stéphane vous recontacte pour en parler.',
+  intro: 'Décrivez votre projet en quelques lignes : je vous rappelle pour en parler.',
   form: {
     submit: 'Envoyer ma demande',
     sending: 'Envoi en cours…',
-    success: 'Demande envoyée. Stéphane vous rappelle dès que possible.',
+    success: 'Demande envoyée. Je vous rappelle dès que possible.',
     error: 'La demande n’a pas pu être envoyée. Vérifiez votre connexion ou appelez directement.',
     consent:
       'J’accepte que les informations saisies soient utilisées pour être recontacté au sujet de ma demande de devis.',
@@ -349,7 +364,7 @@ export const contactSection = {
 /** Page de confirmation après envoi du formulaire (sans JavaScript). */
 export const thanks = {
   title: 'Demande envoyée',
-  text: 'Merci. Votre demande a bien été transmise. Stéphane vous rappelle dès que possible.',
+  text: 'Merci, votre demande est bien arrivée. Je vous rappelle dès que possible.',
   back: 'Retour à l’accueil',
 };
 

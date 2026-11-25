@@ -1,14 +1,14 @@
 ---
 // Prestations : la légende de la coupe. Une ligne par métier, avec son repère (A = fondations … F = toiture).
-import { services } from '../data/site';
+import { services, servicesSection } from '../data/site';
 import Icon from './Icon.astro';
 const ordered = [...services].sort((a, b) => a.mark.localeCompare(b.mark));
 ---
 <section class="section services" id="prestations" aria-labelledby="prestations-titre">
   <div class="container">
     <div class="services-head">
-      <h2 id="prestations-titre">Tous vos travaux, un seul artisan</h2>
-      <p class="lead">Du terrassement aux finitions intérieures, chaque corps d’état est réalisé par la même entreprise. Vous avez un seul interlocuteur du début à la fin du chantier.</p>
+      <h2 id="prestations-titre">{servicesSection.title}</h2>
+      <p class="lead">{servicesSection.lead}</p>
     </div>
     <ol class="legend">
       {ordered.map((s) => (

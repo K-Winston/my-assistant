@@ -20,6 +20,7 @@ const [first, ...rest] = story.paragraphs;
       <>
         <div class="story-body">
           {rest.map((p) => <p>{p}</p>)}
+          <p class="story-signature">{story.signature}</p>
         </div>
         <figure class="story-wide">
           <Photo file={story.photoWide.file} alt={story.photoWide.alt} sizes="(min-width: 64rem) 66vw, 100vw" />
@@ -70,6 +71,7 @@ const [first, ...rest] = story.paragraphs;
     color: var(--c-text);
   }
   .story-body p { color: var(--c-text-2); }
+  .story-body .story-signature { font-family: var(--f-display); font-weight: 600; font-size: var(--fs-h4); text-transform: uppercase; color: var(--c-text); margin-top: var(--sp-5); }
   .story-body p:first-child { color: var(--c-text); font-weight: 500; }
   figure { margin: 0; }
   .story-portrait :global(img) { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--r-sm); }

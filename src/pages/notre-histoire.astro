@@ -9,7 +9,7 @@ const crumbs = [{ name: 'Accueil', path: '/' }, { name: pages.histoire.title, pa
 ---
 <Base title={pages.histoire.seoTitle} description={pages.histoire.seoDescription} breadcrumb={crumbs}>
   <PageHead title={pages.histoire.title} crumbs={crumbs}>
-    <p class="lead">Des fondations à la toiture, un métier appris sur les chantiers, aux côtés d’un compagnon.</p>
+    <p class="lead">{pages.histoire.lead}</p>
     <div slot="aside"><Coupe variant="scene" scene="histoire" /></div>
   </PageHead>
   <Story />
