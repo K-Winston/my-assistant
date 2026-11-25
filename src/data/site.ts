@@ -66,9 +66,9 @@ export const site = {
 export const legal = {
   publicationDirector: 'Stéphane [À COMPLÉTER : nom de famille]',
   host: {
-    name: '[À COMPLÉTER : hébergeur, ex. Netlify, Inc.]',
-    address: '[À COMPLÉTER : adresse de l’hébergeur, ex. 101 2nd Street, San Francisco, CA 94105, États-Unis]',
-    contact: '[À COMPLÉTER : site ou téléphone de l’hébergeur]',
+    name: 'Netlify, Inc.',
+    address: '[À COMPLÉTER : adresse postale de Netlify, Inc., indiquée sur netlify.com]',
+    contact: 'www.netlify.com',
   },
   /** Durée de conservation des demandes de devis. */
   retention: '3 ans à compter du dernier contact',
