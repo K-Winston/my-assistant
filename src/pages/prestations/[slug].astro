@@ -15,7 +15,7 @@ const { service } = Astro.props;
 const others = services.filter((s) => s.slug !== service.slug);
 const crumbs = [
   { name: 'Accueil', path: '/' },
-  { name: 'Prestations', path: '/#prestations' },
+  { name: 'Prestations', path: '/prestations/' },
   { name: service.title, path: `/prestations/${service.slug}/` },
 ];
 ---
@@ -23,7 +23,7 @@ const crumbs = [
   <PageHead title={service.title} crumbs={crumbs}>
     <p class="lead">{service.summary}</p>
     <div slot="aside" class="svc-coupe">
-      <Coupe variant="compact" focus={service.slug} />
+      <Coupe variant="scene" scene={service.slug} />
     </div>
   </PageHead>
 

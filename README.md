@@ -142,7 +142,7 @@ Si vous ajoutez plus tard un outil de statistiques :
 src/data/site.ts           ← TOUT le contenu
 src/components/            ← blocs de page (Hero, Services, Story, ContactForm…)
 src/layouts/Base.astro     ← squelette commun (SEO, polices, en-tête, pied de page)
-src/pages/                 ← une page = un fichier (prestations/[slug].astro génère les 6 pages)
+src/pages/                 ← une page = un fichier : index, prestations/index + [slug] (6 pages), notre-histoire, realisations, contact, pages légales
 src/styles/tokens.css      ← couleurs, typographies, espacements (design tokens)
 src/styles/global.css      ← styles de base, boutons, cartes, champs, impression
 public/photos/             ← photos originales (optimisées au build)
@@ -152,7 +152,7 @@ netlify.toml / vercel.json ← déploiement et en-têtes de sécurité
 AUDIT.md                   ← résultats de l’audit qualité
 ```
 
-Stack : Astro 7 (sortie 100 % statique), CSS natif, environ 2 Ko de JavaScript côté navigateur (menu mobile, formulaire, comparateur avant/après), aucune dépendance chargée depuis un site tiers.
+Stack : Astro 7 (sortie 100 % statique), CSS natif, environ 2,5 Ko de JavaScript côté navigateur (menu mobile, formulaire, comparateur avant/après, démarrage des scènes), aucune dépendance chargée depuis un site tiers.
 
 ---
 
@@ -160,7 +160,13 @@ Stack : Astro 7 (sortie 100 % statique), CSS natif, environ 2 Ko de JavaScript c
 
 La page d'accueil est construite comme une feuille de plan : la **coupe de la maison** (`src/components/Coupe.astro`) montre les six métiers à leur place, des fondations (repère A) à la toiture (repère F). Chaque repère est un lien vers la prestation. Les noms courts et les repères se changent dans `src/data/site.ts` (`short` et `mark` de chaque prestation). Sur chaque page prestation, une petite coupe met le niveau concerné en ocre.
 
-Le seul moment animé du site est la construction de la coupe au chargement : la maison se monte de bas en haut, puis le fil à plomb descend. Réglages dans `Coupe.astro` (bas du fichier) et `src/styles/tokens.css` (`--ease-out`, `--dur-enter`…).
+**Le site compte 15 pages** : accueil, `/prestations/` (la coupe et la légende) et ses 6 pages métier, `/notre-histoire/`, `/realisations/`, `/contact/` (coordonnées, formulaire, secteur), plus les mentions légales, la confidentialité, la confirmation `/merci/` et la page 404. L'accueil présente chaque rubrique en court et renvoie vers sa page.
+
+**Animations** :
+- **Accueil** (et page Prestations) : la maison se construit de bas en haut au chargement, puis le fil à plomb descend.
+- **Pages intérieures** : la même coupe, avec un ouvrier en trait fin qui travaille à l'endroit du métier : il creuse (fondations), monte le mur rang par rang (maçonnerie), serre un raccord puis l'eau coule (plomberie), branche le luminaire qui s'allume (électricité), visse une plaque (placo), pose les tuiles (toiture). Sur « Notre histoire », le père montre et le fils travaille ; sur « Contact », l'ouvrier remplit et coche un devis.
+- Chaque scène dure quelques secondes, démarre quand elle apparaît à l'écran, puis s'arrête sur le travail terminé.
+- Les scènes sont dans `src/components/Coupe.astro` (variant `scene`) ; réglages des courbes et durées dans `src/styles/tokens.css`.
 
 - Le **comparateur avant/après** des réalisations se manipule à la souris, au doigt ou au clavier (curseur). Sans JavaScript, les deux photos s'affichent côte à côte.
 - Le **cartouche** de l'accueil (encadré en bas à droite) permet de choisir le type de travaux : le formulaire de devis s'ouvre déjà rempli.

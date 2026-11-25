@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Coupe from '../components/Coupe.astro';
+import ContactSection from '../components/ContactSection.astro';
+import Area from '../components/Area.astro';
+import { pages, contactSection } from '../data/site';
+const crumbs = [{ name: 'Accueil', path: '/' }, { name: pages.contact.title, path: '/contact/' }];
+---
+<Base title={pages.contact.seoTitle} description={pages.contact.seoDescription} breadcrumb={crumbs}>
+  <PageHead title={pages.contact.title} crumbs={crumbs}>
+    <p class="lead">{contactSection.intro}</p>
+    <div slot="aside"><Coupe variant="scene" scene="contact" /></div>
+  </PageHead>
+  <ContactSection page />
+  <Area />
+</Base>

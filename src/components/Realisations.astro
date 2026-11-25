@@ -4,15 +4,20 @@
 import { realisations } from '../data/site';
 import Photo from './Photo.astro';
 import Txt from './Txt.astro';
+interface Props { /** nombre de chantiers affichés (accueil : 1) */ limit?: number; /** page dédiée : pas de titre de section */ page?: boolean }
+const { limit, page = false } = Astro.props;
+const items = limit ? realisations.items.slice(0, limit) : realisations.items;
 ---
-<section class="section" id="realisations" aria-labelledby="realisations-titre">
+<section class="section" id="realisations" aria-labelledby={page ? undefined : 'realisations-titre'} aria-label={page ? 'Chantiers avant et après' : undefined}>
   <div class="container">
-    <div class="real-head">
-      <h2 id="realisations-titre">{realisations.title}</h2>
-      <p class="lead">{realisations.intro} Faites glisser le curseur pour comparer.</p>
-    </div>
-    <ul class="real-list">
-      {realisations.items.map((r, i) => (
+    {!page && (
+      <div class="real-head">
+        <h2 id="realisations-titre">{realisations.title}</h2>
+        <p class="lead">{realisations.intro} Faites glisser le curseur pour comparer.</p>
+      </div>
+    )}
+    <ul class:list={['real-list', { 'real-list--single': items.length === 1 }]}>
+      {items.map((r, i) => (
         <li class:list={['real', { 'real--featured': i === 0 }]}>
           <figure class="ba" data-ba>
             <div class="ba-frame">
@@ -38,6 +43,9 @@ import Txt from './Txt.astro';
         </li>
       ))}
     </ul>
+    {limit && (
+      <p class="more"><a class="link-more" href="/realisations/">Voir toutes les réalisations</a></p>
+    )}
   </div>
 </section>
 
@@ -48,7 +56,9 @@ import Txt from './Txt.astro';
   @media (min-width: 64rem) {
     .real-list { grid-template-columns: 2fr 1fr; grid-template-rows: auto auto; }
     .real--featured { grid-row: span 2; }
+    .real-list--single { grid-template-columns: 1fr; }
   }
+  .more { margin-top: var(--sp-6); }
   .real { margin: 0; }
   .ba { margin: 0; }
   .ba-frame { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-2); }

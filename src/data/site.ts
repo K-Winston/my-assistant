@@ -77,11 +77,40 @@ export const legal = {
 
 /** Navigation principale (ancres de la page d'accueil). */
 export const nav = [
-  { label: 'Prestations', href: '/#prestations' },
-  { label: 'Notre histoire', href: '/#histoire' },
-  { label: 'Réalisations', href: '/#realisations' },
-  { label: 'Secteur', href: '/#secteur' },
+  { label: 'Prestations', href: '/prestations/' },
+  { label: 'Notre histoire', href: '/notre-histoire/' },
+  { label: 'Réalisations', href: '/realisations/' },
+  { label: 'Contact', href: '/contact/' },
 ];
+
+/** Titres et descriptions des pages (Google, onglet du navigateur). */
+export const pages = {
+  prestations: {
+    title: 'Prestations',
+    seoTitle: 'Maçonnerie, toiture, électricité, plomberie, placo à Graveson',
+    seoDescription:
+      'Les six métiers de l’entreprise, des fondations à la toiture : gros œuvre, maçonnerie et extensions, toiture, électricité, plomberie, placo. Graveson, Maillane, Saint-Rémy-de-Provence, Bellegarde.',
+    lead: 'Un seul artisan pour chaque niveau de la maison. Choisissez un repère sur la coupe ou dans la liste.',
+  },
+  histoire: {
+    title: 'Notre histoire',
+    seoTitle: 'Notre histoire : un savoir-faire transmis de père en fils',
+    seoDescription:
+      'Le père de Stéphane a fait son parcours chez les Compagnons du Devoir, en maçonnerie. Stéphane a appris à ses côtés tous les métiers du bâtiment.',
+  },
+  realisations: {
+    title: 'Réalisations',
+    seoTitle: 'Réalisations : chantiers avant et après à Graveson et alentours',
+    seoDescription:
+      'Chantiers de maçonnerie, rénovation et extension réalisés à Graveson, Maillane, Saint-Rémy-de-Provence et Bellegarde, en photos avant et après.',
+  },
+  contact: {
+    title: 'Contact et devis',
+    seoTitle: 'Contact et demande de devis, maçon à Graveson',
+    seoDescription:
+      'Demandez un devis pour vos travaux de maçonnerie, toiture, électricité, plomberie ou placo à Graveson, Maillane, Saint-Rémy-de-Provence et Bellegarde.',
+  },
+};
 
 export const hero = {
   kicker: 'Maçonnerie générale · Tous corps d’état',

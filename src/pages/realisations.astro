@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Realisations from '../components/Realisations.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { pages, realisations } from '../data/site';
+const crumbs = [{ name: 'Accueil', path: '/' }, { name: pages.realisations.title, path: '/realisations/' }];
+---
+<Base title={pages.realisations.seoTitle} description={pages.realisations.seoDescription} breadcrumb={crumbs}>
+  <PageHead title={pages.realisations.title} crumbs={crumbs}>
+    <p class="lead">{realisations.intro} Faites glisser le curseur sur chaque photo pour comparer avant et après.</p>
+  </PageHead>
+  <Realisations page />
+  <CtaBand />
+</Base>

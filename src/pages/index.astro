@@ -5,14 +5,14 @@ import Services from '../components/Services.astro';
 import Story from '../components/Story.astro';
 import Realisations from '../components/Realisations.astro';
 import Area from '../components/Area.astro';
-import ContactSection from '../components/ContactSection.astro';
+import CtaBand from '../components/CtaBand.astro';
 import { site } from '../data/site';
 ---
 <Base title={site.defaultTitle} description={site.defaultDescription} localBusiness>
   <Hero />
   <Services />
-  <Story />
-  <Realisations />
+  <Story teaser />
+  <Realisations limit={1} />
   <Area />
-  <ContactSection />
+  <CtaBand />
 </Base>

@@ -3,12 +3,14 @@ import { contact, contactSection } from '../data/site';
 import ContactForm from './ContactForm.astro';
 import Icon from './Icon.astro';
 import Txt from './Txt.astro';
+interface Props { /** page Contact : l'introduction est déjà dans l'en-tête */ page?: boolean }
+const { page = false } = Astro.props;
 ---
 <section class="section contact" id="contact" aria-labelledby="contact-titre">
   <div class="container contact-grid">
     <div class="contact-info">
       <h2 id="contact-titre">{contactSection.title}</h2>
-      <p class="lead">{contactSection.intro}</p>
+      {!page && <p class="lead">{contactSection.intro}</p>}
       <ul class="coords">
         <li>
           <Icon name="phone" />
@@ -46,7 +48,7 @@ import Txt from './Txt.astro';
           </div>
         </li>
       </ul>
-      <p class="print-only">Demande de devis en ligne : {new URL('/#contact', Astro.site).href}</p>
+      <p class="print-only">Demande de devis en ligne : {new URL('/contact/', Astro.site).href}</p>
     </div>
     <div class="contact-form-wrap">
       <ContactForm />

@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/PageHead.astro';
+import Coupe from '../../components/Coupe.astro';
+import Services from '../../components/Services.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { pages, hero } from '../../data/site';
+const crumbs = [{ name: 'Accueil', path: '/' }, { name: 'Prestations', path: '/prestations/' }];
+---
+<Base title={pages.prestations.seoTitle} description={pages.prestations.seoDescription} breadcrumb={crumbs}>
+  <PageHead title={pages.prestations.title} crumbs={crumbs}>
+    <p class="lead">{pages.prestations.lead}</p>
+  </PageHead>
+  <section class="coupe-band on-dark" aria-label="Coupe de la maison">
+    <div class="container">
+      <Coupe variant="hero" caption={hero.coupeCaption} />
+    </div>
+  </section>
+  <Services />
+  <CtaBand />
+</Base>
+<style>
+  .coupe-band { padding-bottom: var(--section-y); }
+  .coupe-band :global(.coupe) { max-width: 60rem; }
+</style>

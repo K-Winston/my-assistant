@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/PageHead.astro';
+import Coupe from '../components/Coupe.astro';
+import Story from '../components/Story.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { pages } from '../data/site';
+const crumbs = [{ name: 'Accueil', path: '/' }, { name: pages.histoire.title, path: '/notre-histoire/' }];
+---
+<Base title={pages.histoire.seoTitle} description={pages.histoire.seoDescription} breadcrumb={crumbs}>
+  <PageHead title={pages.histoire.title} crumbs={crumbs}>
+    <p class="lead">Des fondations à la toiture, un métier appris sur les chantiers, aux côtés d’un compagnon.</p>
+    <div slot="aside"><Coupe variant="scene" scene="histoire" /></div>
+  </PageHead>
+  <Story />
+  <CtaBand />
+</Base>

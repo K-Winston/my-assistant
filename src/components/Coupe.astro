@@ -1,17 +1,22 @@
 ---
 // Coupe de principe de la maison, des fondations (repère A) à la toiture (repère F).
 // - variant "hero" : grande coupe animée avec étiquettes cliquables (page d'accueil).
-// - variant "compact" : petite coupe décorative, un niveau mis en évidence (pages prestations).
+// - variant "compact" : petite coupe décorative, un niveau mis en évidence.
+// - variant "scene" : coupe d'en-tête de page avec un ouvrier qui travaille à l'endroit du métier
+//   (scene = slug de prestation, ou 'histoire' / 'contact'). L'animation joue une fois puis
+//   s'arrête sur le travail terminé ; avec « réduire les animations », la scène finie est affichée.
 // Les étiquettes sont de vrais liens HTML posés sur le dessin ; le dessin lui-même est décoratif.
 import { services } from '../data/site';
 
 interface Props {
-  variant?: 'hero' | 'compact';
+  variant?: 'hero' | 'compact' | 'scene';
+  /** scène de l'ouvrier (variant scene) : slug de prestation, 'histoire' ou 'contact' */
+  scene?: string;
   /** slug de la prestation à mettre en évidence (variant compact) */
   focus?: string;
   caption?: string;
 }
-const { variant = 'hero', focus, caption } = Astro.props;
+const { variant = 'hero', focus, caption, scene } = Astro.props;
 
 // Niveau du dessin correspondant à chaque prestation
 const layerOf: Record<string, string> = {
@@ -23,11 +28,20 @@ const layerOf: Record<string, string> = {
   toiture: 'toiture',
 };
 const labels = [...services].sort((a, b) => b.mark.localeCompare(a.mark)); // F (haut) → A (bas)
-const focusLayer = focus ? layerOf[focus] : undefined;
+const focusLayer = focus ? layerOf[focus] : scene ? layerOf[scene] : undefined;
+const sc = scene ? (layerOf[scene] ?? scene) : undefined; // nom court de la scène
+const viewBox = variant === 'scene' ? '0 0 560 540' : '0 0 760 540';
+// Tuiles posées une à une sur le versant droit (scène toiture), de l'égout vers le faîtage
+const tiles = Array.from({ length: 8 }, (_, k) => ({
+  x1: 534 - 29.25 * k, y1: 234 - 21 * k, x2: 534 - 29.25 * (k + 1) + 2, y2: 234 - 21 * (k + 1) + 1.5,
+}));
+// Rangs de briques montés un à un (scène maçonnerie), du bas vers le haut
+const courses = [...Array.from({ length: 11 }, (_, i) => ({ y: 390 - 16 * i, h: 16 })), { y: 222, h: 8 }];
+const screws = [256, 286, 316, 346, 376];
 ---
-<figure class:list={['coupe', `coupe--${variant}`]} data-focus={focusLayer}>
+<figure class:list={['coupe', `coupe--${variant}`, sc && `scene-${sc}`]} data-focus={focusLayer}>
   <div class="coupe-sheet">
-    <svg class="coupe-svg" viewBox="0 0 760 540" fill="none" stroke="currentColor" aria-hidden="true" focusable="false">
+    <svg class="coupe-svg" viewBox={viewBox} fill="none" stroke="currentColor" aria-hidden="true" focusable="false">
       <defs>
         <pattern id="h-sol" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
           <line x1="0" y1="0" x2="0" y2="14" class="hatch" />
@@ -62,7 +76,7 @@ const focusLayer = focus ? layerOf[focus] : undefined;
       <!-- B. Maçonnerie : murs porteurs -->
       <g class="layer layer-maconnerie">
         <rect x="116" y="222" width="24" height="184" fill="url(#h-maconnerie)" />
-        <rect x="460" y="222" width="24" height="184" fill="url(#h-maconnerie)" />
+        <rect x="460" y="222" width="24" height="184" fill="url(#h-maconnerie)" class="wall-right" />
         <path d="M484 395H556" class="leader" /><circle cx="484" cy="395" r="3" class="pin" />
       </g>
 
@@ -93,9 +107,131 @@ const focusLayer = focus ? layerOf[focus] : undefined;
       <!-- F. Toiture : charpente et couverture en tuiles -->
       <g class="layer layer-toiture">
         <path d="M110 222H490M86 226L300 82L514 226M300 82V222M300 196L214 140M300 196L386 140" class="frame" pathLength="1" />
-        <path d="M66 234L300 66L534 234" class="tiles" />
+        <path d="M66 234L300 66" class="tiles" />
+        <path d="M300 66L534 234" class="tiles tiles-right" />
         <path d="M410 145L470 100H556" class="leader" /><circle cx="410" cy="145" r="3" class="pin" />
       </g>
+
+
+      {variant === 'scene' && (
+        <g class="scene">
+          {sc === 'fondations' && (
+            <g>
+              <g class="dirt"><circle cx="492" cy="424" r="2.2" /><circle cx="497" cy="421" r="1.6" /><circle cx="488" cy="420" r="1.4" /></g>
+              <g transform="translate(526 420)" class="man">
+                <circle cx="0" cy="-57" r="7" /><path d="M0 -50V-24M0 -24L-8 0M0 -24L8 0" />
+                <g transform="translate(0 -44)">
+                  <g class="anim dig">
+                    <path d="M0 0L-12 8L-16 12M0 0L-6 14L-14 22" />
+                    <path d="M-10 4L-34 58" class="tool" /><path d="M-40 54L-28 60L-32 72L-42 68Z" class="tool tool-fill" />
+                  </g>
+                </g>
+              </g>
+            </g>
+          )}
+          {sc === 'maconnerie' && (
+            <g>
+              {courses.map((c, i) => (
+                <rect x="460" y={c.y} width="24" height={c.h} fill="url(#h-maconnerie)" class="brick" data-i={i} />
+              ))}
+              <g transform="translate(522 420)" class="man">
+                <circle cx="0" cy="-57" r="7" /><path d="M0 -50V-24M0 -24L-8 0M0 -24L8 0M0 -44L-6 -30" />
+                <g transform="translate(0 -44)">
+                  <g class="anim trowel">
+                    <path d="M0 0L-12 2L-22 2" /><path d="M-22 2L-26 -2M-24 -4L-36 0L-26 5Z" class="tool" />
+                  </g>
+                </g>
+              </g>
+            </g>
+          )}
+          {sc === 'plomberie' && (
+            <g>
+              <circle cx="428" cy="322" r="2.6" class="drop tool-fill" />
+              <g transform="translate(404 406)" class="man">
+                <circle cx="0" cy="-41" r="7" /><path d="M0 -34V-16M0 -16L10 -8L6 0M0 -16L-6 -6L-12 0" />
+                <g transform="translate(0 -28)">
+                  <g class="anim wrench">
+                    <path d="M0 0L16 4L30 -4" /><path d="M30 -4L37 -8M37 -8l2 -5M37 -8l5 2" class="tool" />
+                  </g>
+                </g>
+              </g>
+            </g>
+          )}
+          {sc === 'electricite' && (
+            <g>
+              <path d="M194 406L204 318M214 406L224 318M196 384H216M198.5 362H218.5M201 340H221" class="ladder" />
+              <g class="glow"><circle cx="226" cy="264" r="10" class="tool-fill" /><path d="M226 280v8M212 276l-6 6M240 276l6 6M206 264h-8M246 264h8" class="tool" /></g>
+              <g transform="translate(211 340)" class="man">
+                <circle cx="0" cy="-57" r="7" /><path d="M0 -50V-24M0 -24L-6 0M0 -24L6 0M0 -44L-10 -32" />
+                <g transform="translate(0 -44)">
+                  <g class="anim screw">
+                    <path d="M0 0L8 -14L12 -24" /><path d="M12 -24L15 -31" class="tool" />
+                  </g>
+                </g>
+              </g>
+            </g>
+          )}
+          {sc === 'placo' && (
+            <g>
+              <g class="panel"><rect x="308" y="238" width="8" height="166" class="tool" /></g>
+              {screws.map((y, i) => <circle cx="312" cy={y} r="2.2" class="screw-dot tool-fill" data-i={i} />)}
+              <g transform="translate(352 406)" class="man">
+                <circle cx="0" cy="-57" r="7" /><path d="M0 -50V-24M0 -24L-8 0M0 -24L8 0M0 -44L-8 -30" />
+                <g transform="translate(0 -44)">
+                  <g class="anim drill">
+                    <path d="M0 0L-12 6L-22 4" /><path d="M-22 1h-9v7h9zM-31 4.5h-7M-26 8v6" class="tool" />
+                  </g>
+                </g>
+              </g>
+            </g>
+          )}
+          {sc === 'toiture' && (
+            <g>
+              {tiles.map((t, k) => (
+                <path d={`M${t.x1} ${t.y1}L${t.x2} ${t.y2}`} class="tile" data-i={k} />
+              ))}
+              <g transform="translate(340 92)" class="man">
+                <circle cx="0" cy="-57" r="7" /><path d="M0 -50V-24M0 -24L-8 0M0 -24L6 -4L10 2M0 -44L-8 -30" />
+                <g transform="translate(0 -44)">
+                  <g class="anim hammer">
+                    <path d="M0 0L14 10" /><path d="M14 10L22 4M19 0L25 8" class="tool" />
+                  </g>
+                </g>
+              </g>
+            </g>
+          )}
+          {sc === 'histoire' && (
+            <g>
+              <g transform="translate(528 420)" class="man">
+                <circle cx="0" cy="-57" r="7" /><path d="M0 -50V-24M0 -24L-8 0M0 -24L8 0M0 -44L-22 -36" />
+                <g transform="translate(0 -44)">
+                  <g class="anim point"><path d="M0 0L-12 -6L-24 -14" /></g>
+                </g>
+              </g>
+              <g transform="translate(503 420) scale(0.72)" class="man man-small">
+                <circle cx="0" cy="-57" r="7" /><path d="M0 -50V-24M0 -24L-8 0M0 -24L8 0M0 -44L6 -32" />
+                <g transform="translate(0 -44)">
+                  <g class="anim trowel">
+                    <path d="M0 0L-10 2L-16 2" /><path d="M-16 2L-20 -2M-18 -4L-30 0L-20 5Z" class="tool" />
+                  </g>
+                </g>
+              </g>
+            </g>
+          )}
+          {sc === 'contact' && (
+            <g>
+              <g transform="translate(524 420)" class="man">
+                <circle cx="0" cy="-57" r="7" /><path d="M0 -50V-24M0 -24L-8 0M0 -24L8 0M0 -44L-12 -32" />
+                <rect x="-26" y="-40" width="15" height="20" class="tool" />
+                <path d="M-23 -31l3 3l6 -7" class="tool check" />
+                <g transform="translate(0 -44)">
+                  <g class="anim write"><path d="M0 0L-8 14L-14 12" /><path d="M-14 12L-20 8" class="tool" /></g>
+                </g>
+              </g>
+            </g>
+          )}
+        </g>
+      )}
 
       <!-- Repères posés sur le dessin (petit écran, quand les étiquettes passent sous le dessin) -->
       <g class="marks">
@@ -268,6 +404,88 @@ const focusLayer = focus ? layerOf[focus] : undefined;
   .coupe--hero .lbl-E { animation-delay: 1500ms; }
   .coupe--hero .lbl-F { animation-delay: 1520ms; }
 
+
+  /* ---------- Scènes : un ouvrier au travail (pages intérieures) ---------- */
+  .coupe--scene .leader, .coupe--scene .pin, .coupe--scene .marks { display: none; }
+  .coupe--scene[data-focus] .layer { opacity: 0.45; }
+  .coupe--scene .layer-fondations, .coupe--scene[data-focus] .layer-fondations { opacity: 1; } /* le sol reste lisible */
+  .coupe--scene[data-focus='fondations'] .layer-fondations { color: var(--c-accent); }
+  .scene-maconnerie .wall-right, .scene-toiture .tiles-right { display: none; }
+  .scene .man { color: var(--c-on-dark); stroke-width: 2.2; }
+  .scene .man circle { fill: var(--c-dark); }
+  .scene .tool { color: var(--c-accent); stroke: var(--c-accent); stroke-width: 2; }
+  .scene .tool-fill { fill: var(--c-accent); stroke: none; }
+  .scene rect.tool { fill: var(--c-dark); }
+  .scene .ladder { color: var(--c-coupe-leader); stroke-width: 1.5; }
+  .scene .brick { stroke: var(--c-accent); stroke-width: 1.5; }
+  .scene .tile { stroke: var(--c-accent); stroke-width: 7; stroke-dasharray: 11 3; stroke-linecap: butt; }
+  .scene .dirt circle { fill: var(--c-coupe-line); stroke: none; }
+  .scene .man-small { stroke-width: 3; } /* compense l'échelle 0,72 */
+
+  /* Rotation autour de l'épaule : chaque bras est dessiné depuis l'origine de son groupe */
+  .scene .anim { transform-box: view-box; transform-origin: 0 0; }
+  .scene .brick, .scene .tile, .scene .screw-dot, .scene .glow, .scene .drop, .scene .check { transform-box: fill-box; transform-origin: center; }
+
+  @keyframes dig { 0%, 100% { transform: rotate(0); } 40% { transform: rotate(16deg); } 65% { transform: rotate(-5deg); } }
+  @keyframes dirt { 0%, 40% { opacity: 0; transform: translate(0, 0); } 55% { opacity: 1; } 90%, 100% { opacity: 0; transform: translate(-16px, -26px); } }
+  @keyframes swing { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-22deg); } }
+  @keyframes wrist-turn { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(8deg); } }
+  @keyframes buzz { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(1.5px, -0.5px); } }
+  @keyframes appear { from { opacity: 0; transform: scale(0.4); } }
+  @keyframes lay { from { opacity: 0; transform: translateY(-10px); } }
+  @keyframes slide-in { from { opacity: 0; transform: translateX(40px); } }
+  @keyframes glow-on { 0% { opacity: 0; } 30% { opacity: 1; } 40% { opacity: 0.2; } 55%, 100% { opacity: 1; } }
+  @keyframes drop { 0% { opacity: 0; transform: translateY(0); } 15% { opacity: 1; } 85% { opacity: 1; transform: translateY(16px); } 100% { opacity: 0; transform: translateY(18px); } }
+  @keyframes fade-in { from { opacity: 0; } }
+
+  /* En attente tant que la scène n'est pas à l'écran (script ci-dessous) */
+  .coupe[data-wait] .scene, .coupe[data-wait] .scene * { animation-play-state: paused !important; }
+
+  /* Fondations : 4 coups de pelle */
+  .scene .dig { animation: dig 1s var(--ease-in-out) 0.4s 4; }
+  .scene .dirt { animation: dirt 1s ease-out 0.4s 4 both; }
+  .scene-fondations .dirt { opacity: 0; }
+  /* Maçonnerie : le mur monte rang par rang, la truelle suit */
+  .scene .trowel { animation: swing 0.55s var(--ease-in-out) 0.3s 8; }
+  .scene .brick { animation: lay 350ms var(--ease-out) both; }
+  .scene .brick:nth-of-type(1) { animation-delay: 0.3s; }  .scene .brick:nth-of-type(2) { animation-delay: 0.65s; }
+  .scene .brick:nth-of-type(3) { animation-delay: 1s; }    .scene .brick:nth-of-type(4) { animation-delay: 1.35s; }
+  .scene .brick:nth-of-type(5) { animation-delay: 1.7s; }  .scene .brick:nth-of-type(6) { animation-delay: 2.05s; }
+  .scene .brick:nth-of-type(7) { animation-delay: 2.4s; }  .scene .brick:nth-of-type(8) { animation-delay: 2.75s; }
+  .scene .brick:nth-of-type(9) { animation-delay: 3.1s; }  .scene .brick:nth-of-type(10) { animation-delay: 3.45s; }
+  .scene .brick:nth-of-type(11) { animation-delay: 3.8s; } .scene .brick:nth-of-type(12) { animation-delay: 4.15s; }
+  /* Plomberie : on serre le raccord, puis l'eau coule */
+  .scene .wrench { animation: wrist-turn 0.5s var(--ease-in-out) 0.3s 5; }
+  .scene .drop { opacity: 0; animation: drop 0.9s ease-in 2.9s 3; }
+  /* Électricité : on branche, la lampe s'allume */
+  .scene .screw { animation: wrist-turn 0.45s var(--ease-in-out) 0.3s 5; }
+  .scene .glow { animation: glow-on 0.9s ease-out 2.7s both; }
+  /* Placo : la plaque est posée, puis vissée */
+  .scene .panel { animation: slide-in 700ms var(--ease-out) 0.3s both; }
+  .scene .drill { animation: buzz 0.08s linear 1.2s 30; }
+  .scene .screw-dot { animation: appear 250ms var(--ease-out) both; }
+  .scene .screw-dot:nth-of-type(1) { animation-delay: 1.3s; } .scene .screw-dot:nth-of-type(2) { animation-delay: 1.75s; }
+  .scene .screw-dot:nth-of-type(3) { animation-delay: 2.2s; } .scene .screw-dot:nth-of-type(4) { animation-delay: 2.65s; }
+  .scene .screw-dot:nth-of-type(5) { animation-delay: 3.1s; }
+  /* Toiture : les tuiles sont posées de l'égout vers le faîtage, au rythme du marteau */
+  .scene .hammer { animation: swing 0.45s var(--ease-in-out) 0.3s 9; }
+  .scene .tile { animation: lay 300ms var(--ease-out) both; }
+  .scene .tile:nth-of-type(1) { animation-delay: 0.4s; } .scene .tile:nth-of-type(2) { animation-delay: 0.85s; }
+  .scene .tile:nth-of-type(3) { animation-delay: 1.3s; } .scene .tile:nth-of-type(4) { animation-delay: 1.75s; }
+  .scene .tile:nth-of-type(5) { animation-delay: 2.2s; } .scene .tile:nth-of-type(6) { animation-delay: 2.65s; }
+  .scene .tile:nth-of-type(7) { animation-delay: 3.1s; } .scene .tile:nth-of-type(8) { animation-delay: 3.55s; }
+  /* Histoire : le père montre, le fils travaille */
+  .scene .point { animation: wrist-turn 1.2s var(--ease-in-out) 0.5s 3; }
+  .scene-histoire .trowel { animation-delay: 0.8s; }
+  /* Contact : le devis est rempli puis coché */
+  .scene .write { animation: buzz 0.22s linear 0.4s 10; }
+  .scene .check { animation: appear 300ms var(--ease-out) 2.8s both; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scene *, .scene { animation: none !important; }
+    .scene .drop, .scene-fondations .dirt { opacity: 0; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .coupe--hero .layer, .coupe--hero .layer-toiture .frame, .coupe--hero .layer-toiture .tiles,
     .coupe--hero .plumb-line, .coupe--hero .plumb-bob, .coupe--hero .lbl {
@@ -275,3 +493,20 @@ const focusLayer = focus ? layerOf[focus] : undefined;
     }
   }
 </style>
+
+<script>
+  // Les scènes de l'ouvrier démarrent quand elles entrent à l'écran (utile sur mobile,
+  // où la coupe est sous le titre). Sans JavaScript, elles jouent dès le chargement.
+  const scenes = document.querySelectorAll<HTMLElement>('.coupe--scene');
+  if ('IntersectionObserver' in window && scenes.length) {
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) { e.target.removeAttribute('data-wait'); io.unobserve(e.target); }
+      }
+    }, { threshold: 0.4 });
+    for (const el of scenes) {
+      const r = el.getBoundingClientRect();
+      if (r.top > window.innerHeight * 0.6) { el.setAttribute('data-wait', ''); io.observe(el); }
+    }
+  }
+</script>

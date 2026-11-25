@@ -5,7 +5,7 @@
 // Utilisé par scripts/audit.mjs, ou seul avec le site servi sur BASE_URL.
 import { chromium } from 'playwright';
 
-const pages = ['/', '/prestations/fondations-gros-oeuvre/', '/prestations/toiture/', '/mentions-legales/', '/confidentialite/', '/merci/', '/404/'];
+const pages = ['/', '/prestations/', '/prestations/fondations-gros-oeuvre/', '/prestations/toiture/', '/prestations/electricite/', '/notre-histoire/', '/realisations/', '/contact/', '/mentions-legales/', '/confidentialite/', '/merci/', '/404/'];
 const widths = [360, 768, 1280, 1440];
 
 export async function checkResponsive(BASE) {

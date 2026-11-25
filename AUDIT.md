@@ -182,3 +182,13 @@ Refonte de la page d'accueil, conduite avec le skill **Impeccable** (pbakaus/imp
 
 - **Imposés par le brief ou la direction** : police Inter (3 signalements, charte du client) ; quadrillage de calque du hero (élément du monde « feuille de plan » choisi par le client).
 - **Choix techniques** : `#000` dans les styles d'impression (4 signalements, sortie papier en noir pur) ; tailles de 16 px pour les champs (évite le zoom automatique sur iPhone) et les étiquettes de la coupe sur mobile ; taille de titre des pages prestations et du logo sur mobile (4 signalements de tailles hors de l'échelle typographique).
+
+## Site sur plusieurs pages et scènes animées
+
+- **Structure** : 15 pages. Accueil, Prestations (coupe et légende) et ses 6 pages métier, Notre histoire, Réalisations, Contact, pages légales, `/merci/` et 404. Le menu mène à de vraies pages ; la page active est soulignée en ocre.
+- **Scènes** : sur chaque page intérieure, un ouvrier en trait fin travaille dans la coupe, à l'endroit du métier (8 scènes). Chaque scène démarre quand elle entre à l'écran, dure 3 à 5 s, puis s'arrête sur le travail terminé. Avec « réduire les animations », la scène terminée s'affiche directement.
+- **Contrôle** :
+  - Lighthouse 99–100 dans les 4 catégories sur les 15 pages (SEO de `/merci/` exclu volontairement) ; LCP ≤ 1,96 s ; CLS = 0.
+  - 0 erreur HTML ou console ; 0 lien cassé sur 160 ; responsive et formulaire OK.
+  - axe a signalé une fois une cible tactile sur la page 404 pendant le défilement. Ce signalement ne s'est pas reproduit en isolé ni dans les deux passages complets suivants : il s'agit probablement d'un recouvrement passager par l'en-tête fixe.
+- **Détecteur Impeccable** : les 3 nouveaux signalements « bounce-easing » étaient des faux positifs (animation nommée `jiggle`, renommée `wrist-turn`). Il reste les 12 signalements justifiés plus haut.

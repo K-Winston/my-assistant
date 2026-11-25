@@ -3,21 +3,29 @@
 // les deux paragraphes suivent en colonnes, deux photos encadrent le texte.
 import { story } from '../data/site';
 import Photo from './Photo.astro';
+interface Props { /** accueil : version courte avec lien vers la page « Notre histoire » */ teaser?: boolean }
+const { teaser = false } = Astro.props;
 const [first, ...rest] = story.paragraphs;
 ---
-<section class="section story" id="histoire" aria-labelledby="histoire-titre">
+<section class:list={['section story', { 'story--teaser': teaser }]} id="histoire" aria-labelledby="histoire-titre">
   <div class="container story-grid">
     <h2 id="histoire-titre" class="story-title">{story.title}</h2>
     <figure class="story-portrait">
       <Photo file={story.photo.file} alt={story.photo.alt} sizes="(min-width: 64rem) 30vw, 100vw" />
     </figure>
     <p class="story-quote">{first}</p>
-    <div class="story-body">
-      {rest.map((p) => <p>{p}</p>)}
-    </div>
-    <figure class="story-wide">
-      <Photo file={story.photoWide.file} alt={story.photoWide.alt} sizes="(min-width: 64rem) 66vw, 100vw" />
-    </figure>
+    {teaser ? (
+      <p class="story-more"><a class="link-more" href="/notre-histoire/">Lire notre histoire</a></p>
+    ) : (
+      <>
+        <div class="story-body">
+          {rest.map((p) => <p>{p}</p>)}
+        </div>
+        <figure class="story-wide">
+          <Photo file={story.photoWide.file} alt={story.photoWide.alt} sizes="(min-width: 64rem) 66vw, 100vw" />
+        </figure>
+      </>
+    )}
   </div>
 </section>
 
@@ -40,7 +48,15 @@ const [first, ...rest] = story.paragraphs;
     .story-quote { grid-area: quote; }
     .story-body { grid-area: body; align-self: end; }
     .story-wide { grid-area: wide; }
+    .story--teaser .story-grid {
+      grid-template-areas:
+        'title title title title title title title . portrait portrait portrait portrait'
+        'quote quote quote quote quote quote quote quote portrait portrait portrait portrait'
+        'more  more  more  more  more  more  more  more portrait portrait portrait portrait';
+    }
+    .story-more { grid-area: more; }
   }
+  .story-more { margin: 0; }
   .story-title { margin: 0; max-width: 16ch; }
   /* La transmission, en grand : c'est le cœur du site */
   .story-quote {

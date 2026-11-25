@@ -1,6 +1,8 @@
 ---
 import { nav, site } from '../data/site';
 import Icon from './Icon.astro';
+const path = Astro.url.pathname;
+const current = (href: string) => path === href || path.startsWith(href);
 ---
 <header class="site-header on-dark">
   <div class="container header-inner">
@@ -13,7 +15,7 @@ import Icon from './Icon.astro';
       <span>{site.logoText}</span>
     </a>
 
-    <a class="btn btn-primary header-devis" href="/#contact">Devis</a>
+    <a class="btn btn-primary header-devis" href="/contact/">Devis</a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu-principal" data-ready="false">
       <span class="nav-toggle-open"><Icon name="menu" class="nav-icon" /></span>
       <span class="nav-toggle-close"><Icon name="close" class="nav-icon" /></span>
@@ -23,10 +25,10 @@ import Icon from './Icon.astro';
     <nav class="nav" id="menu-principal" aria-label="Navigation principale">
       <ul class="nav-list">
         {nav.map((item) => (
-          <li><a href={item.href}>{item.label}</a></li>
+          <li><a href={item.href} aria-current={current(item.href) ? 'page' : undefined}>{item.label}</a></li>
         ))}
       </ul>
-      <a class="btn btn-primary nav-cta" href="/#contact">Demander un devis</a>
+      <a class="btn btn-primary nav-cta" href="/contact/">Demander un devis</a>
     </nav>
   </div>
 </header>
@@ -105,6 +107,7 @@ import Icon from './Icon.astro';
     color: var(--c-on-dark);
   }
   .nav-list a:hover { color: var(--c-accent); }
+  .nav-list a[aria-current='page'] { color: var(--c-accent); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.45em; }
 
   /* Mobile : menu déroulant (seulement si le JavaScript est actif) */
   @media (max-width: 63.99rem) {
