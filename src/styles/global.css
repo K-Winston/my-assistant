@@ -112,8 +112,8 @@ strong { font-weight: 600; }
 .section-head p:last-child { margin-bottom: 0; }
 
 /* Texte à compléter : visible pour ne pas l'oublier avant la mise en ligne */
-.todo { background: #fff3d6; color: #5c3b00; padding: 0 0.2em; border-radius: var(--r-sm); overflow-wrap: anywhere; }
-.on-dark .todo { background: #4a3a1e; color: #ffe2b0; }
+.todo { background: var(--c-todo-bg); color: var(--c-todo-fg); padding: 0 0.2em; border-radius: var(--r-sm); overflow-wrap: anywhere; }
+.on-dark .todo { background: var(--c-todo-bg-dark); color: var(--c-todo-fg-dark); }
 
 /* ---------- Boutons ---------- */
 .btn {

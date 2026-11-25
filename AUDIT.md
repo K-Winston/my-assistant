@@ -175,3 +175,10 @@ Refonte de la page d'accueil, conduite avec le skill **Impeccable** (pbakaus/imp
   - La régression signalée au 2e passage (nom sur deux lignes sur mobile) est corrigée et vérifiée à 360 et 390 px, mais ce correctif n'a pas été revu par le relecteur.
   - **Point ouvert** : le sur-titre du hero (« Maçonnerie générale · Tous corps d'état »). Impeccable interdit tout sur-titre ; le brief du client l'exige. Il est conservé en attendant la décision du client. Alternative proposée par le relecteur : déplacer ce texte dans le cartouche.
 - **Contrôle** (`npm run check`) : Lighthouse **100 / 100 / 100 / 100** sur toutes les pages, sauf le SEO de `/merci/` (exclu de Google volontairement). LCP de l'accueil : 1,35 s. CLS = 0. 0 erreur axe, HTML ou console. 0 lien cassé sur 149. Responsive OK de 360 à 1440 px. Formulaire OK avec et sans JavaScript.
+
+### Détecteur Impeccable (scripts installés)
+
+`impeccable detect` (moteur 0.1.30) sur `src/` : 16 signalements au départ. Les 4 couleurs en dur des repères `[À COMPLÉTER]` sont devenues des tokens (`--c-todo-*`). Il en reste 12, tous voulus :
+
+- **Imposés par le brief ou la direction** : police Inter (3 signalements, charte du client) ; quadrillage de calque du hero (élément du monde « feuille de plan » choisi par le client).
+- **Choix techniques** : `#000` dans les styles d'impression (4 signalements, sortie papier en noir pur) ; tailles de 16 px pour les champs (évite le zoom automatique sur iPhone) et les étiquettes de la coupe sur mobile ; taille de titre des pages prestations et du logo sur mobile (4 signalements de tailles hors de l'échelle typographique).

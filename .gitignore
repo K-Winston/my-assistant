@@ -10,3 +10,7 @@ audit-reports/
 src/data/images.generated.json
 demo/
 .impeccable/review/
+# Impeccable : moteur téléchargé par plateforme et caches (jamais versionnés)
+.claude/skills/impeccable/scripts/bin/
+.impeccable/hook.cache.json
+.impeccable/live/cache/

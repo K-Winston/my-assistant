@@ -170,7 +170,7 @@ Le seul moment animé du site est la construction de la coupe au chargement : la
 
 Le dossier `.claude/skills/` contient 37 skills de design et d'animation (Anthropic, Vercel, GreenSock/GSAP, LottieFiles, Emil Kowalski…), chargés automatiquement par Claude Code dans ce projet. Leur origine et leur licence sont listées dans `.claude/skills/SOURCES.md`.
 
-Le skill **Impeccable** (`/impeccable`) a servi à la refonte : critique, contrat de direction (`.impeccable/briefs/accueil.md`) et système de design (`DESIGN.md`). Ses scripts n'ont pas été installés (voir `SOURCES.md`).
+Le skill **Impeccable** (`/impeccable`) a servi à la refonte : critique, contrat de direction (`.impeccable/briefs/accueil.md`) et système de design (`DESIGN.md`). Ses scripts sont installés : `.claude/skills/impeccable/scripts/impeccable detect --json src` lance son détecteur de défauts de design.
 
 Exemples d'utilisation : demandez « revois les animations » (`review-animations`), « fais une critique du design » (`design-critique`), « audit d'accessibilité » (`accessibility-review`).
 

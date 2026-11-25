@@ -60,6 +60,10 @@
   --c-coupe-hatch: #6e665a;   /* hachures et cotes */
   --c-coupe-leader: #8f8677;  /* lignes de rappel vers les étiquettes */
   --c-grid: rgba(245, 241, 234, 0.045); /* quadrillage du calque */
+  --c-todo-bg: #fff3d6;       /* repères [À COMPLÉTER] (provisoires) */
+  --c-todo-fg: #5c3b00;
+  --c-todo-bg-dark: #4a3a1e;
+  --c-todo-fg-dark: #ffe2b0;
   --c-error: #a3261b;
   --c-success: #2f6b2a;
 
