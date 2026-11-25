@@ -223,7 +223,10 @@ strong { font-weight: 600; }
   body { background: #fff; color: #000; font-size: 11pt; }
   .on-dark, .story, .card { background: #fff !important; color: #000 !important; border-color: #999 !important; }
   .on-dark .kicker, .kicker, .lead, .coord-label { color: #000 !important; }
-  .todo { background: none; color: #000; border: 1px dashed #000; }
+  .todo, .on-dark .todo { background: none !important; color: #000 !important; border: 1px dashed #000; }
+  .site-header *, .site-footer * { color: #000 !important; }
+  .site-footer { padding-top: 1rem; border-top: 2px solid #000; }
+  .site-footer .footer-grid > div:last-child, .footer-bottom ul { display: none !important; }
   .skip-link, .nav, .nav-toggle, .btn, .btn-row, .hero-media, .hero-badges,
   .site-footer nav, .cta-band, .contact-form-wrap, picture, .crumbs { display: none !important; }
   .site-header { position: static; border-bottom: 2px solid #000; }

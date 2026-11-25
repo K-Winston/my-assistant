@@ -17,7 +17,7 @@ export async function checkForm(BASE) {
 
   // 1. Sans JavaScript : envoi HTML classique, puis redirection vers /merci/
   {
-    const ctx = await browser.newContext({ javaScriptEnabled: false });
+    const ctx = await browser.newContext({ javaScriptEnabled: false, reducedMotion: 'reduce' });
     const page = await ctx.newPage();
     let posted = null;
     await page.route('https://api.web3forms.com/**', async (route) => {
@@ -37,7 +37,7 @@ export async function checkForm(BASE) {
 
   // 2. Champs obligatoires : un formulaire vide ne part pas
   {
-    const ctx = await browser.newContext();
+    const ctx = await browser.newContext({ reducedMotion: 'reduce' });
     const page = await ctx.newPage();
     let sent = false;
     await page.route('https://api.web3forms.com/**', (route) => { sent = true; route.abort(); });
@@ -50,7 +50,7 @@ export async function checkForm(BASE) {
 
   // 3. Avec JavaScript : envoi en arrière-plan, message de confirmation dans la page
   {
-    const ctx = await browser.newContext();
+    const ctx = await browser.newContext({ reducedMotion: 'reduce' });
     const page = await ctx.newPage();
     await page.route('https://api.web3forms.com/**', (route) =>
       route.fulfill({ status: 200, contentType: 'application/json', body: '{"success":true}' }));
