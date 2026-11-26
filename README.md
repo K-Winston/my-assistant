@@ -20,7 +20,8 @@ Ouvrez-le avec n’importe quel éditeur de texte (sur GitHub, le bouton crayon 
 | L’e-mail, l’adresse, les horaires | `contact` (lignes 41 à 50) |
 | Le lien vers les avis Google | `contact.googleReviewsUrl` (ligne 52) |
 | SIRET, TVA, assurance décennale | `company` (lignes 24 à 33) |
-| Les textes d’une prestation | `services` (à partir de la ligne 122), un bloc par métier |
+| Les textes d’une prestation | `services`, un bloc par métier : `headline` (titre de la présentation), `lead` (accroche), `intro` (récit), `links` (« Sur la coupe » : liens avec les métiers voisins), `included` (ce qui est inclus) |
+| Le bloc « Mes engagements » des pages prestations | `commitments` |
 | Le texte « Notre histoire » | `story` (ligne 257) |
 | Les 3 réalisations avant/après | `realisations` (ligne 269) |
 | Les communes desservies | `area.towns` (ligne 297) |

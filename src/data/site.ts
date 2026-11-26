@@ -142,8 +142,12 @@ export interface Service {
   /** Titre pour Google (70 caractères max) et description (≈ 155 caractères). */
   seoTitle: string;
   seoDescription: string;
-  /** Paragraphes d'introduction de la page prestation. */
+  /** Section « Présentation » de la page prestation : titre, accroche, récit. */
+  headline: string;
+  lead: string;
   intro: string[];
+  /** « Sur la coupe » : liens avec les métiers voisins (slug de la prestation + phrase). */
+  links: { slug: string; text: string }[];
   /** Liste « Ce qui est inclus ». */
   included: string[];
   photos: { file: string; alt: string }[];
@@ -160,9 +164,15 @@ export const services: Service[] = [
     seoTitle: 'Fondations et gros œuvre à Graveson et Saint-Rémy-de-Provence',
     seoDescription:
       'Terrassement, fondations, dalles, murs porteurs et élévations par un maçon tous corps d’état à Graveson, Maillane, Saint-Rémy-de-Provence et Bellegarde.',
+    headline: 'Ce qui ne se voit pas porte tout le reste',
+    lead: 'Une fois la dalle coulée, plus personne ne verra les fondations. C’est pourtant d’elles que dépend la tenue de toute la maison.',
     intro: [
-      'Tout ce qui viendra ensuite repose sur les fondations. J’y prends donc le temps qu’il faut : implantation, profondeur, ferraillage et niveaux sont vérifiés à chaque étape.',
-      'Comme je ferai aussi les murs, la toiture et les réseaux, je prévois dès le départ les réservations et les passages dont ils auront besoin. Vous n’aurez rien à casser plus tard.',
+      'J’y prends donc le temps qu’il faut : implantation, profondeur, ferraillage et niveaux sont vérifiés à chaque étape.',
+      'Comme je ferai aussi les murs, la toiture et les réseaux, je prévois dès maintenant les réservations et les passages dont ils auront besoin. Vous n’aurez rien à casser plus tard.',
+    ],
+    links: [
+      { slug: 'maconnerie-extensions', text: 'Les murs porteurs montent sur une base de niveau.' },
+      { slug: 'plomberie', text: 'Les passages des évacuations sont réservés avant de couler la dalle.' },
     ],
     included: [
       'Terrassement et préparation du terrain',
@@ -186,9 +196,15 @@ export const services: Service[] = [
     seoTitle: 'Maçonnerie et extension à Graveson et Saint-Rémy-de-Provence',
     seoDescription:
       'Agrandissement de maison, murs de clôture, travaux en pierre, enduits et création d’ouvertures à Graveson, Maillane, Saint-Rémy-de-Provence et Bellegarde.',
+    headline: 'Le métier que mon père m’a transmis',
+    lead: 'Agrandir une maison, monter un mur de clôture, reprendre une façade en pierre, ouvrir un mur porteur : c’est le cœur du métier, celui que j’ai appris à ses côtés.',
     intro: [
-      'Agrandir une maison, monter un mur de clôture, reprendre une façade en pierre, ouvrir un mur porteur : c’est le cœur du métier, celui que mon père m’a transmis.',
       'Pour une extension, vous n’avez pas plusieurs entreprises à faire se succéder. Je mène le chantier du terrassement jusqu’aux finitions intérieures.',
+      'Et en montant chaque mur, je sais déjà où passeront les gaines, les tuyaux et les cloisons, puisque c’est moi qui les poserai.',
+    ],
+    links: [
+      { slug: 'fondations-gros-oeuvre', text: 'Les murs reposent sur des fondations que j’ai implantées moi-même.' },
+      { slug: 'toiture', text: 'La charpente vient se poser sur des murs dont je connais les niveaux.' },
     ],
     included: [
       'Agrandissements et extensions',
@@ -212,9 +228,15 @@ export const services: Service[] = [
     seoTitle: 'Toiture et charpente à Graveson et Saint-Rémy-de-Provence',
     seoDescription:
       'Charpente, couverture en tuiles, réparation et rénovation de toiture à Graveson, Maillane, Saint-Rémy-de-Provence et Bellegarde.',
+    headline: 'Le toit protège tout le travail fait en dessous',
+    lead: 'Je traite la charpente et la couverture ensemble, pour une construction neuve, une extension ou un toit à rénover.',
     intro: [
-      'Le toit protège tout le travail fait en dessous. Je traite la charpente et la couverture ensemble, pour une construction neuve, une extension ou un toit à rénover.',
+      'Sur une construction neuve ou une extension, la charpente se pose sur des murs que j’ai montés : je connais leurs niveaux et leur état.',
       'Une tuile déplacée, une fuite ? Une simple réparation est aussi possible.',
+    ],
+    links: [
+      { slug: 'maconnerie-extensions', text: 'La charpente repose sur les murs porteurs.' },
+      { slug: 'placo-amenagement', text: 'Une fois la maison hors d’eau, l’aménagement intérieur peut commencer.' },
     ],
     included: ['Charpente', 'Couverture en tuiles', 'Réparation de toiture', 'Rénovation de toiture'],
     photos: [
@@ -232,9 +254,15 @@ export const services: Service[] = [
     seoTitle: 'Électricité et mise aux normes à Graveson et Saint-Rémy-de-Provence',
     seoDescription:
       'Installation électrique, mise aux normes et rénovation électrique dans le cadre de vos travaux à Graveson, Maillane, Saint-Rémy-de-Provence et Bellegarde.',
+    headline: 'Les gaines posées au bon moment',
+    lead: 'Une installation électrique se prévoit en même temps que les murs et les cloisons, pas une fois qu’ils sont finis.',
     intro: [
-      'Une installation électrique se prévoit en même temps que les murs et les cloisons. Je pose les gaines, les boîtiers et les passages au bon moment du chantier, sans saignées à rouvrir une fois les murs finis.',
+      'Je pose les gaines, les boîtiers et les passages au bon moment du chantier, sans saignées à rouvrir dans des murs déjà enduits.',
       'Dans une maison existante, je reprends le tableau et les circuits pour les mettre aux normes.',
+    ],
+    links: [
+      { slug: 'maconnerie-extensions', text: 'Les passages sont prévus pendant le montage des murs.' },
+      { slug: 'placo-amenagement', text: 'Les gaines sont en place avant que les cloisons ne les recouvrent.' },
     ],
     included: ['Installation électrique', 'Mise aux normes', 'Rénovation électrique'],
     photos: [
@@ -252,9 +280,15 @@ export const services: Service[] = [
     seoTitle: 'Plomberie et salle de bain à Graveson et Saint-Rémy-de-Provence',
     seoDescription:
       'Réseaux d’eau, création de salle de bain, sanitaires et évacuations dans le cadre de vos travaux à Graveson, Maillane, Saint-Rémy-de-Provence et Bellegarde.',
+    headline: 'L’eau passe là où elle a été prévue',
+    lead: 'Arrivées d’eau, évacuations, salle de bain : je fais la plomberie en même temps que la maçonnerie.',
     intro: [
-      'Arrivées d’eau, évacuations, salle de bain : je fais la plomberie en même temps que la maçonnerie. Les passages dans les dalles et les murs sont prévus avant d’être coulés ou montés.',
-      'Les réseaux sont posés avant les doublages et les finitions, pour ne rien avoir à défaire.',
+      'Les passages dans les dalles et les murs sont donc prévus avant d’être coulés ou montés.',
+      'Les réseaux sont posés avant les doublages et les finitions. Il n’y a rien à défaire pour faire passer un tuyau.',
+    ],
+    links: [
+      { slug: 'fondations-gros-oeuvre', text: 'Les évacuations traversent la dalle par des réservations prévues à l’avance.' },
+      { slug: 'placo-amenagement', text: 'Les doublages viennent après, une fois les réseaux en place.' },
     ],
     included: ['Réseaux d’eau', 'Salles de bain', 'Sanitaires', 'Évacuations'],
     photos: [
@@ -272,9 +306,15 @@ export const services: Service[] = [
     seoTitle: 'Placo et isolation intérieure à Graveson et Saint-Rémy-de-Provence',
     seoDescription:
       'Cloisons, doublages, faux plafonds et isolation intérieure en plaques de plâtre à Graveson, Maillane, Saint-Rémy-de-Provence et Bellegarde.',
+    headline: 'Les pièces prennent forme',
+    lead: 'Cloisons, doublages et faux plafonds donnent leur forme aux pièces. Je les pose en fin de gros œuvre, une fois l’électricité et la plomberie en place.',
     intro: [
-      'Cloisons, doublages et faux plafonds donnent leur forme aux pièces. Je les pose en fin de gros œuvre, une fois l’électricité et la plomberie en place.',
       'L’isolation intérieure se pose en même temps que les doublages.',
+      'Comme j’ai posé les réseaux moi-même, je sais exactement où ils passent derrière chaque plaque.',
+    ],
+    links: [
+      { slug: 'electricite', text: 'Les gaines électriques sont posées avant les plaques.' },
+      { slug: 'plomberie', text: 'Les réseaux d’eau sont en place avant les doublages.' },
     ],
     included: ['Cloisons', 'Doublages', 'Faux plafonds', 'Isolation intérieure'],
     photos: [
@@ -296,6 +336,29 @@ export const story = {
   photo: { file: 'histoire', alt: '[À COMPLÉTER : description de la photo, ex. Stéphane sur un chantier]' },
   /** Grande photo de chantier, en largeur. */
   photoWide: { file: 'chantier', alt: '[À COMPLÉTER : description de la photo, ex. mur en pierre en cours de montage]' },
+};
+
+/** Gages de fiabilité affichés sur chaque page prestation (faits du brief uniquement). */
+export const commitments = {
+  title: 'Mes engagements',
+  items: [
+    {
+      icon: 'shield',
+      title: 'Garantie décennale',
+      text: 'Mes travaux sont couverts par une assurance décennale.',
+      detail: 'insurance', // affiche l’assureur et le n° de contrat (company.insurance)
+    },
+    {
+      icon: 'user',
+      title: 'Un seul interlocuteur',
+      text: 'Du premier appel à la fin du chantier, c’est moi que vous avez au téléphone.',
+    },
+    {
+      icon: 'compass',
+      title: 'Un savoir-faire transmis',
+      text: 'J’ai appris le métier aux côtés de mon père, compagnon du Devoir en maçonnerie, et avec lui l’exigence du travail bien fait.',
+    },
+  ],
 };
 
 /** Section « Prestations » (accueil et page Prestations). */
