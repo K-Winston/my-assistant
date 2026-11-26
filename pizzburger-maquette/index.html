@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pizz'Burger – Fast food & pizzeria à Roquemaure</title>
+<meta name="description" content="Pizz'Burger, fast food & pizzeria à Roquemaure depuis 2006 : burgers, tacos, kebabs, pizzas, bowls. Sur place, à emporter et en livraison.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;1,700;1,800&family=Barlow:wght@400;500;600&family=Kaushan+Script&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#E3161D; --red-dark:#B10F15; --black:#0F0F10; --char:#1A1A1C; --char-2:#242427;
+  --white:#FFFFFF; --cream:#F6F1EA; --cheese:#FFC21A; --muted:#A9A9AE;
+  --display:'Anton',Impact,sans-serif; --cond:'Barlow Condensed',sans-serif;
+  --body:'Barlow',system-ui,sans-serif; --script:'Kaushan Script',cursive;
+  --r:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{background:var(--black);color:var(--white);font-family:var(--body);font-size:17px;line-height:1.55;overflow-x:clip}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1200px,100% - 32px);margin-inline:auto}
+
+/* ---------- éléments de marque ---------- */
+.brush{display:inline-block;position:relative;padding:.08em .35em .12em;color:#fff;z-index:0}
+.brush::before{content:"";position:absolute;inset:0;background:var(--red);z-index:-1;transform:skew(-8deg) rotate(-1.5deg);
+  clip-path:polygon(1% 12%,8% 4%,30% 8%,55% 1%,80% 6%,99% 0,97% 40%,100% 78%,92% 96%,65% 92%,40% 100%,14% 94%,0 100%,3% 60%)}
+.brush.white{color:var(--black)} .brush.white::before{background:#fff}
+.brush.cheese{color:var(--black)} .brush.cheese::before{background:var(--cheese)}
+.script{font-family:var(--script);font-weight:400;text-transform:none;letter-spacing:0}
+.kicker{display:inline-block;font-family:var(--script);color:var(--red);font-size:1.5rem;line-height:1;margin-bottom:8px}
+h1,h2,h3{font-family:var(--display);font-weight:400;text-transform:uppercase;line-height:.95;letter-spacing:.01em}
+h2{font-size:clamp(2.4rem,6vw,4.4rem)}
+.underline{display:block;width:120px;height:6px;margin-top:14px;background:var(--red);clip-path:polygon(0 30%,100% 0,96% 100%,2% 80%)}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--cond);font-weight:700;font-size:1.15rem;text-transform:uppercase;letter-spacing:.04em;
+  padding:14px 24px;border-radius:999px;transition:transform .15s,background .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn-red{background:var(--red);color:#fff;box-shadow:0 8px 24px -8px rgba(227,22,29,.7)}
+.btn-red:hover{background:var(--red-dark)}
+.btn-ghost{border:2px solid rgba(255,255,255,.35)}
+.btn-ghost:hover{border-color:#fff}
+.btn svg{width:20px;height:20px}
+
+/* ---------- top bar ---------- */
+.topbar{background:var(--red);font-family:var(--cond);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:.95rem}
+.topbar .wrap{display:flex;justify-content:center;gap:28px;padding:8px 0;flex-wrap:wrap;text-align:center}
+.topbar span{white-space:nowrap}
+
+/* ---------- nav ---------- */
+header.nav{position:sticky;top:0;z-index:50;background:rgba(15,15,16,.92);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.06)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:78px}
+.nav .logo img{width:64px;height:64px;filter:drop-shadow(0 0 0 2px var(--red))}
+.nav .logo{display:flex;align-items:center;gap:12px}
+.nav .logo b{font-family:var(--cond);font-weight:700;text-transform:uppercase;font-size:.8rem;letter-spacing:.14em;color:var(--muted);line-height:1.2}
+.nav ul{display:flex;gap:30px;list-style:none;font-family:var(--cond);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:1.05rem}
+.nav ul a:hover{color:var(--red)}
+.nav .btn{padding:11px 20px;font-size:1rem}
+@media (max-width:900px){.nav ul{display:none}.nav .logo b{display:none}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;padding:70px 0 90px;
+  background:radial-gradient(900px 500px at 78% 40%,rgba(227,22,29,.35),transparent 60%),
+             radial-gradient(600px 400px at 0% 100%,rgba(227,22,29,.18),transparent 60%),var(--black)}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.08;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;position:relative;z-index:1}
+.hero h1{font-size:clamp(3.4rem,9vw,7.2rem);margin:14px 0 22px}
+.hero h1 .brush{margin-top:6px}
+.hero p.lead{font-size:1.2rem;color:#d8d8dc;max-width:520px}
+.hero .ctas{display:flex;gap:14px;flex-wrap:wrap;margin:30px 0 34px}
+.badges{display:flex;gap:10px;flex-wrap:wrap}
+.badge{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--char-2);font-family:var(--cond);font-weight:600;text-transform:uppercase;letter-spacing:.04em;font-size:.95rem}
+.badge .stars{color:var(--cheese);letter-spacing:1px}
+.hero-visual{position:relative}
+.hero-visual .photo{border-radius:28px;overflow:hidden;transform:rotate(3deg);box-shadow:0 30px 80px -20px rgba(0,0,0,.8),0 0 0 6px #fff}
+.hero-visual .photo img{aspect-ratio:1/1;object-fit:cover;width:100%}
+.hero-visual .sticker{position:absolute;left:-28px;bottom:36px;transform:rotate(-7deg);font-family:var(--display);text-transform:uppercase;font-size:1.6rem;line-height:1;
+  background:var(--red);padding:14px 20px;border-radius:6px;box-shadow:0 10px 30px -8px rgba(0,0,0,.7)}
+.hero-visual .sticker small{display:block;font-family:var(--script);text-transform:none;font-size:1.1rem;color:#fff}
+.hero-visual .stamp{position:absolute;right:-16px;top:-24px;width:120px;height:120px;border-radius:50%;animation:spin 18s linear infinite}
+.hero-visual .stamp img{width:100%;border-radius:50%;box-shadow:0 0 0 4px var(--red),0 10px 30px rgba(0,0,0,.6)}
+@keyframes spin{50%{transform:rotate(10deg)}}
+@media (max-width:900px){
+  .hero{padding:40px 0 70px}.hero .wrap{grid-template-columns:1fr}
+  .hero-visual{max-width:440px;margin:10px auto 0;width:88%}
+  .hero-visual .sticker{left:-10px;font-size:1.25rem}
+  .hero-visual .stamp{width:90px;height:90px;right:-8px}
+}
+
+/* ---------- bandeau défilant ---------- */
+.ticker{background:var(--red);overflow:hidden;border-block:3px solid #000;transform:rotate(-1.2deg);margin:-14px -10px 0;position:relative;z-index:2}
+.ticker .track{display:flex;gap:40px;width:max-content;padding:14px 0;animation:tick 28s linear infinite;
+  font-family:var(--cond);font-weight:800;font-style:italic;text-transform:uppercase;font-size:1.5rem;letter-spacing:.32em;white-space:nowrap}
+.ticker .track span::after{content:"🍔";margin-left:40px;letter-spacing:0}
+@keyframes tick{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.ticker .track,.hero-visual .stamp{animation:none}}
+
+/* ---------- sections ---------- */
+section{padding:100px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:46px;flex-wrap:wrap}
+.sec-head p{max-width:420px;color:var(--muted)}
+
+/* carte */
+.menu-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.card{position:relative;border-radius:var(--r);overflow:hidden;background:var(--char);isolation:isolate;min-height:300px;display:flex;align-items:flex-end}
+.card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform .5s}
+.card::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.88))}
+.card:hover img{transform:scale(1.06)}
+.card .txt{padding:20px}
+.card h3{font-size:2rem}
+.card p{font-size:.95rem;color:#ddd;margin-top:4px}
+.card .tag{position:absolute;top:14px;left:14px;font-family:var(--cond);font-weight:700;text-transform:uppercase;font-size:.85rem;letter-spacing:.06em;background:var(--cheese);color:#000;padding:4px 10px;border-radius:4px}
+.card.wide{grid-column:span 2}
+.card.big{grid-column:span 2;grid-row:span 2;min-height:620px}
+.card.big h3{font-size:3.2rem}
+@media (max-width:900px){.menu-grid{grid-template-columns:1fr 1fr}.card.big{min-height:420px}.card{min-height:230px}.card h3{font-size:1.6rem}}
+@media (max-width:520px){.menu-grid{gap:12px}.card .txt{padding:14px}.card p{display:none}.card.big h3{font-size:2.4rem}}
+.menu-note{margin-top:30px;display:flex;justify-content:center}
+
+/* signature */
+.signature{background:var(--red);position:relative;overflow:hidden}
+.signature .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.signature .img{border-radius:28px;overflow:hidden;transform:rotate(-2deg);box-shadow:0 0 0 6px #000,0 30px 60px -20px rgba(0,0,0,.6)}
+.signature .img img{aspect-ratio:1/1;object-fit:cover;width:100%}
+.signature h2{font-size:clamp(2.6rem,6vw,5rem)}
+.signature .kicker{color:#fff}
+.signature p{font-size:1.15rem;margin:20px 0 28px;color:#fff;max-width:480px}
+.signature .btn-dark{background:#000;color:#fff}
+.signature .btn-dark:hover{background:#222}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.pills span{border:2px solid #fff;border-radius:999px;padding:4px 14px;font-family:var(--cond);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+@media (max-width:900px){.signature .wrap{grid-template-columns:1fr;gap:36px}}
+
+/* le resto */
+.resto .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.resto .facade{border-radius:24px;overflow:hidden;position:relative}
+.resto .facade img{aspect-ratio:16/11;object-fit:cover;width:100%}
+.resto .facade .since{position:absolute;bottom:18px;right:18px;background:#000;border:2px solid var(--red);padding:8px 16px;border-radius:999px;font-family:var(--cond);font-weight:700;text-transform:uppercase;letter-spacing:.1em}
+.resto p{color:#cfcfd3;margin:18px 0}
+.services{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:26px}
+.service{display:flex;align-items:center;gap:12px;background:var(--char);padding:14px 16px;border-radius:14px;font-family:var(--cond);font-weight:600;text-transform:uppercase;letter-spacing:.04em;font-size:1.05rem}
+.service i{width:38px;height:38px;flex:none;border-radius:10px;background:var(--red);display:grid;place-items:center;font-style:normal;font-size:1.1rem}
+@media (max-width:900px){.resto .wrap{grid-template-columns:1fr;gap:36px}}
+@media (max-width:420px){.services{grid-template-columns:1fr}}
+
+/* livraison */
+.delivery{padding:0}
+.delivery .box{position:relative;overflow:hidden;border-radius:32px;background:#000;padding:70px 56px;display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.06)}
+.delivery .box::before{content:"";position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(227,22,29,.55),transparent 70%)}
+.delivery h2{font-size:clamp(3rem,9vw,7rem);line-height:.85}
+.delivery h2 span{display:block}
+.delivery .side{position:relative;text-align:center}
+.delivery .price{font-family:var(--display);font-size:5rem;line-height:1;color:var(--cheese)}
+.delivery .side p{font-family:var(--cond);text-transform:uppercase;font-weight:700;letter-spacing:.08em;margin:6px 0 24px}
+.delivery .scooter{font-size:3rem}
+@media (max-width:900px){.delivery .box{grid-template-columns:1fr;padding:46px 24px;text-align:center}}
+
+/* avis */
+.reviews-top{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.score{font-family:var(--display);font-size:5.5rem;line-height:1}
+.score-meta .stars{color:var(--cheese);font-size:1.5rem;letter-spacing:3px}
+.score-meta span{color:var(--muted);font-family:var(--cond);text-transform:uppercase;letter-spacing:.08em;font-weight:600}
+.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.review{background:var(--char);border-radius:var(--r);padding:28px;position:relative;border-top:4px solid var(--red)}
+.review::before{content:"“";position:absolute;right:20px;top:-6px;font-family:var(--display);font-size:6rem;color:var(--red);opacity:.35;line-height:1}
+.review .stars{color:var(--cheese);letter-spacing:2px}
+.review p{margin:12px 0 18px;color:#e6e6e8}
+.review .who{font-family:var(--cond);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.review .who small{display:block;color:var(--muted);font-weight:500;letter-spacing:.04em}
+@media (max-width:900px){.reviews{grid-template-columns:1fr}}
+
+/* galerie */
+.gallery{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:40px}
+.gallery img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:12px}
+@media (max-width:700px){.gallery{grid-template-columns:repeat(3,1fr)}}
+
+/* infos */
+.infos{background:var(--cream);color:var(--black)}
+.infos .wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.infos h2{color:var(--black)}
+.info-list{margin-top:30px;display:grid;gap:16px}
+.info{display:flex;gap:16px;align-items:flex-start}
+.info i{width:46px;height:46px;flex:none;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-style:normal;font-size:1.2rem}
+.info b{display:block;font-family:var(--cond);text-transform:uppercase;letter-spacing:.06em;font-size:1.05rem}
+.info a{color:var(--red-dark);font-weight:600}
+.hours{margin-top:30px;background:#fff;border-radius:var(--r);padding:22px 26px;box-shadow:0 10px 30px -18px rgba(0,0,0,.3)}
+.hours h3{font-size:1.6rem;margin-bottom:10px}
+.hours table{width:100%;border-collapse:collapse;font-family:var(--cond);font-size:1.1rem;font-weight:600}
+.hours td{padding:7px 0;border-bottom:1px dashed #ddd}
+.hours td:last-child{text-align:right}
+.hours tr.closed td:last-child{color:var(--red)}
+.hours .note{font-size:.85rem;color:#777;margin-top:10px;font-family:var(--body)}
+.map{border-radius:24px;overflow:hidden;min-height:460px;box-shadow:0 0 0 6px #000;background:#ddd}
+.map iframe{width:100%;height:100%;min-height:460px;border:0;display:block}
+@media (max-width:900px){.infos .wrap{grid-template-columns:1fr}.map,.map iframe{min-height:320px}}
+
+/* footer */
+footer{background:#000;padding:60px 0 110px;text-align:center}
+footer img{width:110px;margin:0 auto 18px}
+footer .tagline{font-family:var(--script);font-size:1.6rem;color:var(--red)}
+footer .links{display:flex;justify-content:center;gap:24px;margin:22px 0;font-family:var(--cond);font-weight:600;text-transform:uppercase;letter-spacing:.06em;flex-wrap:wrap}
+footer .social{display:flex;justify-content:center;gap:12px;margin-bottom:24px}
+footer .social a{width:44px;height:44px;border-radius:50%;background:var(--char-2);display:grid;place-items:center}
+footer .social a:hover{background:var(--red)}
+footer .social svg{width:20px;height:20px;fill:#fff}
+footer small{color:#77777c}
+
+/* barre mobile */
+.mobile-bar{display:none}
+@media (max-width:700px){
+  .mobile-bar{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:60;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(0,0,0,.94);border-top:1px solid #222}
+  .mobile-bar .btn{justify-content:center;padding:13px 10px;font-size:1.05rem}
+  .nav .btn{display:none}
+  section{padding:70px 0}
+  .topbar .wrap{gap:14px;font-size:.82rem}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <span>🛵 Livraison dès 15€</span><span>🕕 Ouvert dès 18h</span><span>📞 04 34 47 98 31</span>
+</div></div>
+
+<header class="nav"><div class="wrap">
+  <a href="#" class="logo"><img src="img/logo.png" alt="Logo Pizz'Burger"><b>Fast food<br>& pizzeria</b></a>
+  <ul>
+    <li><a href="#carte">La carte</a></li>
+    <li><a href="#resto">Le resto</a></li>
+    <li><a href="#livraison">Livraison</a></li>
+    <li><a href="#avis">Avis</a></li>
+    <li><a href="#infos">Infos</a></li>
+  </ul>
+  <a class="btn btn-red" href="tel:+33434479831">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
+    Commander</a>
+</div></header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="kicker">Goûtez la différence !</span>
+      <h1>La dalle,<br><span class="brush">la vraie.</span></h1>
+      <p class="lead">Burgers, tacos, kebabs, pizzas & bowls généreux, faits minute en plein cœur de Roquemaure. Sur place, à emporter ou livrés chez vous.</p>
+      <div class="ctas">
+        <a class="btn btn-red" href="tel:+33434479831">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
+          04 34 47 98 31</a>
+        <a class="btn btn-ghost" href="#carte">Voir la carte →</a>
+      </div>
+      <div class="badges">
+        <span class="badge"><span class="stars">★★★★★</span> 4,3 · 221 avis Google</span>
+        <span class="badge">🛵 Livraison</span>
+        <span class="badge">🥡 À emporter</span>
+        <span class="badge">🪑 Terrasse</span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="photo"><img src="img/triple.jpg" alt="Burger triple steak cheddar fondant"></div>
+      <div class="stamp"><img src="img/logo.png" alt=""></div>
+      <div class="sticker"><small>Street food</small>since 2006</div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true"><div class="track">
+  <span>Burgers</span><span>Tacos</span><span>Kebabs</span><span>Pizzas</span><span>Bowls</span><span>Wraps</span><span>Frites cheese</span>
+  <span>Burgers</span><span>Tacos</span><span>Kebabs</span><span>Pizzas</span><span>Bowls</span><span>Wraps</span><span>Frites cheese</span>
+</div></div>
+
+<!-- CARTE -->
+<section id="carte">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="kicker">On est là pour régaler</span><h2>Nos spécialités</h2><span class="underline"></span></div>
+      <p>Du burger qui déborde au tacos gratiné : tout est préparé à la commande, avec des sauces maison et du cheddar à volonté.</p>
+    </div>
+    <div class="menu-grid">
+      <a class="card big" href="#"><img src="img/stack.jpg" alt="Pile de burgers nappés de cheddar"><span class="tag">Best-seller</span>
+        <div class="txt"><h3>Burgers</h3><p>Smash, double, chicken crousty… le cheddar coule, c'est la règle.</p></div></a>
+      <a class="card" href="#"><img src="img/tacos.jpg" alt="Tacos gratiné coupé en deux"><div class="txt"><h3>Tacos</h3><p>Gratinés, sauce fromagère, frites dedans.</p></div></a>
+      <a class="card" href="#"><img src="img/wrap.jpg" alt="Wrap poulet sauce"><div class="txt"><h3>Wraps</h3><p>Le wrap qui met tout le monde d'accord.</p></div></a>
+      <a class="card" href="#"><img src="img/pizza.jpg" alt="Spécialité gratinée sauce cheddar"><span class="tag">Maison</span><div class="txt"><h3>Pizz' & gratinés</h3><p>Nos pâtes cuites minute, bien garnies.</p></div></a>
+      <a class="card" href="#"><img src="img/bowl.jpg" alt="Bowl frites poulet crispy"><div class="txt"><h3>Bowls</h3><p>Frites, viandes, sauces : le combo ultime.</p></div></a>
+      <a class="card" href="#"><img src="img/fries.jpg" alt="Frites sauce fromagère"><div class="txt"><h3>Frites cheese</h3><p>Nappées généreusement.</p></div></a>
+      <a class="card" href="#"><img src="img/dessert.jpg" alt="Dessert Kreamy's choco bomb"><div class="txt"><h3>Desserts</h3><p>Kreamy's & douceurs.</p></div></a>
+      <a class="card wide" href="#"><img src="img/menu.jpg" alt="Menu burger, wrap et boisson"><span class="tag">Menus</span><div class="txt"><h3>Menus & boissons</h3><p>Formules avec frites et boisson.</p></div></a>
+    </div>
+    <div class="menu-note"><a class="btn btn-red" href="#">Télécharger la carte complète (PDF)</a></div>
+  </div>
+</section>
+
+<!-- SIGNATURE -->
+<section class="signature">
+  <div class="wrap">
+    <div class="img"><img src="img/wrap.jpg" alt="Wrap poulet ultra crispy sauce"></div>
+    <div>
+      <span class="kicker">Mission : se régaler</span>
+      <h2>Poulet<br><span class="brush white">ultra crispy</span></h2>
+      <p>Le kebab traditionnel qui rencontre le fast-food américain. Pain grillé, poulet croustillant, sauces qui coulent : c'est ça, l'esprit Pizz'Burger.</p>
+      <div class="pills"><span>Kebab</span><span>Chicken</span><span>Cheddar</span><span>Sauce maison</span></div>
+      <a class="btn btn-dark" href="tel:+33434479831">Je commande ce soir</a>
+    </div>
+  </div>
+</section>
+
+<!-- LE RESTO -->
+<section id="resto" class="resto">
+  <div class="wrap">
+    <div class="facade"><img src="img/facade.jpg" alt="Devanture Pizz'Burger, rue de la République à Roquemaure"><span class="since">Depuis 2006</span></div>
+    <div>
+      <span class="kicker">Ce soir, ça se passe chez Pizz'Burger !</span>
+      <h2>Le snack<br>de Roquemaure</h2><span class="underline"></span>
+      <p>Rue de la République, en plein centre du village, on vous accueille depuis 2006 dans une ambiance street food. Venez manger sur place, en terrasse, ou passez récupérer votre commande.</p>
+      <p>Soirées matchs, nouveautés chaque saison, et toujours le même accueil chaleureux.</p>
+      <div class="services">
+        <div class="service"><i>🍽️</i>Sur place</div>
+        <div class="service"><i>🥡</i>À emporter</div>
+        <div class="service"><i>🛵</i>Livraison</div>
+        <div class="service"><i>☀️</i>Terrasse</div>
+        <div class="service"><i>📅</i>Réservations</div>
+        <div class="service"><i>🥗</i>Options végé</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVRAISON -->
+<section id="livraison" class="delivery">
+  <div class="wrap">
+    <div class="box">
+      <div>
+        <span class="kicker">Pas envie de bouger ?</span>
+        <h2><span>Faites-vous</span><span class="brush">livrer</span></h2>
+      </div>
+      <div class="side">
+        <div class="scooter">🛵</div>
+        <div class="price">15€</div>
+        <p>Minimum de commande · Roquemaure & alentours</p>
+        <a class="btn btn-red" href="tel:+33434479831">Appeler pour commander</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AVIS -->
+<section id="avis">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="kicker">Ils ont validé</span><h2>Vos avis</h2><span class="underline"></span></div>
+      <div class="reviews-top">
+        <div class="score">4,3</div>
+        <div class="score-meta"><div class="stars">★★★★★</div><span>221 avis Google</span></div>
+      </div>
+    </div>
+    <div class="reviews">
+      <div class="review"><div class="stars">★★★★★</div>
+        <p>Excellent snack à Roquemaure ! Je me suis régalé avec mes enfants, tout le monde a validé. Burgers, tacos et kebabs sont super bons et bien servis.</p>
+        <div class="who">Client Google<small>Sur place</small></div></div>
+      <div class="review"><div class="stars">★★★★★</div>
+        <p>Cela fait pas mal d'années que je commande kebab avec livraison à domicile… vraiment top et délicieux. Livraison top, accueil téléphonique chaleureux.</p>
+        <div class="who">Nath C.<small>Livraison · Dîner</small></div></div>
+      <div class="review"><div class="stars">★★★★★</div>
+        <p>Toujours un plaisir de venir ici. On habite à Roquemaure depuis janvier et on n'a jamais été déçus ! La nourriture est bonne et le service très agréable.</p>
+        <div class="who">Alexiane F.<small>À emporter · Dîner</small></div></div>
+    </div>
+    <div class="gallery">
+      <img src="img/closeup.jpg" alt=""><img src="img/bigmac.jpg" alt=""><img src="img/tacos.jpg" alt="">
+      <img src="img/bowl.jpg" alt=""><img src="img/fries.jpg" alt=""><img src="img/triple.jpg" alt="">
+    </div>
+  </div>
+</section>
+
+<!-- INFOS -->
+<section id="infos" class="infos">
+  <div class="wrap">
+    <div>
+      <span class="kicker">On vous attend !</span>
+      <h2>Infos pratiques</h2><span class="underline"></span>
+      <div class="info-list">
+        <div class="info"><i>📍</i><div><b>Adresse</b>7 Rue de la République, 30150 Roquemaure<br><a href="https://maps.google.com/?q=7+Rue+de+la+R%C3%A9publique+30150+Roquemaure" target="_blank" rel="noopener">Itinéraire →</a></div></div>
+        <div class="info"><i>📞</i><div><b>Téléphone</b><a href="tel:+33434479831">04 34 47 98 31</a></div></div>
+        <div class="info"><i>✉️</i><div><b>E-mail</b><a href="mailto:aprestoute@hotmail.fr">aprestoute@hotmail.fr</a></div></div>
+      </div>
+      <div class="hours">
+        <h3>Horaires</h3>
+        <table>
+          <tr><td>Lundi – Jeudi</td><td>11h30–14h · 18h–22h</td></tr>
+          <tr><td>Vendredi – Samedi</td><td>11h30–14h · 18h–23h</td></tr>
+          <tr><td>Dimanche</td><td>18h–22h</td></tr>
+        </table>
+        <p class="note">Horaires indicatifs, à valider avec le restaurant.</p>
+      </div>
+    </div>
+    <div class="map">
+      <iframe title="Plan d'accès Pizz'Burger" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        src="https://maps.google.com/maps?q=7%20Rue%20de%20la%20R%C3%A9publique%2C%2030150%20Roquemaure&z=16&output=embed"></iframe>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <img src="img/logo.png" alt="Pizz'Burger">
+    <div class="tagline">À très vite chez Pizz'Burger !</div>
+    <div class="links"><a href="#carte">La carte</a><a href="#resto">Le resto</a><a href="#livraison">Livraison</a><a href="#avis">Avis</a><a href="#infos">Infos</a></div>
+    <div class="social">
+      <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 9V7c0-.8.5-1 1-1h2V3h-3c-2.8 0-4 1.8-4 4v2H8v3h2v9h4v-9h2.6l.4-3z"/></svg></a>
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" style="fill:none;stroke:#fff;stroke-width:2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="#fff"/></svg><svg hidden viewBox="0 0 24 24"><path d="M12 7.3A4.7 4.7 0 1 0 12 16.7 4.7 4.7 0 0 0 12 7.3zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6zM17 5.6a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2zM21.9 7.9c-.1-1.5-.4-2.8-1.5-3.9S18 2.6 16.5 2.5c-1.6-.1-6.4-.1-8 0-1.5.1-2.8.4-3.9 1.5S3.2 6.4 3.1 7.9c-.1 1.6-.1 6.4 0 8 .1 1.5.4 2.8 1.5 3.9s2.4 1.4 3.9 1.5c1.6.1 6.4.1 8 0 1.5-.1 2.8-.4 3.9-1.5s1.4-2.4 1.5-3.9c.1-1.6.1-6.4 0-8z"/></svg></a>
+    </div>
+    <small>© 2026 Pizz'Burger · Fast food & pizzeria · Roquemaure · Mentions légales</small>
+  </div>
+</footer>
+
+<div class="mobile-bar">
+  <a class="btn btn-red" href="tel:+33434479831">📞 Appeler</a>
+  <a class="btn btn-ghost" href="https://maps.google.com/?q=7+Rue+de+la+R%C3%A9publique+30150+Roquemaure" target="_blank" rel="noopener">📍 Itinéraire</a>
+</div>
+
+</body>
+</html>
