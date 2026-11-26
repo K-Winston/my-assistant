@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Fiche RDV Pizz'Burger</title>
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=Kaushan+Script&display=swap" rel="stylesheet">
+<style>
+:root{--red:#E3161D;--black:#0F0F10;--char:#1A1A1C;--line:#2c2c30;--muted:#A9A9AE;--cheese:#FFC21A}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--black);color:#fff;font-family:'Barlow',system-ui,sans-serif;line-height:1.5;padding:0 16px 60px}
+.wrap{max-width:760px;margin:0 auto}
+header{display:flex;align-items:center;gap:16px;padding:26px 0 10px}
+header img{width:72px;height:72px}
+.kicker{font-family:'Kaushan Script',cursive;color:var(--red);font-size:1.3rem}
+h1{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;font-size:2.4rem;line-height:1}
+.intro{color:var(--muted);margin:10px 0 18px}
+.progress{position:sticky;top:0;z-index:5;background:var(--black);padding:10px 0 12px;border-bottom:1px solid var(--line)}
+.bar{height:8px;border-radius:99px;background:var(--char);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--red);transition:width .2s}
+.progress span{font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:.9rem;color:var(--muted)}
+h2{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;font-size:1.6rem;margin:30px 0 8px;display:flex;align-items:center;gap:10px}
+h2 b{background:var(--red);font-weight:400;border-radius:6px;padding:0 8px;font-size:1.1rem}
+label{display:grid;grid-template-columns:26px 1fr;gap:10px;padding:12px 0;border-bottom:1px dashed var(--line);cursor:pointer}
+label input{width:22px;height:22px;accent-color:var(--red);margin-top:2px}
+label small{display:block;color:var(--muted);font-size:.9rem}
+label:has(input:checked) .q{text-decoration:line-through;color:var(--muted)}
+.why{background:rgba(255,194,26,.1);border-left:4px solid var(--cheese);padding:12px 14px;border-radius:0 10px 10px 0;margin:10px 0;color:#eee;font-size:.95rem}
+.demo{background:var(--char);border-radius:16px;padding:18px 20px;margin-top:10px}
+.demo ol{padding-left:20px}
+.demo li{margin:6px 0}
+a{color:var(--cheese)}
+textarea{width:100%;min-height:140px;margin-top:10px;background:var(--char);color:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+button{font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:1rem;border:0;border-radius:99px;padding:12px 20px;cursor:pointer;background:var(--red);color:#fff}
+button.ghost{background:transparent;border:2px solid var(--line)}
+@media print{body{background:#fff;color:#000}.progress,.tools{display:none}label small,.intro{color:#444}.demo,textarea{background:#f4f4f4;color:#000}h2 b{color:#fff}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><img src="img/logo.png" alt=""><div><div class="kicker">Rendez-vous patron</div><h1>Fiche RDV Pizz'Burger</h1></div></header>
+<p class="intro">À cocher au fil de l'échange. Les cases et les notes restent enregistrées sur ce téléphone.</p>
+
+<div class="progress"><span id="count">0 / 0 points validés</span><div class="bar"><i id="fill"></i></div></div>
+
+<h2><b>0</b> Démo de la maquette (5 min)</h2>
+<div class="demo"><ol>
+  <li>Ouvrir <a href="https://pizzburger-maquette.netlify.app/">pizzburger-maquette.netlify.app</a> <b>sur son téléphone</b> (c'est là que ses clients le verront).</li>
+  <li>Montrer l'accroche « La dalle, la vraie », puis les boutons ronds Appeler / Itinéraire.</li>
+  <li>Taper sur une spécialité : la carte s'ouvre sur le bon onglet.</li>
+  <li>Le bloc « Le moment » : soirées matchs, nouveautés, offre du moment.</li>
+  <li>Les avis Google 4,3 ★ et la carte d'accès.</li>
+  <li>Bien préciser : <b>c'est une maquette</b>, les produits et les prix de la carte sont des exemples.</li>
+</ol></div>
+
+<h2><b>1</b> Horaires</h2>
+<label><input type="checkbox"><span><span class="q">Ouvert le midi ou seulement le soir ?</span><small>Google indique 11h30, alors que les publications Facebook disent « dès 18h ».</small></span></label>
+<label><input type="checkbox"><span><span class="q">Heure de fermeture, jour par jour</span><small>Et le(s) jour(s) de fermeture hebdomadaire.</small></span></label>
+<label><input type="checkbox"><span><span class="q">Congés annuels, horaires des jours fériés</span></span></label>
+
+<h2><b>2</b> Carte & prix</h2>
+<label><input type="checkbox"><span><span class="q">Récupérer la carte complète avec les prix</span><small>Photo du panneau ou du flyer, ça suffit.</small></span></label>
+<label><input type="checkbox"><span><span class="q">Les produits stars à mettre en avant</span><small>Best-sellers, recette signature, nouveautés.</small></span></label>
+<label><input type="checkbox"><span><span class="q">Formules et menus, suppléments, menu enfant</span></span></label>
+<label><input type="checkbox"><span><span class="q">Viande halal ? Options végétariennes ?</span><small>Google affiche « Convient aux végétariens ».</small></span></label>
+<label><input type="checkbox"><span><span class="q">Liste des allergènes</span><small>Les 14 allergènes doivent pouvoir être communiqués aux clients : on peut l'afficher sur le site.</small></span></label>
+
+<h2><b>3</b> Livraison & commande</h2>
+<label><input type="checkbox"><span><span class="q">Zone de livraison : quelles communes ?</span><small>Ex. Roquemaure, Sauveterre, Montfaucon, Pujaut… à confirmer.</small></span></label>
+<label><input type="checkbox"><span><span class="q">Minimum de 15 € confirmé ? Frais de livraison ? Délai moyen ?</span></span></label>
+<label><input type="checkbox"><span><span class="q">Présent sur Uber Eats, Deliveroo… ?</span><small>Si oui, ajouter les boutons sur le site.</small></span></label>
+<label><input type="checkbox"><span><span class="q">Commande par téléphone uniquement, ou envie de commande en ligne / click & collect ?</span><small>Ça change beaucoup le budget : à cadrer dès maintenant.</small></span></label>
+<label><input type="checkbox"><span><span class="q">Moyens de paiement acceptés</span><small>CB, espèces, tickets resto, paiement à la livraison…</small></span></label>
+
+<h2><b>4</b> Photos & identité</h2>
+<label><input type="checkbox"><span><span class="q">Récupérer les photos originales en haute définition</span><small>La maquette utilise des captures d'écran : ça se voit sur grand écran.</small></span></label>
+<label><input type="checkbox"><span><span class="q">Logo en fichier vectoriel (AI, SVG ou PDF)</span><small>Demander qui l'a créé.</small></span></label>
+<label><input type="checkbox"><span><span class="q">Visuels générés par IA : lesquels sont de vrais produits ?</span><small>Certains posts Facebook sont marqués « Contenu IA ». Sur un site, les photos de plats doivent correspondre à ce qui est servi : privilégier de vraies photos.</small></span></label>
+<label><input type="checkbox"><span><span class="q">Nom officiel à afficher</span><small>Pizz'Burger, Pizz"burger ou Snack Pizz'burger ? Les trois existent en ligne.</small></span></label>
+<label><input type="checkbox"><span><span class="q">« Depuis 2006 » : confirmé ?</span></span></label>
+
+<h2><b>5</b> Contenu & animation</h2>
+<label><input type="checkbox"><span><span class="q">Diffuse-t-il vraiment les matchs ? Lesquels ?</span></span></label>
+<label><input type="checkbox"><span><span class="q">L'offre « Cheese offert pour… » : quelles conditions ?</span></span></label>
+<label><input type="checkbox"><span><span class="q">OK pour afficher des avis Google avec le prénom des clients ?</span></span></label>
+<label><input type="checkbox"><span><span class="q">Qui mettra à jour le bloc « Le moment » ? À quelle fréquence ?</span><small>Lui-même (il faut alors un outil simple), ou toi dans le cadre d'une maintenance.</small></span></label>
+<label><input type="checkbox"><span><span class="q">Ton des textes : il valide ?</span><small>« La dalle, la vraie », « Le QG de Roquemaure », tutoiement par endroits…</small></span></label>
+
+<h2><b>6</b> Technique & administratif</h2>
+<label><input type="checkbox"><span><span class="q">Nom de domaine pizz-burger.com : chez qui ? Qui a les accès ?</span><small>Et que contient le site actuel ? Faut-il le remplacer ?</small></span></label>
+<label><input type="checkbox"><span><span class="q">E-mail à afficher</span><small>aprestoute@hotmail.fr ou une adresse pro (contact@pizz-burger.com) ?</small></span></label>
+<label><input type="checkbox"><span><span class="q">Liens Facebook, Instagram, TikTok</span></span></label>
+<label><input type="checkbox"><span><span class="q">Mentions légales</span><small>Raison sociale, forme juridique, SIRET, adresse du siège, nom du responsable de la publication.</small></span></label>
+<label><input type="checkbox"><span><span class="q">Accès à la fiche Google Business</span><small>Pour aligner horaires, lien du site et photos.</small></span></label>
+
+<h2><b>7</b> Projet</h2>
+<label><input type="checkbox"><span><span class="q">Budget et date de mise en ligne souhaitée</span></span></label>
+<label><input type="checkbox"><span><span class="q">Maintenance et hébergement : inclus ou en option ?</span></span></label>
+<label><input type="checkbox"><span><span class="q">Validation de la direction graphique</span><small>Couleurs, logo, typographies : ce qu'il aime, ce qu'il veut changer.</small></span></label>
+
+<h2><b>✍</b> Notes</h2>
+<textarea id="notes" placeholder="Ce qu'il a dit, ce qu'il veut changer…"></textarea>
+
+<div class="tools">
+  <button onclick="window.print()">Imprimer / PDF</button>
+  <button class="ghost" onclick="copyNotes()">Copier le compte-rendu</button>
+  <button class="ghost" onclick="resetAll()">Tout décocher</button>
+</div>
+</div>
+
+<script>
+var KEY='pizzburger-rdv';
+var boxes=[].slice.call(document.querySelectorAll('label input')),notes=document.getElementById('notes');
+function load(){try{var d=JSON.parse(localStorage.getItem(KEY)||'{}');(d.c||[]).forEach(function(v,i){if(boxes[i])boxes[i].checked=v});notes.value=d.n||''}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({c:boxes.map(function(b){return b.checked}),n:notes.value}))}catch(e){}}
+function update(){var n=boxes.filter(function(b){return b.checked}).length;
+  document.getElementById('count').textContent=n+' / '+boxes.length+' points validés';
+  document.getElementById('fill').style.width=(100*n/boxes.length)+'%'}
+boxes.forEach(function(b){b.addEventListener('change',function(){save();update()})});
+notes.addEventListener('input',save);
+function resetAll(){if(!confirm('Tout décocher et effacer les notes ?'))return;boxes.forEach(function(b){b.checked=false});notes.value='';save();update()}
+function copyNotes(){
+  var out=['RDV Pizz\'Burger – '+new Date().toLocaleDateString('fr-FR'),''];
+  document.querySelectorAll('h2').forEach(function(h){
+    var sec=[],el=h.nextElementSibling;
+    while(el&&el.tagName==='LABEL'){var i=el.querySelector('input');sec.push((i.checked?'[x] ':'[ ] ')+el.querySelector('.q').textContent);el=el.nextElementSibling}
+    if(sec.length){out.push(h.textContent.trim());out=out.concat(sec);out.push('')}
+  });
+  out.push('Notes :',notes.value);
+  var t=out.join('\n');
+  if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){alert('Compte-rendu copié')},function(){prompt('Copie ce texte :',t)});else prompt('Copie ce texte :',t);
+}
+load();update();
+</script>
+</body>
+</html>
