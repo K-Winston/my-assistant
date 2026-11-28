@@ -92,7 +92,7 @@ header.nav{position:sticky;top:0;z-index:50;background:rgba(15,15,16,.92);backdr
 .hero-visual .sticker{position:absolute;left:-28px;bottom:36px;transform:rotate(-7deg);font-family:var(--display);text-transform:uppercase;font-size:1.6rem;line-height:1;
   background:var(--red);padding:14px 20px;border-radius:6px;box-shadow:0 10px 30px -8px rgba(0,0,0,.7)}
 .hero-visual .sticker small{display:block;font-family:var(--script);text-transform:none;font-size:1.1rem;color:#fff}
-.hero-visual .stamp{position:absolute;right:-16px;top:-24px;width:120px;height:120px;border-radius:50%;animation:spin 18s linear infinite}
+.hero-visual .stamp{position:absolute;right:-16px;top:-24px;width:120px;height:120px;border-radius:50%}
 .hero-visual .stamp img{width:100%;border-radius:50%;box-shadow:0 0 0 4px var(--red),0 10px 30px rgba(0,0,0,.6)}
 @keyframes spin{50%{transform:rotate(10deg)}}
 @media (max-width:900px){
@@ -104,11 +104,11 @@ header.nav{position:sticky;top:0;z-index:50;background:rgba(15,15,16,.92);backdr
 
 /* ---------- bandeau défilant ---------- */
 .ticker{background:var(--red);overflow:hidden;border-block:3px solid #000;transform:rotate(-1.2deg);margin:-14px -10px 0;position:relative;z-index:2}
-.ticker .track{display:flex;gap:40px;width:max-content;padding:14px 0;animation:tick 28s linear infinite;
+.ticker .track{display:flex;gap:40px;width:max-content;padding:14px 0;
   font-family:var(--cond);font-weight:800;font-style:italic;text-transform:uppercase;font-size:1.5rem;letter-spacing:.32em;white-space:nowrap}
 .ticker .track span::after{content:"🍔";margin-left:40px;letter-spacing:0}
 @keyframes tick{to{transform:translateX(-50%)}}
-@media (prefers-reduced-motion:reduce){.ticker .track,.hero-visual .stamp{animation:none}.card img,.btn{transition:none}}
+@media (prefers-reduced-motion:reduce){.card img,.btn{transition:none}}
 
 /* ---------- sections ---------- */
 section{padding:100px 0}
@@ -279,6 +279,135 @@ footer small{color:#77777c}
   section{padding:70px 0}
   .topbar .wrap{gap:14px;font-size:.82rem}
 }
+
+/* =====================================================================
+   MOTION DESIGN
+   - Tout mouvement est en opt-in : @media (prefers-reduced-motion:no-preference)
+   - Uniquement transform (translate/scale/rotate) et opacity : reste sur le compositeur
+   - Les keyframes ne définissent que l'état de départ : l'état final est l'état normal
+   ===================================================================== */
+@keyframes rise{from{opacity:0;translate:0 28px}}
+@keyframes wipe{from{scale:0 1}}
+@keyframes slam{from{opacity:0;scale:1.9;rotate:-8deg}}
+@keyframes drop{from{opacity:0;translate:0 -60px;rotate:-7deg;scale:.94}}
+@keyframes pop{from{opacity:0;scale:.3}}
+@keyframes reveal{from{opacity:0;translate:0 48px;scale:.97}}
+@keyframes hero-out{to{opacity:.35;translate:0 110px;scale:.92}}
+@keyframes text-out{to{opacity:.25;translate:0 -50px}}
+@keyframes tilt{from{rotate:-7deg;translate:0 50px}to{rotate:4deg;translate:0 -40px}}
+@keyframes zoom-out{from{scale:1.22}}
+@keyframes drive{from{translate:-180px 0;rotate:-8deg}}
+@keyframes grow-progress{from{scale:0 1}}
+@keyframes ring{0%,100%{rotate:0deg}20%{rotate:-16deg}40%{rotate:14deg}60%{rotate:-10deg}80%{rotate:6deg}}
+@keyframes pulse{from{opacity:.75;scale:1}to{opacity:0;scale:1.7}}
+
+/* bouton pause des animations continues (WCAG 2.2.2) */
+.ticker-wrap{position:relative;z-index:2}
+.motion-toggle{position:absolute;right:16px;top:50%;translate:0 -50%;z-index:3;width:44px;height:44px;border-radius:50%;border:3px solid #000;
+  background:#fff;color:#000;display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 16px -6px rgba(0,0,0,.6)}
+.motion-toggle svg{width:16px;height:16px}
+.motion-toggle .play{display:none}
+.motion-paused .motion-toggle .play{display:block}
+.motion-paused .motion-toggle .pause{display:none}
+.motion-paused :is(.ticker .track,.hero-visual .stamp){animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){.motion-toggle{display:none}}
+
+/* onglets : pastille rouge qui glisse d'un onglet à l'autre (anchor positioning) */
+.tabs{position:relative}
+.tab{z-index:1;transition:border-color .25s,color .25s}
+@supports (position-anchor:--tab-active){
+  .tab[aria-selected="true"]{anchor-name:--tab-active;background:transparent}
+  .tab[aria-selected="true"]::after{content:none}
+  .tabs::before,.tabs::after{content:"";position:absolute;pointer-events:none;position-anchor:--tab-active}
+  /* pastille (fond) */
+  .tabs::before{z-index:0;background:var(--red);border-radius:999px;
+    inset-block-start:anchor(self-start);inset-block-end:anchor(self-end);
+    inset-inline-start:anchor(self-start);inset-inline-end:anchor(self-end)}
+  /* soulignement : bordure, conservée en mode contraste élevé */
+  .tabs::after{z-index:2;inset-block-start:calc(anchor(self-end) - 9px);
+    inset-inline-start:calc(anchor(self-start) + 20px);inset-inline-end:calc(anchor(self-end) + 20px);
+    border-block-end:3px solid #fff}
+  @media (prefers-reduced-motion:no-preference){
+    .tabs::before,.tabs::after{transition:inset .38s linear(0,.5 18%,1.04 40%,.99 65%,1)}
+  }
+}
+
+@media (prefers-reduced-motion:no-preference){
+  /* animations continues existantes, désormais en opt-in */
+  .ticker .track{animation:tick 28s linear infinite}
+
+  /* --- Hero : séquence d'entrée --- */
+  .hero .kicker{animation:rise .6s cubic-bezier(.2,.8,.2,1) .05s both}
+  .hero h1{animation:rise .7s cubic-bezier(.2,.8,.2,1) .15s both}
+  .hero h1 .brush{animation:slam .55s ease-out .55s both;animation:slam .55s linear(0,.55 25%,1.08 50%,.98 72%,1) .55s both}
+  .hero h1 .brush::before{transform-origin:left center;animation:wipe .45s cubic-bezier(.7,0,.2,1) .45s both}
+  .hero .lead{animation:rise .6s cubic-bezier(.2,.8,.2,1) .4s both}
+  .hero .ctas{animation:rise .6s cubic-bezier(.2,.8,.2,1) .5s both}
+  .hero .badge{animation:rise .5s cubic-bezier(.2,.8,.2,1) both;animation-delay:.6s}
+  .hero .badge:nth-child(2){animation-delay:.66s}
+  .hero .badge:nth-child(3){animation-delay:.72s}
+  .hero .badge:nth-child(4){animation-delay:.78s}
+  .hero-visual .photo{animation:drop .9s ease-out .2s both;animation:drop .9s linear(0,.6 25%,1.05 48%,.98 70%,1) .2s both}
+  .hero-visual .sticker{animation:slam .5s ease-out 1s both;animation:slam .5s linear(0,.6 30%,1.1 55%,.97 78%,1) 1s both}
+  .hero-visual .stamp{animation:pop .6s ease-out .8s both,spin 18s linear 1.4s infinite}
+
+  /* --- micro-interactions --- */
+  .btn{transition:transform .15s,background .15s,scale .12s}
+  .btn:active{scale:.96}
+  .btn:hover svg{animation:ring .55s ease-in-out}
+  .card .txt{transition:translate .35s cubic-bezier(.2,.8,.2,1)}
+  .card:is(:hover,:focus-visible) .txt{translate:0 -8px}
+  .nav ul a{background:linear-gradient(currentColor,currentColor) 0 100%/0 2px no-repeat;padding-bottom:3px;transition:background-size .25s,color .2s}
+  .nav ul a:is(:hover,:focus-visible){background-size:100% 2px}
+  .mobile-bar .call{position:relative}
+  .mobile-bar .call::after{content:"";position:absolute;inset:0;border-radius:50%;border:3px solid var(--red);
+    animation:pulse 1.6s ease-out 2s 3 both}
+
+  /* --- carte : contenu de l'onglet en cascade --- */
+  .panel:not([hidden]) .pic{animation:rise .5s cubic-bezier(.2,.8,.2,1) both}
+  .panel:not([hidden]) .item{animation:rise .45s cubic-bezier(.2,.8,.2,1) both}
+  .panel:not([hidden]) .item:nth-child(2){animation-delay:.05s}
+  .panel:not([hidden]) .item:nth-child(3){animation-delay:.1s}
+  .panel:not([hidden]) .item:nth-child(4){animation-delay:.15s}
+  .panel:not([hidden]) .item:nth-child(5){animation-delay:.2s}
+
+  /* --- animations liées au défilement (amélioration progressive : rien ne bouge
+         dans les navigateurs sans support, le contenu reste visible) --- */
+  @supports ((animation-timeline:view()) and (animation-range:entry)){
+    /* barre de progression de lecture */
+    .scroll-progress{position:fixed;inset:0 0 auto;height:4px;z-index:80;background:var(--cheese);transform-origin:0 50%;
+      animation:grow-progress linear both;animation-timeline:scroll(root)}
+
+    /* le hero s'éloigne quand on descend */
+    .hero-visual{animation:hero-out linear both;animation-timeline:view();animation-range:exit 0% exit 100%}
+    .hero .wrap>div:first-child{animation:text-out linear both;animation-timeline:view();animation-range:exit 10% exit 100%}
+
+    /* apparition des blocs */
+    :is(.sec-head,.card,.review,.service,.event,.info,.hours,.menu-foot,.reviews-top,.delivery .box,.resto .facade,.signature .wrap>div:last-child,.gallery img,.map){
+      --d:0%;animation:reveal linear both;animation-timeline:view();
+      animation-range:entry calc(5% + var(--d)) entry calc(75% + var(--d))}
+    :is(.menu-grid,.events-grid,.reviews,.services,.info-list,.gallery)>:nth-child(2){--d:6%}
+    :is(.menu-grid,.events-grid,.reviews,.services,.info-list,.gallery)>:nth-child(3){--d:12%}
+    :is(.menu-grid,.gallery)>:nth-child(4),.services>:nth-child(4){--d:8%}
+    :is(.menu-grid,.gallery)>:nth-child(5),.services>:nth-child(5){--d:14%}
+    :is(.menu-grid,.gallery)>:nth-child(6),.services>:nth-child(6){--d:20%}
+    .menu-grid>:nth-child(7){--d:10%}
+    .menu-grid>:nth-child(8){--d:16%}
+
+    /* traits de pinceau qui se dessinent à l'arrivée du titre */
+    main section:not(.hero) .brush{view-timeline:--brush}
+    main section:not(.hero) .brush::before{transform-origin:left center;animation:wipe linear both;
+      animation-timeline:--brush;animation-range:entry 40% cover 45%}
+
+    /* profondeur sur les photos */
+    .signature .img{animation:tilt linear both;animation-timeline:view();animation-range:cover 0% cover 100%}
+    .resto .facade img{animation:zoom-out linear both;animation-timeline:view();animation-range:entry 0% cover 60%}
+
+    /* livraison : le scooter arrive, le prix tombe comme un tampon */
+    .delivery .scooter{animation:drive linear both;animation-timeline:view();animation-range:entry 10% cover 40%}
+    .delivery .price,.score{animation:slam linear both;animation-timeline:view();animation-range:entry 20% entry 100%}
+  }
+}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Restaurant","name":"Pizz'Burger","description":"Fast food & pizzeria à Roquemaure depuis 2006 : burgers, tacos, kebabs, pizzas, bowls.",
@@ -289,6 +418,7 @@ footer small{color:#77777c}
 </head>
 <body>
 <a class="skip-link" href="#contenu">Aller au contenu</a>
+<div class="scroll-progress" aria-hidden="true"></div>
 
 <aside class="topbar" aria-label="En bref"><div class="wrap">
   <span><span aria-hidden="true">🛵</span> Livraison dès 15€</span><span><span aria-hidden="true">🕕</span> Ouvert dès 18h</span><span><span aria-hidden="true">📞</span> 04 34 47 98 31</span>
@@ -338,10 +468,16 @@ footer small{color:#77777c}
   </div>
 </section>
 
+<div class="ticker-wrap">
 <div class="ticker" aria-hidden="true"><div class="track">
   <span>Burgers</span><span>Tacos</span><span>Kebabs</span><span>Pizzas</span><span>Bowls</span><span>Wraps</span><span>Frites cheese</span>
   <span>Burgers</span><span>Tacos</span><span>Kebabs</span><span>Pizzas</span><span>Bowls</span><span>Wraps</span><span>Frites cheese</span>
 </div></div>
+<button type="button" class="motion-toggle" aria-label="Mettre en pause les animations">
+  <svg class="pause" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="2" width="4" height="12" rx="1"/><rect x="9" y="2" width="4" height="12" rx="1"/></svg>
+  <svg class="play" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2.5v11a.5.5 0 0 0 .76.43l9-5.5a.5.5 0 0 0 0-.86l-9-5.5A.5.5 0 0 0 4 2.5z"/></svg>
+</button>
+</div>
 
 <!-- CARTE -->
 <section id="specialites">
@@ -652,6 +788,19 @@ footer small{color:#77777c}
   document.querySelectorAll('[data-go]').forEach(function(a){
     a.addEventListener('click',function(){select(document.getElementById('tab-'+a.dataset.go))});
   });
+})();
+</script>
+<script>
+(function(){
+  var root=document.documentElement,btn=document.querySelector('.motion-toggle');
+  function set(paused){
+    root.classList.toggle('motion-paused',paused);
+    btn.setAttribute('aria-label',paused?'Relancer les animations':'Mettre en pause les animations');
+    try{localStorage.setItem('pb-motion-paused',paused?'1':'0')}catch(e){}
+  }
+  var saved=null;try{saved=localStorage.getItem('pb-motion-paused')}catch(e){}
+  if(saved==='1')set(true);
+  btn.addEventListener('click',function(){set(!root.classList.contains('motion-paused'))});
 })();
 </script>
 </body>
