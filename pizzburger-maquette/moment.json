@@ -1,0 +1,27 @@
+{
+  "_aide": "Contenu du bloc « Le moment » de la page d'accueil. Modifier les textes ci-dessous, enregistrer : le site se met à jour. Styles possibles : match, photo, promo.",
+  "cartes": [
+    {
+      "style": "match",
+      "etiquette": "⚽ Soirées matchs",
+      "titre": "Ce soir,",
+      "titre_pinceau": "on vibre ensemble !",
+      "texte": "Les grands matchs diffusés au resto. Venez avec la bande, on s'occupe des burgers."
+    },
+    {
+      "style": "photo",
+      "image": "bowl",
+      "image_alt": "Bowl de saison",
+      "etiquette": "🍂 Nouveauté de saison",
+      "titre": "L'automne, ça se savoure",
+      "texte": "Le bowl crispy nappé de sauce fromagère est de retour."
+    },
+    {
+      "style": "promo",
+      "accroche": "Cheese offert",
+      "etiquette": "🧀 Offre du moment",
+      "titre": "Pour toute commande de [à définir]",
+      "texte": "Conditions à préciser avec le restaurant."
+    }
+  ]
+}

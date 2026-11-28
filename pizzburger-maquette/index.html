@@ -75,6 +75,7 @@ header.nav{position:sticky;top:0;z-index:50;background:rgba(15,15,16,.92);backdr
 .nav ul a:hover{color:var(--red)}
 .nav .btn{padding:11px 20px;font-size:1rem}
 @media (max-width:900px){.nav ul{display:none}.nav .logo b{display:none}}
+@media (max-width:1100px){.nav .logo b{display:none}}
 
 /* ---------- hero ---------- */
 .hero{position:relative;overflow:hidden;padding:70px 0 90px;
@@ -439,6 +440,107 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
     .delivery .price,.score{animation:slam linear both;animation-timeline:view();animation-range:entry 20% entry 100%}
   }
 }
+
+/* ===== utilitaires ===== */
+.visually-hidden:where(:not(:focus-within,:active)){position:absolute!important;clip-path:inset(50%)!important;overflow:hidden!important;width:1px!important;height:1px!important;margin:-1px!important;padding:0!important;border:0!important;white-space:nowrap!important}
+.demo-inline{background:rgba(255,194,26,.12);border:1px dashed var(--cheese);color:#f3e2b0;border-radius:12px;padding:10px 14px;font-size:.92rem}
+.demo-inline a{color:var(--cheese)}
+
+/* ===== bouton « Ajouter » sur la carte ===== */
+.item p{grid-column:1}
+.item .add{grid-column:2;grid-row:2;align-self:start;justify-self:end;position:relative;cursor:pointer;font-family:var(--cond);font-weight:700;text-transform:uppercase;letter-spacing:.04em;
+  font-size:.95rem;color:#fff;background:transparent;border:2px solid var(--red);border-radius:999px;padding:6px 14px;min-height:36px;white-space:nowrap;transition:background .2s}
+.item .add:hover{background:var(--red)}
+.item .add[data-qty]:not([data-qty=""])::after{content:attr(data-qty);position:absolute;top:-10px;right:-8px;background:var(--cheese);color:#000;border-radius:999px;font-size:.75rem;padding:1px 7px;border:2px solid var(--char)}
+.item.in-cart h3{color:var(--cheese)}
+@media (prefers-reduced-motion:no-preference){
+  .item .add.bump{animation:pop .35s linear(0,.6 30%,1.12 55%,.97 78%,1)}
+  .item .add:active{scale:.94}
+}
+
+/* ===== allergènes ===== */
+.allergens{margin-top:26px;background:var(--black);border-radius:var(--r);padding:4px 22px}
+.allergens summary{cursor:pointer;padding:16px 0;font-family:var(--cond);font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:1.05rem}
+.allergens-body{padding:0 0 20px}
+.allergen-list{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:14px}
+.allergen-list li{background:var(--char-2);border-radius:10px;padding:8px 12px;font-family:var(--cond);font-weight:600;letter-spacing:.03em}
+.menu-foot{margin-top:18px}
+.menu-foot-ctas{display:flex;gap:10px;flex-wrap:wrap}
+@media (max-width:700px){.menu-foot{flex-direction:column;align-items:stretch}.menu-foot-ctas .btn{justify-content:center}}
+
+/* ===== bouton panier (dans l'en-tête) ===== */
+.nav-actions{display:flex;align-items:center;gap:10px}
+.cart-fab{display:flex;align-items:center;gap:8px;cursor:pointer;font-family:var(--cond);font-weight:700;text-transform:uppercase;letter-spacing:.04em;
+  font-size:1rem;color:#000;background:var(--cheese);border:0;border-radius:999px;padding:9px 14px;min-height:44px}
+.cart-fab .count{background:#000;color:#fff;border-radius:999px;min-width:24px;padding:1px 7px;text-align:center}
+.cart-fab[hidden]{display:none}
+@media (prefers-reduced-motion:no-preference){.cart-fab:not([hidden]){animation:slam .45s linear(0,.6 30%,1.1 55%,.97 78%,1) both}}
+
+/* ===== fenêtre de commande ===== */
+html:has(dialog.order[open]){overflow:hidden}
+dialog.order{margin:0 0 0 auto;width:min(480px,100%);height:100dvh;max-height:none;max-width:100%;border:0;padding:0;background:var(--char);color:#fff;
+  box-shadow:-20px 0 60px rgba(0,0,0,.6)}
+dialog.order::backdrop{background:rgba(0,0,0,.65)}
+.order-inner{padding:22px 24px 40px;min-height:100%}
+.order-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.order-head h2{font-size:2.4rem}
+.order-close{cursor:pointer}
+.order-head .order-close{width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,.3);background:transparent;color:#fff;font-size:1.1rem}
+.order-sub{font-family:var(--cond);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:1.1rem;color:var(--muted);margin:22px 0 10px;line-height:1.2}
+.cart-list{list-style:none;display:grid;gap:8px}
+.cart-list li{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;background:var(--black);border-radius:12px;padding:10px 12px}
+.cart-name{font-family:var(--cond);font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+.stepper{display:flex;align-items:center;gap:4px}
+.stepper button{width:36px;height:36px;border-radius:50%;border:2px solid var(--red);background:transparent;color:#fff;font-size:1.1rem;cursor:pointer}
+.stepper button:hover{background:var(--red)}
+.stepper output{min-width:24px;text-align:center;font-family:var(--display);font-size:1.2rem}
+.cart-price{font-family:var(--display);color:var(--cheese)}
+.cart-empty{color:var(--muted);margin:10px 0}
+.cart-empty a{color:var(--cheese)}
+.cart-total{display:flex;justify-content:space-between;margin:14px 0 4px;padding-top:12px;border-top:1px dashed rgba(255,255,255,.2);font-family:var(--cond);text-transform:uppercase;letter-spacing:.05em}
+.cart-total b{color:var(--cheese)}
+.form-hint{color:var(--muted);font-size:.9rem;margin-bottom:6px}
+.field{display:grid;gap:4px;margin:16px 0}
+.field label{font-family:var(--cond);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.field .opt{color:var(--muted);font-weight:500;text-transform:none}
+.field .hint{color:var(--muted);font-size:.88rem;margin:0}
+.field :is(input,select,textarea){font:inherit;color:#fff;background:var(--black);border:2px solid #3a3a40;border-radius:12px;padding:12px 14px;min-height:48px;width:100%}
+.field select{color-scheme:dark}
+.field :is(input,select,textarea):focus-visible{outline:3px solid var(--cheese);outline-offset:2px;border-color:var(--cheese)}
+.field :is(input,select)[aria-invalid="true"],.field :is(input,select):user-invalid{border-color:#ff6b6b}
+.err{color:#ff8a8a;font-size:.9rem;margin:0;min-height:0}
+.err:not(:empty)::before{content:"⚠ ";}
+.order-submit{width:100%;justify-content:center;margin-top:8px;cursor:pointer;border:0}
+.pay-note{color:var(--muted);font-size:.88rem;margin-top:10px;text-align:center}
+.order-done{text-align:center;padding-top:20px;display:grid;gap:14px;justify-items:center}
+.order-done:focus{outline:none}
+.done-icon{font-size:3rem}
+.order-done h3{font-size:1.9rem}
+.order-done ul{list-style:none;color:#ddd}
+.order-done .btn{border:0;cursor:pointer}
+@media (prefers-reduced-motion:no-preference){
+  dialog.order[open]{animation:drawer-in .38s cubic-bezier(.2,.8,.2,1)}
+  dialog.order[open]::backdrop{animation:fade .3s ease-out}
+}
+@keyframes drawer-in{from{translate:100% 0}}
+@keyframes fade{from{opacity:0}}
+
+/* ===== carrousel des avis (mobile) ===== */
+.carousel-controls,.carousel-markers{display:none}
+@media (max-width:900px){
+  .reviews-carousel{position:relative}
+  .reviews{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;gap:14px;scrollbar-width:none;
+    padding:4px 2px 10px;margin:0 -2px;touch-action:manipulation}
+  .reviews::-webkit-scrollbar{display:none}
+  .reviews>.review{flex:0 0 86%;scroll-snap-align:center}
+  .carousel-controls{display:flex;justify-content:flex-end;gap:8px;margin-bottom:12px}
+  .carousel-controls button{width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,.35);background:transparent;color:#fff;font-size:1.2rem;cursor:pointer;touch-action:manipulation}
+  .carousel-markers{display:flex;justify-content:center;gap:6px;margin-top:14px}
+  .carousel-markers button{width:28px;height:28px;border:0;background:transparent;cursor:pointer;display:grid;place-items:center;padding:0}
+  .carousel-markers button::before{content:"";width:10px;height:10px;border-radius:50%;background:#55555c;transition:width .2s,background .2s}
+  .carousel-markers button[aria-current="true"]::before{width:26px;border-radius:6px;background:var(--red);outline:2px solid #fff;outline-offset:2px}
+}
+@media (max-width:900px) and (prefers-reduced-motion:no-preference){.reviews{scroll-behavior:smooth}}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Restaurant","name":"Pizz'Burger","description":"Fast food & pizzeria à Roquemaure depuis 2006 : burgers, tacos, kebabs, pizzas, bowls.",
@@ -465,9 +567,10 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
     <li><a href="#avis">Avis</a></li>
     <li><a href="#infos">Infos</a></li>
   </ul></nav>
+  <div class="nav-actions"><button type="button" class="cart-fab" id="cart-fab" hidden><span aria-hidden="true">🛍</span> Ma commande <span class="count">0</span></button>
   <a class="btn btn-red" href="tel:+33434479831">
     <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
-    Commander</a>
+    Commander</a></div>
 </div></header>
 
 <main id="contenu">
@@ -615,9 +718,25 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
       </div>
       </div>
     </div>
+    <details class="allergens">
+      <summary><span aria-hidden="true">⚠️</span> Allergènes : les 14 allergènes majeurs</summary>
+      <div class="allergens-body">
+        <p class="demo-inline">⚠ Tableau par plat à compléter avec la liste réelle du restaurant. En attendant, demandez au <a href="tel:+33434479831">04 34 47 98 31</a>.</p>
+        <ul class="allergen-list">
+          <li><span aria-hidden="true">🌾</span> Gluten</li><li><span aria-hidden="true">🦐</span> Crustacés</li><li><span aria-hidden="true">🥚</span> Œufs</li>
+          <li><span aria-hidden="true">🐟</span> Poissons</li><li><span aria-hidden="true">🥜</span> Arachides</li><li><span aria-hidden="true">🫘</span> Soja</li>
+          <li><span aria-hidden="true">🥛</span> Lait</li><li><span aria-hidden="true">🌰</span> Fruits à coque</li><li><span aria-hidden="true">🥬</span> Céleri</li>
+          <li><span aria-hidden="true">🟡</span> Moutarde</li><li><span aria-hidden="true">⚪</span> Sésame</li><li><span aria-hidden="true">🍷</span> Sulfites</li>
+          <li><span aria-hidden="true">🌱</span> Lupin</li><li><span aria-hidden="true">🐚</span> Mollusques</li>
+        </ul>
+      </div>
+    </details>
     <div class="menu-foot">
-      <p><b>Menus :</b> transformez n'importe quel burger, tacos ou kebab en menu avec frites + boisson.</p>
-      <a class="btn btn-red" href="tel:+33434479831">Commander : 04 34 47 98 31</a>
+      <p><b>Menus :</b> transformez n'importe quel burger, tacos ou kebab en menu avec frites + boisson. <b>Click &amp; collect :</b> ajoutez vos produits et passez récupérer votre commande.</p>
+      <div class="menu-foot-ctas">
+        <button type="button" class="btn btn-red" data-open-order><span aria-hidden="true">🛍</span> Ma commande</button>
+        <a class="btn btn-ghost" href="tel:+33434479831">Ou par téléphone : 04 34 47 98 31</a>
+      </div>
     </div>
   </div>
 </section>
@@ -715,16 +834,24 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
         <div class="score-meta"><div class="stars" aria-hidden="true">★★★★★</div><span>221 avis Google</span></div>
       </div>
     </div>
-    <div class="reviews">
-      <div class="review"><div class="stars" role="img" aria-label="5 étoiles sur 5">★★★★★</div>
+    <div class="reviews-carousel" role="region" aria-roledescription="carrousel" aria-label="Avis clients">
+    <div class="carousel-controls">
+      <button type="button" data-dir="prev"><span aria-hidden="true">←</span><span class="visually-hidden">Avis précédent</span></button>
+      <button type="button" data-dir="next"><span aria-hidden="true">→</span><span class="visually-hidden">Avis suivant</span></button>
+    </div>
+    <div class="reviews" tabindex="0" role="group" aria-label="Avis, faire défiler horizontalement">
+      <div class="review" role="group" aria-roledescription="avis" aria-label="1 sur 3"><div class="stars" role="img" aria-label="5 étoiles sur 5">★★★★★</div>
         <p>Excellent snack à Roquemaure ! Je me suis régalé avec mes enfants, tout le monde a validé. Burgers, tacos et kebabs sont super bons et bien servis.</p>
         <div class="who">Client Google<small>Sur place</small></div></div>
-      <div class="review"><div class="stars" role="img" aria-label="5 étoiles sur 5">★★★★★</div>
+      <div class="review" role="group" aria-roledescription="avis" aria-label="2 sur 3"><div class="stars" role="img" aria-label="5 étoiles sur 5">★★★★★</div>
         <p>Cela fait pas mal d'années que je commande kebab avec livraison à domicile… vraiment top et délicieux. Livraison top, accueil téléphonique chaleureux.</p>
         <div class="who">Nath C.<small>Livraison · Dîner</small></div></div>
-      <div class="review"><div class="stars" role="img" aria-label="5 étoiles sur 5">★★★★★</div>
+      <div class="review" role="group" aria-roledescription="avis" aria-label="3 sur 3"><div class="stars" role="img" aria-label="5 étoiles sur 5">★★★★★</div>
         <p>Toujours un plaisir de venir ici. On habite à Roquemaure depuis janvier et on n'a jamais été déçus ! La nourriture est bonne et le service très agréable.</p>
         <div class="who">Alexiane F.<small>À emporter · Dîner</small></div></div>
+    </div>
+    <p class="visually-hidden carousel-status" role="status" aria-live="polite"></p>
+    <nav class="carousel-markers" aria-label="Choisir un avis"></nav>
     </div>
     <div class="gallery">
       <picture><source type="image/avif" srcset="img/closeup.avif"><source type="image/webp" srcset="img/closeup.webp"><img src="img/closeup.jpg" alt="" width="715" height="719" loading="lazy"></picture><picture><source type="image/avif" srcset="img/bigmac.avif"><source type="image/webp" srcset="img/bigmac.webp"><img src="img/bigmac.jpg" alt="" width="356" height="349" loading="lazy"></picture><picture><source type="image/avif" srcset="img/tacos.avif"><source type="image/webp" srcset="img/tacos.webp"><img src="img/tacos.jpg" alt="" width="356" height="351" loading="lazy"></picture>
@@ -782,6 +909,62 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
     <small>© 2026 Pizz'Burger · Fast food & pizzeria · Roquemaure · <a href="mentions-legales.html">Mentions légales</a></small>
   </div>
 </footer>
+
+<p class="visually-hidden" id="live-status" role="status" aria-live="polite"></p>
+
+<dialog class="order" id="order" aria-labelledby="order-title" closedby="any">
+  <div class="order-inner">
+    <div class="order-head">
+      <h2 id="order-title">Ma commande</h2>
+      <button type="button" class="order-close" aria-label="Fermer la commande">✕</button>
+    </div>
+    <p class="demo-inline">⚠ <b>Démo :</b> aucune commande n'est envoyée au restaurant. Les prix seront affichés avec la carte réelle.</p>
+
+    <div id="step-cart">
+      <h3 class="order-sub">Click &amp; collect</h3>
+      <ul class="cart-list" id="cart-list"></ul>
+      <p class="cart-empty" id="cart-empty">Votre commande est vide. Ajoutez des produits depuis <a href="#carte" class="order-close">la carte</a>.</p>
+      <p class="cart-total">Total <b>calculé avec les prix réels</b></p>
+
+      <form id="order-form" method="post" action="#" aria-labelledby="order-form-title" novalidate>
+        <h3 class="order-sub" id="order-form-title">Retrait au restaurant</h3>
+        <p class="form-hint">Tous les champs sont obligatoires sauf mention contraire.</p>
+        <div class="field">
+          <label for="creneau">Heure de retrait</label>
+          <p class="hint" id="hint-creneau">7 Rue de la République, Roquemaure · préparation ~20 min</p>
+          <select id="creneau" name="creneau" required aria-describedby="hint-creneau err-creneau"></select>
+          <p class="err" id="err-creneau"></p>
+        </div>
+        <div class="field">
+          <label for="nom">Nom pour le comptoir</label>
+          <input id="nom" name="nom" type="text" autocomplete="name" required maxlength="60" enterkeyhint="next" aria-describedby="err-nom">
+          <p class="err" id="err-nom"></p>
+        </div>
+        <div class="field">
+          <label for="tel">Téléphone</label>
+          <p class="hint" id="hint-tel">Pour vous prévenir si besoin</p>
+          <input id="tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" required pattern="(?:\+33\s?|0)[1-9](?:[\s.\-]?\d{2}){4}" enterkeyhint="next" aria-describedby="hint-tel err-tel">
+          <p class="err" id="err-tel"></p>
+        </div>
+        <div class="field">
+          <label for="remarques">Remarques <span class="opt">(facultatif)</span></label>
+          <textarea id="remarques" name="remarques" rows="3" maxlength="300" placeholder="Sauces, sans oignons, allergies…"></textarea>
+        </div>
+        <button type="submit" class="btn btn-red order-submit">Valider la commande (démo)</button>
+        <p class="pay-note">Paiement au retrait, sur place. Livraison : par téléphone uniquement pour l'instant.</p>
+      </form>
+    </div>
+
+    <div id="step-done" class="order-done" tabindex="-1" hidden>
+      <p class="done-icon" aria-hidden="true">✅</p>
+      <h3>Commande <span id="done-num"></span> prête à envoyer</h3>
+      <p><b id="done-name"></b>, retrait <b id="done-when"></b>.</p>
+      <ul id="done-list"></ul>
+      <div class="demo-inline"><b>C'est une démo : rien n'a été envoyé.</b> En version finale, le restaurant recevrait la commande (tablette, e-mail ou SMS) et vous recevriez une confirmation.</div>
+      <button type="button" class="btn btn-red order-close">Fermer</button>
+    </div>
+  </div>
+</dialog>
 
 <nav class="mobile-bar" aria-label="Accès rapide">
   <a class="call" href="tel:+33434479831" aria-label="Appeler Pizz'Burger"><svg aria-hidden="true" viewBox="0 0 24 24" fill="#fff"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg></a>
@@ -848,6 +1031,7 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
   var H={0:[['18:00','22:00']],1:[['11:30','14:00'],['18:00','22:00']],2:[['11:30','14:00'],['18:00','22:00']],
          3:[['11:30','14:00'],['18:00','22:00']],4:[['11:30','14:00'],['18:00','22:00']],
          5:[['11:30','14:00'],['18:00','23:00']],6:[['11:30','14:00'],['18:00','23:00']]};
+  window.PB_HOURS=H;
   var JOURS=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
   var el=document.getElementById('open-status');
   function min(t){var p=t.split(':');return +p[0]*60+ +p[1]}
@@ -905,5 +1089,6 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
   });
 })();
 </script>
+<script src="js/extras.js" defer></script>
 </body>
 </html>
