@@ -14,9 +14,11 @@
 <meta name="theme-color" content="#0F0F10">
 <link rel="icon" type="image/png" href="img/favicon.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;1,700;1,800&family=Barlow:wght@400;500;600&family=Kaushan+Script&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/barlow-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="expect" href="#accueil" blocking="render">
 <style>
 :root{
   --red:#E3161D; --red-dark:#B10F15; --black:#0F0F10; --char:#1A1A1C; --char-2:#242427;
@@ -28,8 +30,9 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html{overflow-x:clip}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
-body{background:var(--black);color:var(--white);font-family:var(--body);font-size:17px;line-height:1.55;overflow-x:clip}
+body{background:var(--black);color:var(--white);font-family:var(--body);font-size:17px;line-height:1.55;overflow-x:clip;font-size-adjust:from-font}
 img{display:block;max-width:100%;height:auto}
+picture{display:contents}
 :where(a,button,[tabindex]):focus-visible{outline:3px solid var(--cheese);outline-offset:3px}
 .skip-link{position:absolute;left:16px;top:-100px;z-index:100;background:var(--cheese);color:#000;font-family:var(--cond);font-weight:700;text-transform:uppercase;padding:10px 18px;border-radius:999px}
 .skip-link:focus{top:12px}
@@ -52,7 +55,7 @@ h2{font-size:clamp(2.4rem,6vw,4.4rem)}
 .btn:hover{transform:translateY(-2px)}
 .btn-red{background:var(--red);color:#fff;box-shadow:0 8px 24px -8px rgba(227,22,29,.7)}
 .btn-red:hover{background:var(--red-dark)}
-.btn-ghost{border:2px solid rgba(255,255,255,.35)}
+.btn-ghost{border:2px solid rgba(255,255,255,.35);background:transparent;color:#fff;cursor:pointer}
 .btn-ghost:hover{border-color:#fff}
 .btn svg{width:20px;height:20px}
 
@@ -60,11 +63,12 @@ h2{font-size:clamp(2.4rem,6vw,4.4rem)}
 .topbar{background:var(--red);font-family:var(--cond);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:.95rem}
 .topbar .wrap{display:flex;justify-content:center;gap:28px;padding:8px 0;flex-wrap:wrap;text-align:center}
 .topbar span{white-space:nowrap}
+@media (max-width:520px){.topbar .tel{display:none}}
 
 /* ---------- nav ---------- */
 header.nav{position:sticky;top:0;z-index:50;background:rgba(15,15,16,.92);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.06)}
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:78px}
-.nav .logo img{width:64px;height:64px;filter:drop-shadow(0 0 0 2px var(--red))}
+.nav .logo img{view-transition-name:logo;width:64px;height:64px;filter:drop-shadow(0 0 0 2px var(--red))}
 .nav .logo{display:flex;align-items:center;gap:12px}
 .nav .logo b{font-family:var(--cond);font-weight:700;text-transform:uppercase;font-size:.8rem;letter-spacing:.14em;color:var(--muted);line-height:1.2}
 .nav ul{display:flex;gap:30px;list-style:none;font-family:var(--cond);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:1.05rem}
@@ -248,12 +252,25 @@ section{padding:100px 0}
 .hours{margin-top:30px;background:#fff;border-radius:var(--r);padding:22px 26px;box-shadow:0 10px 30px -18px rgba(0,0,0,.3)}
 .hours h3{font-size:1.6rem;margin-bottom:10px}
 .hours table{width:100%;border-collapse:collapse;font-family:var(--cond);font-size:1.1rem;font-weight:600}
-.hours td{padding:7px 0;border-bottom:1px dashed #ddd}
+.hours :is(td,th){padding:7px 0;border-bottom:1px dashed #ddd;text-align:left;font-weight:600}
+.hours tr.today :is(td,th){color:var(--red-dark);font-weight:700}
+.hours tr.today th::after{content:" · aujourd'hui";font-weight:600;font-size:.85em}
+.open-status .dot{display:inline-block;width:.6em;height:.6em;border-radius:50%;background:#2ee66b;box-shadow:0 0 0 2px #fff;margin-right:.35em;vertical-align:.05em}
+.open-status.closed .dot{background:#111}
 .hours td:last-child{text-align:right}
 .hours tr.closed td:last-child{color:var(--red)}
 .hours .note{font-size:.85rem;color:#5c5c5c;margin-top:10px;font-family:var(--body)}
 .map{border-radius:24px;overflow:hidden;min-height:460px;box-shadow:0 0 0 6px #000;background:#ddd}
 .map iframe{width:100%;height:100%;min-height:460px;border:0;display:block}
+.map{position:relative;color:#fff;display:grid}
+.map-facade{display:grid;place-content:center;justify-items:center;gap:14px;text-align:center;padding:40px 24px;
+  background:radial-gradient(circle at 50% 35%,rgba(227,22,29,.35),transparent 60%),
+    repeating-linear-gradient(35deg,#1d1d20 0 2px,transparent 2px 46px),repeating-linear-gradient(-55deg,#1d1d20 0 2px,transparent 2px 60px),#121214}
+.map-facade .pin{width:64px;height:64px;color:var(--red);filter:drop-shadow(0 8px 14px rgba(0,0,0,.6))}
+.map-addr{font-family:var(--display);text-transform:uppercase;font-size:1.6rem;line-height:1.05}
+.map-note{max-width:340px;font-size:.85rem;color:#bdbdc2}
+.map-note a,.map-open{color:var(--cheese)}
+.map-open{font-family:var(--cond);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
 @media (max-width:900px){.infos .wrap{grid-template-columns:1fr}.map,.map iframe{min-height:320px}}
 
 /* footer */
@@ -266,6 +283,9 @@ footer .social a{width:44px;height:44px;border-radius:50%;background:var(--char-
 footer .social a:hover{background:var(--red)}
 footer .social svg{width:20px;height:20px;fill:#fff}
 footer small{color:#8a8a90}
+.install-wrap{margin:0 0 22px}
+.install-status{color:#bdbdc2;font-size:.9rem;margin-top:8px}
+.install-status:empty{display:none}
 footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
 
 /* boutons flottants mobile (à gauche : le badge Netlify occupe le coin droit) */
@@ -280,6 +300,16 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
   section{padding:70px 0}
   .topbar .wrap{gap:14px;font-size:.82rem}
 }
+
+/* transitions entre pages (accueil <-> mentions légales) */
+@media (prefers-reduced-motion:no-preference){
+  @view-transition{navigation:auto}
+  ::view-transition-old(root){animation:.28s ease-in both vt-out}
+  ::view-transition-new(root){animation:.42s cubic-bezier(.2,.8,.2,1) both vt-in}
+  ::view-transition-group(logo){animation-duration:.45s}
+}
+@keyframes vt-out{to{opacity:0;translate:0 -24px}}
+@keyframes vt-in{from{opacity:0;translate:0 40px}}
 
 /* =====================================================================
    MOTION DESIGN
@@ -422,7 +452,7 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
 <div class="scroll-progress" aria-hidden="true"></div>
 
 <aside class="topbar" aria-label="En bref"><div class="wrap">
-  <span><span aria-hidden="true">🛵</span> Livraison dès 15€</span><span><span aria-hidden="true">🕕</span> Ouvert dès 18h</span><span><span aria-hidden="true">📞</span> 04 34 47 98 31</span>
+  <span><span aria-hidden="true">🛵</span> Livraison dès 15€</span><span class="open-status" id="open-status"><span aria-hidden="true">🕕</span> Ouvert dès 18h</span><span class="tel"><span aria-hidden="true">📞</span> 04 34 47 98 31</span>
 </div></aside>
 
 <header class="nav"><div class="wrap">
@@ -442,7 +472,7 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
 
 <main id="contenu">
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="accueil">
   <div class="wrap">
     <div>
       <span class="kicker">Goûtez la différence !</span>
@@ -462,7 +492,7 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
       </div>
     </div>
     <div class="hero-visual">
-      <div class="photo"><img src="img/triple.jpg" alt="Burger triple steak cheddar fondant" width="715" height="709" fetchpriority="high"></div>
+      <div class="photo"><picture><source type="image/avif" srcset="img/triple.avif"><source type="image/webp" srcset="img/triple.webp"><img src="img/triple.jpg" alt="Burger triple steak cheddar fondant" width="715" height="709" fetchpriority="high"></picture></div>
       <div class="stamp"><img src="img/logo.png" alt="" width="336" height="336"></div>
       <div class="sticker"><small>Street food</small>since 2006</div>
     </div>
@@ -488,15 +518,15 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
       <p>Ici, le cheddar coule, les frites croustillent et personne ne repart avec la dalle. Tout est préparé à la commande, avec nos sauces maison.</p>
     </div>
     <div class="menu-grid">
-      <a class="card big" href="#carte" data-go="burgers"><img src="img/stack.jpg" alt="Pile de burgers nappés de cheddar" width="354" height="350" loading="lazy"><span class="tag">Best-seller</span>
+      <a class="card big" href="#carte" data-go="burgers"><picture><source type="image/avif" srcset="img/stack.avif"><source type="image/webp" srcset="img/stack.webp"><img src="img/stack.jpg" alt="Pile de burgers nappés de cheddar" width="354" height="350" loading="lazy"></picture><span class="tag">Best-seller</span>
         <div class="txt"><h3>Burgers</h3><p>Simple, double, chicken crousty… Une seule règle : le cheddar doit couler.</p></div></a>
-      <a class="card" href="#carte" data-go="tacos"><img src="img/tacos.jpg" alt="Tacos gratiné coupé en deux" width="356" height="351" loading="lazy"><div class="txt"><h3>Tacos</h3><p>Ton tacos t'attend : gratiné, sauce fromagère, frites dedans.</p></div></a>
-      <a class="card" href="#carte" data-go="kebabs"><img src="img/wrap.jpg" alt="Wrap poulet sauce" width="715" height="719" loading="lazy"><div class="txt"><h3>Wraps</h3><p>Le wrap qui met tout le monde d'accord.</p></div></a>
-      <a class="card" href="#carte" data-go="pizzas"><img src="img/pizza.jpg" alt="Spécialité gratinée sauce cheddar" width="356" height="350" loading="lazy"><span class="tag">Maison</span><div class="txt"><h3>Pizz' & gratinés</h3><p>La pâte cuite minute, garnie jusqu'au bord.</p></div></a>
-      <a class="card" href="#carte" data-go="bowls"><img src="img/bowl.jpg" alt="Bowl frites poulet crispy" width="1080" height="717" loading="lazy"><div class="txt"><h3>Bowls</h3><p>Frites, viande, sauce : le combo qui ne pardonne pas.</p></div></a>
-      <a class="card" href="#carte" data-go="bowls"><img src="img/fries.jpg" alt="Frites sauce fromagère" width="354" height="349" loading="lazy"><div class="txt"><h3>Frites cheese</h3><p>Nappées. Vraiment nappées.</p></div></a>
-      <a class="card" href="#carte" data-go="desserts"><img src="img/dessert.jpg" alt="Dessert Kreamy's choco bomb" width="356" height="354" loading="lazy"><div class="txt"><h3>Desserts</h3><p>Parce qu'il reste toujours une place.</p></div></a>
-      <a class="card wide" href="#carte" data-go="burgers"><img src="img/menu.jpg" alt="Menu burger, wrap et boisson" width="354" height="349" loading="lazy"><span class="tag">Menus</span><div class="txt"><h3>Menus & boissons</h3><p>Formules avec frites et boisson.</p></div></a>
+      <a class="card" href="#carte" data-go="tacos"><picture><source type="image/avif" srcset="img/tacos.avif"><source type="image/webp" srcset="img/tacos.webp"><img src="img/tacos.jpg" alt="Tacos gratiné coupé en deux" width="356" height="351" loading="lazy"></picture><div class="txt"><h3>Tacos</h3><p>Ton tacos t'attend : gratiné, sauce fromagère, frites dedans.</p></div></a>
+      <a class="card" href="#carte" data-go="kebabs"><picture><source type="image/avif" srcset="img/wrap.avif"><source type="image/webp" srcset="img/wrap.webp"><img src="img/wrap.jpg" alt="Wrap poulet sauce" width="715" height="719" loading="lazy"></picture><div class="txt"><h3>Wraps</h3><p>Le wrap qui met tout le monde d'accord.</p></div></a>
+      <a class="card" href="#carte" data-go="pizzas"><picture><source type="image/avif" srcset="img/pizza.avif"><source type="image/webp" srcset="img/pizza.webp"><img src="img/pizza.jpg" alt="Spécialité gratinée sauce cheddar" width="356" height="350" loading="lazy"></picture><span class="tag">Maison</span><div class="txt"><h3>Pizz' & gratinés</h3><p>La pâte cuite minute, garnie jusqu'au bord.</p></div></a>
+      <a class="card" href="#carte" data-go="bowls"><picture><source type="image/avif" srcset="img/bowl.avif"><source type="image/webp" srcset="img/bowl.webp"><img src="img/bowl.jpg" alt="Bowl frites poulet crispy" width="1080" height="717" loading="lazy"></picture><div class="txt"><h3>Bowls</h3><p>Frites, viande, sauce : le combo qui ne pardonne pas.</p></div></a>
+      <a class="card" href="#carte" data-go="bowls"><picture><source type="image/avif" srcset="img/fries.avif"><source type="image/webp" srcset="img/fries.webp"><img src="img/fries.jpg" alt="Frites sauce fromagère" width="354" height="349" loading="lazy"></picture><div class="txt"><h3>Frites cheese</h3><p>Nappées. Vraiment nappées.</p></div></a>
+      <a class="card" href="#carte" data-go="desserts"><picture><source type="image/avif" srcset="img/dessert.avif"><source type="image/webp" srcset="img/dessert.webp"><img src="img/dessert.jpg" alt="Dessert Kreamy's choco bomb" width="356" height="354" loading="lazy"></picture><div class="txt"><h3>Desserts</h3><p>Parce qu'il reste toujours une place.</p></div></a>
+      <a class="card wide" href="#carte" data-go="burgers"><picture><source type="image/avif" srcset="img/menu.avif"><source type="image/webp" srcset="img/menu.webp"><img src="img/menu.jpg" alt="Menu burger, wrap et boisson" width="354" height="349" loading="lazy"></picture><span class="tag">Menus</span><div class="txt"><h3>Menus & boissons</h3><p>Formules avec frites et boisson.</p></div></a>
     </div>
     <div class="menu-note"><a class="btn btn-red" href="#carte">Voir toute la carte ↓</a></div>
   </div>
@@ -519,7 +549,7 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
     </div>
     <div class="panel" id="panel-burgers" data-panel="burgers" role="tabpanel" aria-labelledby="tab-burgers" tabindex="0">
       <div class="panel-inner">
-      <div class="pic"><img src="img/stack.jpg" alt="Burgers" width="354" height="350" loading="lazy"></div>
+      <div class="pic"><picture><source type="image/avif" srcset="img/stack.avif"><source type="image/webp" srcset="img/stack.webp"><img src="img/stack.jpg" alt="Burgers" width="354" height="350" loading="lazy"></picture></div>
       <div class="items">
         <div class="item"><h3>Cheese Burger</h3><span class="price">— €</span><p>Steak, cheddar, oignons, cornichons, ketchup-moutarde.</p></div>
         <div class="item"><h3>Double Cheese <span class="chip">Best-seller</span></h3><span class="price">— €</span><p>Deux steaks, double cheddar. Pour les vraies faims.</p></div>
@@ -531,7 +561,7 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
     </div>
     <div class="panel" id="panel-tacos" data-panel="tacos" role="tabpanel" aria-labelledby="tab-tacos" hidden="until-found">
       <div class="panel-inner">
-      <div class="pic"><img src="img/tacos.jpg" alt="Tacos" width="356" height="351" loading="lazy"></div>
+      <div class="pic"><picture><source type="image/avif" srcset="img/tacos.avif"><source type="image/webp" srcset="img/tacos.webp"><img src="img/tacos.jpg" alt="Tacos" width="356" height="351" loading="lazy"></picture></div>
       <div class="items">
         <div class="item"><h3>Tacos 1 viande</h3><span class="price">— €</span><p>Frites, sauce fromagère maison, viande au choix.</p></div>
         <div class="item"><h3>Tacos 2 viandes <span class="chip">Best-seller</span></h3><span class="price">— €</span><p>Le plus commandé. Deux viandes au choix.</p></div>
@@ -542,7 +572,7 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
     </div>
     <div class="panel" id="panel-kebabs" data-panel="kebabs" role="tabpanel" aria-labelledby="tab-kebabs" hidden="until-found">
       <div class="panel-inner">
-      <div class="pic"><img src="img/wrap.jpg" alt="Kebabs & wraps" width="715" height="719" loading="lazy"></div>
+      <div class="pic"><picture><source type="image/avif" srcset="img/wrap.avif"><source type="image/webp" srcset="img/wrap.webp"><img src="img/wrap.jpg" alt="Kebabs & wraps" width="715" height="719" loading="lazy"></picture></div>
       <div class="items">
         <div class="item"><h3>Kebab traditionnel <span class="chip">Signature</span></h3><span class="price">— €</span><p>Pain maison, viande grillée, crudités, sauce au choix.</p></div>
         <div class="item"><h3>Assiette kebab</h3><span class="price">— €</span><p>Viande, frites, salade, pain à part.</p></div>
@@ -553,7 +583,7 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
     </div>
     <div class="panel" id="panel-pizzas" data-panel="pizzas" role="tabpanel" aria-labelledby="tab-pizzas" hidden="until-found">
       <div class="panel-inner">
-      <div class="pic"><img src="img/pizza.jpg" alt="Pizzas" width="356" height="350" loading="lazy"></div>
+      <div class="pic"><picture><source type="image/avif" srcset="img/pizza.avif"><source type="image/webp" srcset="img/pizza.webp"><img src="img/pizza.jpg" alt="Pizzas" width="356" height="350" loading="lazy"></picture></div>
       <div class="items">
         <div class="item"><h3>Margherita</h3><span class="price">— €</span><p>Sauce tomate, mozzarella, origan.</p></div>
         <div class="item"><h3>Reine</h3><span class="price">— €</span><p>Tomate, mozzarella, jambon, champignons.</p></div>
@@ -565,7 +595,7 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
     </div>
     <div class="panel" id="panel-bowls" data-panel="bowls" role="tabpanel" aria-labelledby="tab-bowls" hidden="until-found">
       <div class="panel-inner">
-      <div class="pic"><img src="img/bowl.jpg" alt="Bowls & frites" width="1080" height="717" loading="lazy"></div>
+      <div class="pic"><picture><source type="image/avif" srcset="img/bowl.avif"><source type="image/webp" srcset="img/bowl.webp"><img src="img/bowl.jpg" alt="Bowls & frites" width="1080" height="717" loading="lazy"></picture></div>
       <div class="items">
         <div class="item"><h3>Bowl crispy <span class="chip">Best-seller</span></h3><span class="price">— €</span><p>Frites, poulet crispy, cheddar, sauce maison.</p></div>
         <div class="item"><h3>Bowl kebab</h3><span class="price">— €</span><p>Frites, viande kebab, sauce fromagère, oignons frits.</p></div>
@@ -576,7 +606,7 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
     </div>
     <div class="panel" id="panel-desserts" data-panel="desserts" role="tabpanel" aria-labelledby="tab-desserts" hidden="until-found">
       <div class="panel-inner">
-      <div class="pic"><img src="img/dessert.jpg" alt="Desserts & boissons" width="356" height="354" loading="lazy"></div>
+      <div class="pic"><picture><source type="image/avif" srcset="img/dessert.avif"><source type="image/webp" srcset="img/dessert.webp"><img src="img/dessert.jpg" alt="Desserts & boissons" width="356" height="354" loading="lazy"></picture></div>
       <div class="items">
         <div class="item"><h3>Kreamy's Choco Bomb <span class="chip y">Nouveau</span></h3><span class="price">— €</span><p>Le dessert en pot, chocolat et crème.</p></div>
         <div class="item"><h3>Tiramisu</h3><span class="price">— €</span><p>Classique ou spéculoos.</p></div>
@@ -595,7 +625,7 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
 <!-- SIGNATURE -->
 <section class="signature">
   <div class="wrap">
-    <div class="img"><img src="img/wrap.jpg" alt="Wrap poulet ultra crispy sauce" width="715" height="719" loading="lazy"></div>
+    <div class="img"><picture><source type="image/avif" srcset="img/wrap.avif"><source type="image/webp" srcset="img/wrap.webp"><img src="img/wrap.jpg" alt="Wrap poulet ultra crispy sauce" width="715" height="719" loading="lazy"></picture></div>
     <div>
       <span class="kicker">Mission : se régaler</span>
       <h2>Poulet<br><span class="brush white">ultra crispy</span></h2>
@@ -621,7 +651,7 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
         <p>Les grands matchs diffusés au resto. Venez avec la bande, on s'occupe des burgers.</p>
       </div>
       <div class="event">
-        <img src="img/bowl.jpg" alt="Bowl de saison" width="1080" height="717" loading="lazy">
+        <picture><source type="image/avif" srcset="img/bowl.avif"><source type="image/webp" srcset="img/bowl.webp"><img src="img/bowl.jpg" alt="Bowl de saison" width="1080" height="717" loading="lazy"></picture>
         <span class="when"><span aria-hidden="true">🍂</span> Nouveauté de saison</span>
         <h3>L'automne,<br>ça se savoure</h3>
         <p>Le bowl crispy nappé de sauce fromagère est de retour.</p>
@@ -639,7 +669,7 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
 <!-- LE RESTO -->
 <section id="resto" class="resto">
   <div class="wrap">
-    <div class="facade"><img src="img/facade.jpg" alt="Devanture Pizz'Burger, rue de la République à Roquemaure" width="995" height="614" loading="lazy"><span class="since">Depuis 2006</span></div>
+    <div class="facade"><picture><source type="image/avif" srcset="img/facade.avif"><source type="image/webp" srcset="img/facade.webp"><img src="img/facade.jpg" alt="Devanture Pizz'Burger, rue de la République à Roquemaure" width="995" height="614" loading="lazy"></picture><span class="since">Depuis 2006</span></div>
     <div>
       <span class="kicker">Rue de la République</span>
       <h2>Le QG<br>de Roquemaure</h2><span class="underline"></span>
@@ -697,8 +727,8 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
         <div class="who">Alexiane F.<small>À emporter · Dîner</small></div></div>
     </div>
     <div class="gallery">
-      <img src="img/closeup.jpg" alt="" width="715" height="719" loading="lazy"><img src="img/bigmac.jpg" alt="" width="356" height="349" loading="lazy"><img src="img/tacos.jpg" alt="" width="356" height="351" loading="lazy">
-      <img src="img/bowl.jpg" alt="" width="1080" height="717" loading="lazy"><img src="img/fries.jpg" alt="" width="354" height="349" loading="lazy"><img src="img/triple.jpg" alt="" width="715" height="709" loading="lazy">
+      <picture><source type="image/avif" srcset="img/closeup.avif"><source type="image/webp" srcset="img/closeup.webp"><img src="img/closeup.jpg" alt="" width="715" height="719" loading="lazy"></picture><picture><source type="image/avif" srcset="img/bigmac.avif"><source type="image/webp" srcset="img/bigmac.webp"><img src="img/bigmac.jpg" alt="" width="356" height="349" loading="lazy"></picture><picture><source type="image/avif" srcset="img/tacos.avif"><source type="image/webp" srcset="img/tacos.webp"><img src="img/tacos.jpg" alt="" width="356" height="351" loading="lazy"></picture>
+      <picture><source type="image/avif" srcset="img/bowl.avif"><source type="image/webp" srcset="img/bowl.webp"><img src="img/bowl.jpg" alt="" width="1080" height="717" loading="lazy"></picture><picture><source type="image/avif" srcset="img/fries.avif"><source type="image/webp" srcset="img/fries.webp"><img src="img/fries.jpg" alt="" width="354" height="349" loading="lazy"></picture><picture><source type="image/avif" srcset="img/triple.avif"><source type="image/webp" srcset="img/triple.webp"><img src="img/triple.jpg" alt="" width="715" height="709" loading="lazy"></picture>
     </div>
   </div>
 </section>
@@ -717,16 +747,21 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
       <div class="hours">
         <h3>Horaires</h3>
         <table>
-          <tr><td>Lundi – Jeudi</td><td>11h30–14h · 18h–22h</td></tr>
-          <tr><td>Vendredi – Samedi</td><td>11h30–14h · 18h–23h</td></tr>
-          <tr><td>Dimanche</td><td>18h–22h</td></tr>
+          <tr data-days="1 2 3 4"><th scope="row">Lundi – Jeudi</th><td>11h30–14h · 18h–22h</td></tr>
+          <tr data-days="5 6"><th scope="row">Vendredi – Samedi</th><td>11h30–14h · 18h–23h</td></tr>
+          <tr data-days="0"><th scope="row">Dimanche</th><td>18h–22h</td></tr>
         </table>
         <p class="note">Horaires indicatifs, à valider avec le restaurant.</p>
       </div>
     </div>
     <div class="map">
-      <iframe title="Plan d'accès Pizz'Burger" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"
-        src="https://maps.google.com/maps?q=7%20Rue%20de%20la%20R%C3%A9publique%2C%2030150%20Roquemaure&z=16&output=embed"></iframe>
+      <div class="map-facade" id="map-facade">
+        <svg aria-hidden="true" class="pin" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+        <p class="map-addr">7 Rue de la République<br>30150 Roquemaure</p>
+        <button type="button" class="btn btn-red" id="map-load">Afficher le plan interactif</button>
+        <p class="map-note">Le plan est fourni par Google Maps : en l'affichant, vous acceptez que Google reçoive votre adresse IP et dépose ses cookies. <a href="mentions-legales.html#donnees">En savoir plus</a></p>
+        <a class="map-open" href="https://maps.google.com/?q=7+Rue+de+la+R%C3%A9publique+30150+Roquemaure" target="_blank" rel="noopener">Ouvrir dans Google Maps ↗</a>
+      </div>
     </div>
   </div>
 </section>
@@ -742,6 +777,8 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
       <a href="#" aria-label="Facebook"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M14 9V7c0-.8.5-1 1-1h2V3h-3c-2.8 0-4 1.8-4 4v2H8v3h2v9h4v-9h2.6l.4-3z"/></svg></a>
       <a href="#" aria-label="Instagram"><svg aria-hidden="true" viewBox="0 0 24 24" style="fill:none;stroke:#fff;stroke-width:2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="#fff"/></svg></a>
     </div>
+    <div class="install-wrap"><button type="button" class="btn btn-ghost" id="install-app" hidden>📲 Installer l'appli Pizz'Burger</button>
+    <p id="install-status" class="install-status" role="status"></p></div>
     <small>© 2026 Pizz'Burger · Fast food & pizzeria · Roquemaure · <a href="mentions-legales.html">Mentions légales</a></small>
   </div>
 </footer>
@@ -802,6 +839,70 @@ footer small a{color:#ddd;text-decoration:underline;text-underline-offset:3px}
   var saved=null;try{saved=localStorage.getItem('pb-motion-paused')}catch(e){}
   if(saved==='1')set(true);
   btn.addEventListener('click',function(){set(!root.classList.contains('motion-paused'))});
+})();
+</script>
+<script>
+/* Statut ouvert / fermé, calculé à l'heure de Roquemaure quel que soit le fuseau du visiteur.
+   Horaires INDICATIFS (à valider) : mêmes valeurs que le tableau des horaires. */
+(function(){
+  var H={0:[['18:00','22:00']],1:[['11:30','14:00'],['18:00','22:00']],2:[['11:30','14:00'],['18:00','22:00']],
+         3:[['11:30','14:00'],['18:00','22:00']],4:[['11:30','14:00'],['18:00','22:00']],
+         5:[['11:30','14:00'],['18:00','23:00']],6:[['11:30','14:00'],['18:00','23:00']]};
+  var JOURS=['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+  var el=document.getElementById('open-status');
+  function min(t){var p=t.split(':');return +p[0]*60+ +p[1]}
+  function fmt(t){var p=t.split(':');return (+p[0])+'h'+(p[1]==='00'?'':p[1])}
+  function paris(){
+    var parts=new Intl.DateTimeFormat('fr-FR',{timeZone:'Europe/Paris',weekday:'short',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date());
+    var o={};parts.forEach(function(x){o[x.type]=x.value});
+    var day=['dim.','lun.','mar.','mer.','jeu.','ven.','sam.'].indexOf(o.weekday);
+    return {day:day,m:+o.hour*60+ +o.minute};
+  }
+  function update(){
+    var n=paris(),slots=H[n.day]||[],txt,open=false;
+    for(var i=0;i<slots.length;i++){
+      if(n.m>=min(slots[i][0])&&n.m<min(slots[i][1])){open=true;
+        var left=min(slots[i][1])-n.m;
+        txt=left<=30?'Ferme bientôt · '+fmt(slots[i][1]):'Ouvert · jusqu\'à '+fmt(slots[i][1]);break;}
+    }
+    if(!open){
+      var next=null;
+      for(var d=0;d<8&&!next;d++){var day=(n.day+d)%7;(H[day]||[]).some(function(sl){
+        if(d>0||min(sl[0])>n.m){next={d:d,day:day,t:sl[0]};return true}})}
+      txt='Fermé · ouvre '+(next.d===0?'à ':next.d===1?'demain à ':JOURS[next.day]+' à ')+fmt(next.t);
+    }
+    el.className='open-status'+(open?'':' closed');
+    el.innerHTML='<span class="dot" aria-hidden="true"></span>'+txt;
+    document.querySelectorAll('.hours tr[data-days]').forEach(function(tr){
+      tr.classList.toggle('today',tr.dataset.days.split(' ').indexOf(String(n.day))>-1)});
+  }
+  update();setInterval(update,60000);
+})();
+
+/* Carte Google Maps chargée seulement à la demande (aucune requête vers Google avant le clic) */
+(function(){
+  var btn=document.getElementById('map-load');
+  btn.addEventListener('click',function(){
+    var f=document.createElement('iframe');
+    f.title="Plan d'accès Pizz'Burger";
+    f.referrerPolicy='strict-origin-when-cross-origin';
+    f.src='https://maps.google.com/maps?q=7%20Rue%20de%20la%20R%C3%A9publique%2C%2030150%20Roquemaure&z=16&output=embed';
+    var facade=document.getElementById('map-facade');
+    facade.replaceWith(f);f.focus();
+  });
+})();
+
+/* Installation de l'appli : bouton affiché seulement si le navigateur gère navigator.install() */
+(function(){
+  var b=document.getElementById('install-app'),st=document.getElementById('install-status');
+  if(typeof Navigator!=='undefined'&&typeof Navigator.prototype.install==='function'){b.hidden=false}
+  b.addEventListener('click',async function(){
+    if(b.getAttribute('aria-disabled')==='true')return;
+    b.setAttribute('aria-disabled','true');
+    try{await navigator.install();st.textContent="L'appli est installée.";b.hidden=true}
+    catch(e){st.textContent=e.name==='AbortError'?"Installation annulée.":"L'installation n'a pas pu démarrer.";if(e.name!=='AbortError')console.error(e)}
+    finally{b.removeAttribute('aria-disabled')}
+  });
 })();
 </script>
 </body>

@@ -8,9 +8,10 @@
 <meta name="description" content="Mentions légales et politique de confidentialité du site Pizz'Burger, fast food & pizzeria à Roquemaure.">
 <meta name="theme-color" content="#0F0F10">
 <link rel="icon" type="image/png" href="img/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=Kaushan+Script&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/anton-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="expect" href="#intro" blocking="render">
 <style>
 :root{--red:#E3161D;--black:#0F0F10;--char:#1A1A1C;--line:#2c2c30;--muted:#A9A9AE;--cheese:#FFC21A;
   --display:'Anton',Impact,sans-serif;--cond:'Barlow Condensed',sans-serif;--body:'Barlow',system-ui,sans-serif;--script:'Kaushan Script',cursive}
@@ -26,7 +27,7 @@ a{color:var(--cheese)}
 header{border-bottom:1px solid var(--line);background:rgba(15,15,16,.92);position:sticky;top:0;z-index:10;backdrop-filter:blur(10px)}
 header .wrap{display:flex;align-items:center;justify-content:space-between;height:74px;width:min(1200px,100% - 32px)}
 header .logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff}
-header .logo img{width:56px;height:56px}
+header .logo img{view-transition-name:logo;width:56px;height:56px}
 header .logo b{font-family:var(--cond);font-weight:700;text-transform:uppercase;font-size:.8rem;letter-spacing:.14em;color:var(--muted);line-height:1.2}
 .back{font-family:var(--cond);font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:#fff;text-decoration:none;border:2px solid rgba(255,255,255,.3);border-radius:999px;padding:9px 18px}
 .back:hover{border-color:#fff}
@@ -63,6 +64,14 @@ dl.card dd{color:#fff}
 .third div{background:var(--char);border-radius:14px;padding:16px 18px;border-left:4px solid var(--red)}
 .third b{font-family:var(--cond);text-transform:uppercase;letter-spacing:.05em;color:#fff}
 
+@media (prefers-reduced-motion:no-preference){
+  @view-transition{navigation:auto}
+  ::view-transition-old(root){animation:.28s ease-in both vt-out}
+  ::view-transition-new(root){animation:.42s cubic-bezier(.2,.8,.2,1) both vt-in}
+  ::view-transition-group(logo){animation-duration:.45s}
+}
+@keyframes vt-out{to{opacity:0;translate:0 -24px}}
+@keyframes vt-in{from{opacity:0;translate:0 40px}}
 footer{background:#000;padding:44px 0 60px;text-align:center;margin-top:40px}
 footer img{width:90px;margin:0 auto 14px}
 footer .tagline{font-family:var(--script);font-size:1.4rem;color:#ff5a5f}
@@ -82,7 +91,7 @@ footer a{color:#ddd}
 </header>
 
 <main id="contenu" class="wrap">
-  <div class="intro">
+  <div class="intro" id="intro">
     <span class="kicker">Les infos qui comptent</span>
     <h1>Mentions légales</h1>
     <span class="underline"></span>
@@ -160,10 +169,9 @@ footer a{color:#ddd}
     <h2 class="sec" id="t-donnees"><span>7</span>Données personnelles</h2>
     <p>Le site ne contient ni formulaire, ni espace client, ni outil de mesure d'audience. <b>Nous ne collectons pas de données personnelles</b> par son intermédiaire. Les commandes passées par téléphone ne sont pas enregistrées via le site.</p>
     <h3>Services tiers</h3>
-    <p>Pour afficher certains contenus, votre navigateur se connecte à des services extérieurs, qui reçoivent alors techniquement votre adresse IP :</p>
+    <p>Les polices de caractères et les images sont hébergées sur le site lui-même. Seuls les services suivants peuvent recevoir votre adresse IP :</p>
     <div class="third">
-      <div><b>Google Fonts</b> (Google Ireland Ltd.) : affichage des polices de caractères. <span class="todo">[à supprimer si les polices sont hébergées sur le site, recommandé]</span></div>
-      <div><b>Google Maps</b> (Google Ireland Ltd.) : affichage du plan d'accès. Google peut déposer ses propres cookies lors de l'utilisation de la carte : voir la <a href="https://policies.google.com/privacy?hl=fr" rel="noopener" target="_blank">politique de confidentialité de Google</a>.</div>
+      <div><b>Google Maps</b> (Google Ireland Ltd.) : le plan d'accès n'est chargé <b>que si vous cliquez</b> sur « Afficher le plan interactif ». Avant ce clic, aucune donnée n'est envoyée à Google. Une fois la carte affichée, Google reçoit votre adresse IP et peut déposer ses propres cookies : voir la <a href="https://policies.google.com/privacy?hl=fr" rel="noopener" target="_blank">politique de confidentialité de Google</a>.</div>
       <div><b>Netlify</b> : hébergement du site, journaux techniques de connexion conservés par l'hébergeur pour la sécurité du service.</div>
     </div>
     <h3>Vos droits</h3>
@@ -174,7 +182,7 @@ footer a{color:#ddd}
   <section id="cookies" aria-labelledby="t-cookies">
     <h2 class="sec" id="t-cookies"><span>8</span>Cookies et traceurs</h2>
     <p>Le site ne dépose aucun cookie publicitaire ni de mesure d'audience. Il enregistre uniquement dans votre navigateur (stockage local) votre choix de mettre en pause les animations, afin de le conserver d'une visite à l'autre. Cette information reste sur votre appareil et n'est jamais transmise ; vous pouvez l'effacer à tout moment depuis les réglages de votre navigateur.</p>
-    <p>Les cookies éventuellement déposés par Google Maps relèvent de Google (voir section 7). <span class="todo">[si la carte est chargée seulement après un clic du visiteur, le préciser ici]</span></p>
+    <p>Aucun cookie n'est déposé tant que vous n'affichez pas le plan Google Maps. Si vous l'affichez, les cookies déposés relèvent de Google (voir section 7).</p>
   </section>
 
   <section id="mediation" aria-labelledby="t-mediation">

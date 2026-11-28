@@ -1,0 +1,40 @@
+{
+  "id": "/",
+  "name": "Pizz'Burger Roquemaure",
+  "short_name": "Pizz'Burger",
+  "description": "Fast food & pizzeria à Roquemaure : burgers, tacos, kebabs, pizzas. Sur place, à emporter et en livraison.",
+  "lang": "fr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0F0F10",
+  "theme_color": "#0F0F10",
+  "icons": [
+    {
+      "src": "img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "img/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "La carte",
+      "url": "/#carte"
+    },
+    {
+      "name": "Infos & horaires",
+      "url": "/#infos"
+    }
+  ]
+}
