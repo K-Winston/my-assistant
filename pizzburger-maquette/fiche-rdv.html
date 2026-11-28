@@ -14,7 +14,7 @@ body{background:var(--black);color:#fff;font-family:'Barlow',system-ui,sans-seri
 .wrap{max-width:760px;margin:0 auto}
 header{display:flex;align-items:center;gap:16px;padding:26px 0 10px}
 header img{width:72px;height:72px}
-.kicker{font-family:'Kaushan Script',cursive;color:var(--red);font-size:1.3rem}
+.kicker{font-family:'Kaushan Script',cursive;color:#ff5a5f;font-size:1.3rem}
 h1{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;font-size:2.4rem;line-height:1}
 .intro{color:var(--muted);margin:10px 0 18px}
 .progress{position:sticky;top:0;z-index:5;background:var(--black);padding:10px 0 12px;border-bottom:1px solid var(--line)}
@@ -32,6 +32,7 @@ label:has(input:checked) .q{text-decoration:line-through;color:var(--muted)}
 .demo ol{padding-left:20px}
 .demo li{margin:6px 0}
 a{color:var(--cheese)}
+:where(a,button,input,textarea):focus-visible{outline:3px solid var(--cheese);outline-offset:3px}
 textarea{width:100%;min-height:140px;margin-top:10px;background:var(--char);color:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit}
 .tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
 button{font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:1rem;border:0;border-radius:99px;padding:12px 20px;cursor:pointer;background:var(--red);color:#fff}
@@ -40,11 +41,11 @@ button.ghost{background:transparent;border:2px solid var(--line)}
 </style>
 </head>
 <body>
-<div class="wrap">
-<header><img src="img/logo.png" alt=""><div><div class="kicker">Rendez-vous patron</div><h1>Fiche RDV Pizz'Burger</h1></div></header>
+<main class="wrap">
+<header><img src="img/logo.png" alt="" width="72" height="72"><div><div class="kicker">Rendez-vous patron</div><h1>Fiche RDV Pizz'Burger</h1></div></header>
 <p class="intro">À cocher au fil de l'échange. Les cases et les notes restent enregistrées sur ce téléphone.</p>
 
-<div class="progress"><span id="count">0 / 0 points validés</span><div class="bar"><i id="fill"></i></div></div>
+<div class="progress"><span id="count">0 / 0 points validés</span><div class="bar" aria-hidden="true"><i id="fill"></i></div></div>
 
 <h2><b>0</b> Démo de la maquette (5 min)</h2>
 <div class="demo"><ol>
@@ -101,15 +102,15 @@ button.ghost{background:transparent;border:2px solid var(--line)}
 <label><input type="checkbox"><span><span class="q">Maintenance et hébergement : inclus ou en option ?</span></span></label>
 <label><input type="checkbox"><span><span class="q">Validation de la direction graphique</span><small>Couleurs, logo, typographies : ce qu'il aime, ce qu'il veut changer.</small></span></label>
 
-<h2><b>✍</b> Notes</h2>
-<textarea id="notes" placeholder="Ce qu'il a dit, ce qu'il veut changer…"></textarea>
+<h2 id="notes-titre"><b aria-hidden="true">✍</b> Notes</h2>
+<textarea id="notes" aria-labelledby="notes-titre" placeholder="Ce qu'il a dit, ce qu'il veut changer…"></textarea>
 
 <div class="tools">
   <button onclick="window.print()">Imprimer / PDF</button>
   <button class="ghost" onclick="copyNotes()">Copier le compte-rendu</button>
   <button class="ghost" onclick="resetAll()">Tout décocher</button>
 </div>
-</div>
+</main>
 
 <script>
 var KEY='pizzburger-rdv';

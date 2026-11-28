@@ -26,9 +26,13 @@
   --r:18px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;overflow-x:clip}
+html{overflow-x:clip}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 body{background:var(--black);color:var(--white);font-family:var(--body);font-size:17px;line-height:1.55;overflow-x:clip}
-img{display:block;max-width:100%}
+img{display:block;max-width:100%;height:auto}
+:where(a,button,[tabindex]):focus-visible{outline:3px solid var(--cheese);outline-offset:3px}
+.skip-link{position:absolute;left:16px;top:-100px;z-index:100;background:var(--cheese);color:#000;font-family:var(--cond);font-weight:700;text-transform:uppercase;padding:10px 18px;border-radius:999px}
+.skip-link:focus{top:12px}
 a{color:inherit;text-decoration:none}
 .wrap{width:min(1200px,100% - 32px);margin-inline:auto}
 
@@ -104,7 +108,7 @@ header.nav{position:sticky;top:0;z-index:50;background:rgba(15,15,16,.92);backdr
   font-family:var(--cond);font-weight:800;font-style:italic;text-transform:uppercase;font-size:1.5rem;letter-spacing:.32em;white-space:nowrap}
 .ticker .track span::after{content:"🍔";margin-left:40px;letter-spacing:0}
 @keyframes tick{to{transform:translateX(-50%)}}
-@media (prefers-reduced-motion:reduce){.ticker .track,.hero-visual .stamp{animation:none}}
+@media (prefers-reduced-motion:reduce){.ticker .track,.hero-visual .stamp{animation:none}.card img,.btn{transition:none}}
 
 /* ---------- sections ---------- */
 section{padding:100px 0}
@@ -132,25 +136,26 @@ section{padding:100px 0}
 .menu-section{background:var(--char);border-block:1px solid rgba(255,255,255,.05)}
 .demo-note{display:inline-flex;align-items:center;gap:8px;background:rgba(255,194,26,.12);color:var(--cheese);border:1px dashed var(--cheese);
   padding:6px 14px;border-radius:999px;font-family:var(--cond);font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:.85rem}
-.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:30px;scrollbar-width:none}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 4px 8px;margin:0 -4px 26px;scrollbar-width:none;scroll-snap-type:inline proximity;scroll-padding-inline:16px}
 .tabs::-webkit-scrollbar{display:none}
-.tab{flex:none;cursor:pointer;border:2px solid rgba(255,255,255,.15);background:transparent;color:#fff;border-radius:999px;padding:10px 20px;
+.tab{flex:none;position:relative;scroll-snap-align:start;cursor:pointer;border:2px solid rgba(255,255,255,.15);background:transparent;color:#fff;border-radius:999px;padding:10px 20px;
   font-family:var(--cond);font-weight:700;font-size:1.05rem;text-transform:uppercase;letter-spacing:.05em}
 .tab[aria-selected="true"]{background:var(--red);border-color:var(--red)}
-.panel{display:none;grid-template-columns:.8fr 1.2fr;gap:40px;align-items:start}
-.panel.active{display:grid}
+/* indicateur de forme (pas seulement la couleur), visible aussi en mode contraste élevé */
+.tab[aria-selected="true"]::after{content:"";position:absolute;inset:auto 20px 6px;border-block-end:3px solid currentColor}
+.panel-inner{display:grid;grid-template-columns:.8fr 1.2fr;gap:40px;align-items:start}
 .panel .pic{border-radius:24px;overflow:hidden;position:sticky;top:100px}
 .panel .pic img{aspect-ratio:4/5;object-fit:cover;width:100%}
 .items{display:grid;gap:4px}
 .item{display:grid;grid-template-columns:1fr auto;gap:4px 16px;padding:16px 0;border-bottom:1px dashed rgba(255,255,255,.14)}
-.item h4{font-family:var(--cond);font-weight:700;font-size:1.35rem;text-transform:uppercase;letter-spacing:.03em;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.item h3{line-height:1.15;font-family:var(--cond);font-weight:700;font-size:1.35rem;text-transform:uppercase;letter-spacing:.03em;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .item .price{font-family:var(--display);font-size:1.4rem;color:var(--cheese);white-space:nowrap}
 .item p{grid-column:1/-1;color:var(--muted);font-size:.98rem}
 .chip{font-family:var(--cond);font-size:.75rem;font-weight:700;letter-spacing:.06em;padding:2px 8px;border-radius:4px;background:var(--red);color:#fff}
 .chip.y{background:var(--cheese);color:#000}
 .menu-foot{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-top:34px;padding:22px 26px;border-radius:var(--r);background:var(--black)}
 .menu-foot p{color:#ddd}
-@media (max-width:900px){.panel{grid-template-columns:1fr;gap:20px}.panel .pic{position:static}.panel .pic img{aspect-ratio:16/9}}
+@media (max-width:900px){.panel-inner{grid-template-columns:1fr;gap:20px}.panel .pic{position:static}.panel .pic img{aspect-ratio:16/9}}
 
 /* événements */
 .events-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:18px}
@@ -167,7 +172,7 @@ section{padding:100px 0}
 .event.match h3{font-size:2.8rem}
 .event.promo{background:var(--cheese);color:#000}
 .event.promo::after{display:none}
-.event.promo .when{color:var(--red-dark)}
+.event.promo .when{color:#7a080c}
 .event.promo p{color:#222}
 .event.promo h3{font-size:1.6rem;line-height:1.05}
 .event.promo .big{font-family:var(--display);font-size:4.4rem;line-height:.9;text-transform:uppercase;margin-bottom:auto}
@@ -246,7 +251,7 @@ section{padding:100px 0}
 .hours td{padding:7px 0;border-bottom:1px dashed #ddd}
 .hours td:last-child{text-align:right}
 .hours tr.closed td:last-child{color:var(--red)}
-.hours .note{font-size:.85rem;color:#777;margin-top:10px;font-family:var(--body)}
+.hours .note{font-size:.85rem;color:#5c5c5c;margin-top:10px;font-family:var(--body)}
 .map{border-radius:24px;overflow:hidden;min-height:460px;box-shadow:0 0 0 6px #000;background:#ddd}
 .map iframe{width:100%;height:100%;min-height:460px;border:0;display:block}
 @media (max-width:900px){.infos .wrap{grid-template-columns:1fr}.map,.map iframe{min-height:320px}}
@@ -275,28 +280,36 @@ footer small{color:#77777c}
   .topbar .wrap{gap:14px;font-size:.82rem}
 }
 </style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Restaurant","name":"Pizz'Burger","description":"Fast food & pizzeria à Roquemaure depuis 2006 : burgers, tacos, kebabs, pizzas, bowls.",
+"address":{"@type":"PostalAddress","streetAddress":"7 Rue de la République","postalCode":"30150","addressLocality":"Roquemaure","addressCountry":"FR"},
+"telephone":"+33434479831","servesCuisine":["Burgers","Kebab","Tacos","Pizza"],"priceRange":"10-20 €","hasMap":"https://maps.google.com/?q=7+Rue+de+la+R%C3%A9publique+30150+Roquemaure",
+"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.3","reviewCount":"221"}}
+</script>
 </head>
 <body>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
 
-<div class="topbar"><div class="wrap">
-  <span>🛵 Livraison dès 15€</span><span>🕕 Ouvert dès 18h</span><span>📞 04 34 47 98 31</span>
-</div></div>
+<aside class="topbar" aria-label="En bref"><div class="wrap">
+  <span><span aria-hidden="true">🛵</span> Livraison dès 15€</span><span><span aria-hidden="true">🕕</span> Ouvert dès 18h</span><span><span aria-hidden="true">📞</span> 04 34 47 98 31</span>
+</div></aside>
 
 <header class="nav"><div class="wrap">
-  <a href="#" class="logo"><img src="img/logo.png" alt="Logo Pizz'Burger"><b>Fast food<br>& pizzeria</b></a>
-  <ul>
+  <a href="./" class="logo"><img src="img/logo.png" alt="Logo Pizz'Burger" width="336" height="336"><b>Fast food<br>& pizzeria</b></a>
+  <nav aria-label="Principale"><ul>
     <li><a href="#carte">La carte</a></li>
     <li><a href="#evenements">Ce soir</a></li>
     <li><a href="#resto">Le resto</a></li>
     <li><a href="#livraison">Livraison</a></li>
     <li><a href="#avis">Avis</a></li>
     <li><a href="#infos">Infos</a></li>
-  </ul>
+  </ul></nav>
   <a class="btn btn-red" href="tel:+33434479831">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
     Commander</a>
 </div></header>
 
+<main id="contenu">
 <!-- HERO -->
 <section class="hero">
   <div class="wrap">
@@ -306,20 +319,20 @@ footer small{color:#77777c}
       <p class="lead">Burgers qui débordent, tacos gratinés, kebabs généreux et pizzas cuites minute. Depuis 2006, on cale les grosses faims de Roquemaure : sur place, à emporter ou livré chez vous.</p>
       <div class="ctas">
         <a class="btn btn-red" href="tel:+33434479831">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
           04 34 47 98 31</a>
         <a class="btn btn-ghost" href="#carte">Voir la carte →</a>
       </div>
       <div class="badges">
-        <span class="badge"><span class="stars">★★★★★</span> 4,3 · 221 avis Google</span>
-        <span class="badge">🛵 Livraison</span>
-        <span class="badge">🥡 À emporter</span>
-        <span class="badge">🪑 Terrasse</span>
+        <span class="badge"><span class="stars" aria-hidden="true">★★★★★</span> 4,3 · 221 avis Google</span>
+        <span class="badge"><span aria-hidden="true">🛵</span> Livraison</span>
+        <span class="badge"><span aria-hidden="true">🥡</span> À emporter</span>
+        <span class="badge"><span aria-hidden="true">🪑</span> Terrasse</span>
       </div>
     </div>
     <div class="hero-visual">
-      <div class="photo"><img src="img/triple.jpg" alt="Burger triple steak cheddar fondant"></div>
-      <div class="stamp"><img src="img/logo.png" alt=""></div>
+      <div class="photo"><img src="img/triple.jpg" alt="Burger triple steak cheddar fondant" width="715" height="709" fetchpriority="high"></div>
+      <div class="stamp"><img src="img/logo.png" alt="" width="336" height="336"></div>
       <div class="sticker"><small>Street food</small>since 2006</div>
     </div>
   </div>
@@ -338,15 +351,15 @@ footer small{color:#77777c}
       <p>Ici, le cheddar coule, les frites croustillent et personne ne repart avec la dalle. Tout est préparé à la commande, avec nos sauces maison.</p>
     </div>
     <div class="menu-grid">
-      <a class="card big" href="#carte" data-go="burgers"><img src="img/stack.jpg" alt="Pile de burgers nappés de cheddar"><span class="tag">Best-seller</span>
+      <a class="card big" href="#carte" data-go="burgers"><img src="img/stack.jpg" alt="Pile de burgers nappés de cheddar" width="354" height="350" loading="lazy"><span class="tag">Best-seller</span>
         <div class="txt"><h3>Burgers</h3><p>Simple, double, chicken crousty… Une seule règle : le cheddar doit couler.</p></div></a>
-      <a class="card" href="#carte" data-go="tacos"><img src="img/tacos.jpg" alt="Tacos gratiné coupé en deux"><div class="txt"><h3>Tacos</h3><p>Ton tacos t'attend : gratiné, sauce fromagère, frites dedans.</p></div></a>
-      <a class="card" href="#carte" data-go="kebabs"><img src="img/wrap.jpg" alt="Wrap poulet sauce"><div class="txt"><h3>Wraps</h3><p>Le wrap qui met tout le monde d'accord.</p></div></a>
-      <a class="card" href="#carte" data-go="pizzas"><img src="img/pizza.jpg" alt="Spécialité gratinée sauce cheddar"><span class="tag">Maison</span><div class="txt"><h3>Pizz' & gratinés</h3><p>La pâte cuite minute, garnie jusqu'au bord.</p></div></a>
-      <a class="card" href="#carte" data-go="bowls"><img src="img/bowl.jpg" alt="Bowl frites poulet crispy"><div class="txt"><h3>Bowls</h3><p>Frites, viande, sauce : le combo qui ne pardonne pas.</p></div></a>
-      <a class="card" href="#carte" data-go="bowls"><img src="img/fries.jpg" alt="Frites sauce fromagère"><div class="txt"><h3>Frites cheese</h3><p>Nappées. Vraiment nappées.</p></div></a>
-      <a class="card" href="#carte" data-go="desserts"><img src="img/dessert.jpg" alt="Dessert Kreamy's choco bomb"><div class="txt"><h3>Desserts</h3><p>Parce qu'il reste toujours une place.</p></div></a>
-      <a class="card wide" href="#carte" data-go="burgers"><img src="img/menu.jpg" alt="Menu burger, wrap et boisson"><span class="tag">Menus</span><div class="txt"><h3>Menus & boissons</h3><p>Formules avec frites et boisson.</p></div></a>
+      <a class="card" href="#carte" data-go="tacos"><img src="img/tacos.jpg" alt="Tacos gratiné coupé en deux" width="356" height="351" loading="lazy"><div class="txt"><h3>Tacos</h3><p>Ton tacos t'attend : gratiné, sauce fromagère, frites dedans.</p></div></a>
+      <a class="card" href="#carte" data-go="kebabs"><img src="img/wrap.jpg" alt="Wrap poulet sauce" width="715" height="719" loading="lazy"><div class="txt"><h3>Wraps</h3><p>Le wrap qui met tout le monde d'accord.</p></div></a>
+      <a class="card" href="#carte" data-go="pizzas"><img src="img/pizza.jpg" alt="Spécialité gratinée sauce cheddar" width="356" height="350" loading="lazy"><span class="tag">Maison</span><div class="txt"><h3>Pizz' & gratinés</h3><p>La pâte cuite minute, garnie jusqu'au bord.</p></div></a>
+      <a class="card" href="#carte" data-go="bowls"><img src="img/bowl.jpg" alt="Bowl frites poulet crispy" width="1080" height="717" loading="lazy"><div class="txt"><h3>Bowls</h3><p>Frites, viande, sauce : le combo qui ne pardonne pas.</p></div></a>
+      <a class="card" href="#carte" data-go="bowls"><img src="img/fries.jpg" alt="Frites sauce fromagère" width="354" height="349" loading="lazy"><div class="txt"><h3>Frites cheese</h3><p>Nappées. Vraiment nappées.</p></div></a>
+      <a class="card" href="#carte" data-go="desserts"><img src="img/dessert.jpg" alt="Dessert Kreamy's choco bomb" width="356" height="354" loading="lazy"><div class="txt"><h3>Desserts</h3><p>Parce qu'il reste toujours une place.</p></div></a>
+      <a class="card wide" href="#carte" data-go="burgers"><img src="img/menu.jpg" alt="Menu burger, wrap et boisson" width="354" height="349" loading="lazy"><span class="tag">Menus</span><div class="txt"><h3>Menus & boissons</h3><p>Formules avec frites et boisson.</p></div></a>
     </div>
     <div class="menu-note"><a class="btn btn-red" href="#carte">Voir toute la carte ↓</a></div>
   </div>
@@ -359,68 +372,80 @@ footer small{color:#77777c}
       <div><span class="kicker">Toi, tu cherches quoi manger ?</span><h2>La carte</h2><span class="underline"></span></div>
       <span class="demo-note">⚠ Contenu d'exemple : produits et prix à remplacer par la carte réelle</span>
     </div>
-    <div class="tabs" role="tablist">
-      <button class="tab" role="tab" aria-selected="true" data-tab="burgers">Burgers</button>
-      <button class="tab" role="tab" aria-selected="false" data-tab="tacos">Tacos</button>
-      <button class="tab" role="tab" aria-selected="false" data-tab="kebabs">Kebabs & wraps</button>
-      <button class="tab" role="tab" aria-selected="false" data-tab="pizzas">Pizzas</button>
-      <button class="tab" role="tab" aria-selected="false" data-tab="bowls">Bowls & frites</button>
-      <button class="tab" role="tab" aria-selected="false" data-tab="desserts">Desserts & boissons</button>
+    <div class="tabs" role="tablist" aria-label="Catégories de la carte" focusgroup="tablist nomemory">
+      <button type="button" class="tab" role="tab" id="tab-burgers" aria-selected="true" data-tab="burgers" focusgroupstart>Burgers</button>
+      <button type="button" class="tab" role="tab" id="tab-tacos" aria-selected="false" data-tab="tacos">Tacos</button>
+      <button type="button" class="tab" role="tab" id="tab-kebabs" aria-selected="false" data-tab="kebabs">Kebabs & wraps</button>
+      <button type="button" class="tab" role="tab" id="tab-pizzas" aria-selected="false" data-tab="pizzas">Pizzas</button>
+      <button type="button" class="tab" role="tab" id="tab-bowls" aria-selected="false" data-tab="bowls">Bowls & frites</button>
+      <button type="button" class="tab" role="tab" id="tab-desserts" aria-selected="false" data-tab="desserts">Desserts & boissons</button>
     </div>
-    <div class="panel active" data-panel="burgers" role="tabpanel">
-      <div class="pic"><img src="img/stack.jpg" alt="Burgers" loading="lazy"></div>
+    <div class="panel" id="panel-burgers" data-panel="burgers" role="tabpanel" aria-labelledby="tab-burgers" tabindex="0">
+      <div class="panel-inner">
+      <div class="pic"><img src="img/stack.jpg" alt="Burgers" width="354" height="350" loading="lazy"></div>
       <div class="items">
-        <div class="item"><h4>Cheese Burger</h4><span class="price">— €</span><p>Steak, cheddar, oignons, cornichons, ketchup-moutarde.</p></div>
-        <div class="item"><h4>Double Cheese <span class="chip">Best-seller</span></h4><span class="price">— €</span><p>Deux steaks, double cheddar. Pour les vraies faims.</p></div>
-        <div class="item"><h4>Le Pizz'Burger <span class="chip">Signature</span></h4><span class="price">— €</span><p>Steak + galette de poulet pané, cheddar, salade, sauce maison.</p></div>
-        <div class="item"><h4>Chicken Crousty</h4><span class="price">— €</span><p>Filet de poulet ultra crispy, cheddar, salade, sauce au choix.</p></div>
-        <div class="item"><h4>Triple Smash <span class="chip y">Nouveau</span></h4><span class="price">— €</span><p>Trois steaks, trois cheddars, cornichons. Serviettes conseillées.</p></div>
+        <div class="item"><h3>Cheese Burger</h3><span class="price">— €</span><p>Steak, cheddar, oignons, cornichons, ketchup-moutarde.</p></div>
+        <div class="item"><h3>Double Cheese <span class="chip">Best-seller</span></h3><span class="price">— €</span><p>Deux steaks, double cheddar. Pour les vraies faims.</p></div>
+        <div class="item"><h3>Le Pizz'Burger <span class="chip">Signature</span></h3><span class="price">— €</span><p>Steak + galette de poulet pané, cheddar, salade, sauce maison.</p></div>
+        <div class="item"><h3>Chicken Crousty</h3><span class="price">— €</span><p>Filet de poulet ultra crispy, cheddar, salade, sauce au choix.</p></div>
+        <div class="item"><h3>Triple Smash <span class="chip y">Nouveau</span></h3><span class="price">— €</span><p>Trois steaks, trois cheddars, cornichons. Serviettes conseillées.</p></div>
+      </div>
       </div>
     </div>
-    <div class="panel" data-panel="tacos" role="tabpanel">
-      <div class="pic"><img src="img/tacos.jpg" alt="Tacos" loading="lazy"></div>
+    <div class="panel" id="panel-tacos" data-panel="tacos" role="tabpanel" aria-labelledby="tab-tacos" hidden="until-found">
+      <div class="panel-inner">
+      <div class="pic"><img src="img/tacos.jpg" alt="Tacos" width="356" height="351" loading="lazy"></div>
       <div class="items">
-        <div class="item"><h4>Tacos 1 viande</h4><span class="price">— €</span><p>Frites, sauce fromagère maison, viande au choix.</p></div>
-        <div class="item"><h4>Tacos 2 viandes <span class="chip">Best-seller</span></h4><span class="price">— €</span><p>Le plus commandé. Deux viandes au choix.</p></div>
-        <div class="item"><h4>Tacos 3 viandes</h4><span class="price">— €</span><p>Pour ceux qui ne savent pas choisir.</p></div>
-        <div class="item"><h4>Tacos gratiné <span class="chip y">Maison</span></h4><span class="price">— €</span><p>Gratiné au four, cheddar fondu par-dessus.</p></div>
+        <div class="item"><h3>Tacos 1 viande</h3><span class="price">— €</span><p>Frites, sauce fromagère maison, viande au choix.</p></div>
+        <div class="item"><h3>Tacos 2 viandes <span class="chip">Best-seller</span></h3><span class="price">— €</span><p>Le plus commandé. Deux viandes au choix.</p></div>
+        <div class="item"><h3>Tacos 3 viandes</h3><span class="price">— €</span><p>Pour ceux qui ne savent pas choisir.</p></div>
+        <div class="item"><h3>Tacos gratiné <span class="chip y">Maison</span></h3><span class="price">— €</span><p>Gratiné au four, cheddar fondu par-dessus.</p></div>
+      </div>
       </div>
     </div>
-    <div class="panel" data-panel="kebabs" role="tabpanel">
-      <div class="pic"><img src="img/wrap.jpg" alt="Kebabs & wraps" loading="lazy"></div>
+    <div class="panel" id="panel-kebabs" data-panel="kebabs" role="tabpanel" aria-labelledby="tab-kebabs" hidden="until-found">
+      <div class="panel-inner">
+      <div class="pic"><img src="img/wrap.jpg" alt="Kebabs & wraps" width="715" height="719" loading="lazy"></div>
       <div class="items">
-        <div class="item"><h4>Kebab traditionnel <span class="chip">Signature</span></h4><span class="price">— €</span><p>Pain maison, viande grillée, crudités, sauce au choix.</p></div>
-        <div class="item"><h4>Assiette kebab</h4><span class="price">— €</span><p>Viande, frites, salade, pain à part.</p></div>
-        <div class="item"><h4>Wrap poulet crispy</h4><span class="price">— €</span><p>Poulet ultra crispy, cheddar, salade, sauce. Le wrap qui met tout le monde d'accord.</p></div>
-        <div class="item"><h4>Wrap kebab cheese</h4><span class="price">— €</span><p>Galette grillée, viande kebab, sauce fromagère.</p></div>
+        <div class="item"><h3>Kebab traditionnel <span class="chip">Signature</span></h3><span class="price">— €</span><p>Pain maison, viande grillée, crudités, sauce au choix.</p></div>
+        <div class="item"><h3>Assiette kebab</h3><span class="price">— €</span><p>Viande, frites, salade, pain à part.</p></div>
+        <div class="item"><h3>Wrap poulet crispy</h3><span class="price">— €</span><p>Poulet ultra crispy, cheddar, salade, sauce. Le wrap qui met tout le monde d'accord.</p></div>
+        <div class="item"><h3>Wrap kebab cheese</h3><span class="price">— €</span><p>Galette grillée, viande kebab, sauce fromagère.</p></div>
+      </div>
       </div>
     </div>
-    <div class="panel" data-panel="pizzas" role="tabpanel">
-      <div class="pic"><img src="img/pizza.jpg" alt="Pizzas" loading="lazy"></div>
+    <div class="panel" id="panel-pizzas" data-panel="pizzas" role="tabpanel" aria-labelledby="tab-pizzas" hidden="until-found">
+      <div class="panel-inner">
+      <div class="pic"><img src="img/pizza.jpg" alt="Pizzas" width="356" height="350" loading="lazy"></div>
       <div class="items">
-        <div class="item"><h4>Margherita</h4><span class="price">— €</span><p>Sauce tomate, mozzarella, origan.</p></div>
-        <div class="item"><h4>Reine</h4><span class="price">— €</span><p>Tomate, mozzarella, jambon, champignons.</p></div>
-        <div class="item"><h4>Orientale</h4><span class="price">— €</span><p>Tomate, mozzarella, merguez, poivrons, œuf.</p></div>
-        <div class="item"><h4>4 fromages</h4><span class="price">— €</span><p>Crème ou tomate, mozzarella, chèvre, bleu, emmental.</p></div>
-        <div class="item"><h4>Pizza kebab <span class="chip y">Maison</span></h4><span class="price">— €</span><p>Tomate, mozzarella, viande kebab, oignons, sauce blanche.</p></div>
+        <div class="item"><h3>Margherita</h3><span class="price">— €</span><p>Sauce tomate, mozzarella, origan.</p></div>
+        <div class="item"><h3>Reine</h3><span class="price">— €</span><p>Tomate, mozzarella, jambon, champignons.</p></div>
+        <div class="item"><h3>Orientale</h3><span class="price">— €</span><p>Tomate, mozzarella, merguez, poivrons, œuf.</p></div>
+        <div class="item"><h3>4 fromages</h3><span class="price">— €</span><p>Crème ou tomate, mozzarella, chèvre, bleu, emmental.</p></div>
+        <div class="item"><h3>Pizza kebab <span class="chip y">Maison</span></h3><span class="price">— €</span><p>Tomate, mozzarella, viande kebab, oignons, sauce blanche.</p></div>
+      </div>
       </div>
     </div>
-    <div class="panel" data-panel="bowls" role="tabpanel">
-      <div class="pic"><img src="img/bowl.jpg" alt="Bowls & frites" loading="lazy"></div>
+    <div class="panel" id="panel-bowls" data-panel="bowls" role="tabpanel" aria-labelledby="tab-bowls" hidden="until-found">
+      <div class="panel-inner">
+      <div class="pic"><img src="img/bowl.jpg" alt="Bowls & frites" width="1080" height="717" loading="lazy"></div>
       <div class="items">
-        <div class="item"><h4>Bowl crispy <span class="chip">Best-seller</span></h4><span class="price">— €</span><p>Frites, poulet crispy, cheddar, sauce maison.</p></div>
-        <div class="item"><h4>Bowl kebab</h4><span class="price">— €</span><p>Frites, viande kebab, sauce fromagère, oignons frits.</p></div>
-        <div class="item"><h4>Frites cheese</h4><span class="price">— €</span><p>Frites nappées de sauce cheddar.</p></div>
-        <div class="item"><h4>Frites maison</h4><span class="price">— €</span><p>Portion normale ou grande.</p></div>
+        <div class="item"><h3>Bowl crispy <span class="chip">Best-seller</span></h3><span class="price">— €</span><p>Frites, poulet crispy, cheddar, sauce maison.</p></div>
+        <div class="item"><h3>Bowl kebab</h3><span class="price">— €</span><p>Frites, viande kebab, sauce fromagère, oignons frits.</p></div>
+        <div class="item"><h3>Frites cheese</h3><span class="price">— €</span><p>Frites nappées de sauce cheddar.</p></div>
+        <div class="item"><h3>Frites maison</h3><span class="price">— €</span><p>Portion normale ou grande.</p></div>
+      </div>
       </div>
     </div>
-    <div class="panel" data-panel="desserts" role="tabpanel">
-      <div class="pic"><img src="img/dessert.jpg" alt="Desserts & boissons" loading="lazy"></div>
+    <div class="panel" id="panel-desserts" data-panel="desserts" role="tabpanel" aria-labelledby="tab-desserts" hidden="until-found">
+      <div class="panel-inner">
+      <div class="pic"><img src="img/dessert.jpg" alt="Desserts & boissons" width="356" height="354" loading="lazy"></div>
       <div class="items">
-        <div class="item"><h4>Kreamy's Choco Bomb <span class="chip y">Nouveau</span></h4><span class="price">— €</span><p>Le dessert en pot, chocolat et crème.</p></div>
-        <div class="item"><h4>Tiramisu</h4><span class="price">— €</span><p>Classique ou spéculoos.</p></div>
-        <div class="item"><h4>Canette 33 cl</h4><span class="price">— €</span><p>Coca-Cola, Pepsi, Oasis, Ice Tea…</p></div>
-        <div class="item"><h4>Bouteille 1,5 L</h4><span class="price">— €</span><p>Idéal pour les commandes à partager.</p></div>
+        <div class="item"><h3>Kreamy's Choco Bomb <span class="chip y">Nouveau</span></h3><span class="price">— €</span><p>Le dessert en pot, chocolat et crème.</p></div>
+        <div class="item"><h3>Tiramisu</h3><span class="price">— €</span><p>Classique ou spéculoos.</p></div>
+        <div class="item"><h3>Canette 33 cl</h3><span class="price">— €</span><p>Coca-Cola, Pepsi, Oasis, Ice Tea…</p></div>
+        <div class="item"><h3>Bouteille 1,5 L</h3><span class="price">— €</span><p>Idéal pour les commandes à partager.</p></div>
+      </div>
       </div>
     </div>
     <div class="menu-foot">
@@ -433,7 +458,7 @@ footer small{color:#77777c}
 <!-- SIGNATURE -->
 <section class="signature">
   <div class="wrap">
-    <div class="img"><img src="img/wrap.jpg" alt="Wrap poulet ultra crispy sauce"></div>
+    <div class="img"><img src="img/wrap.jpg" alt="Wrap poulet ultra crispy sauce" width="715" height="719" loading="lazy"></div>
     <div>
       <span class="kicker">Mission : se régaler</span>
       <h2>Poulet<br><span class="brush white">ultra crispy</span></h2>
@@ -454,19 +479,19 @@ footer small{color:#77777c}
     <div class="events-grid">
       <div class="event match">
         <span class="ball" aria-hidden="true">⚽</span>
-        <span class="when">⚽ Soirées matchs</span>
+        <span class="when"><span aria-hidden="true">⚽</span> Soirées matchs</span>
         <h3>Ce soir,<br><span class="brush">on vibre ensemble !</span></h3>
         <p>Les grands matchs diffusés au resto. Venez avec la bande, on s'occupe des burgers.</p>
       </div>
       <div class="event">
-        <img src="img/bowl.jpg" alt="Bowl de saison" loading="lazy">
-        <span class="when">🍂 Nouveauté de saison</span>
+        <img src="img/bowl.jpg" alt="Bowl de saison" width="1080" height="717" loading="lazy">
+        <span class="when"><span aria-hidden="true">🍂</span> Nouveauté de saison</span>
         <h3>L'automne,<br>ça se savoure</h3>
         <p>Le bowl crispy nappé de sauce fromagère est de retour.</p>
       </div>
       <div class="event promo">
         <div class="big">Cheese<br>offert</div>
-        <span class="when">🧀 Offre du moment</span>
+        <span class="when"><span aria-hidden="true">🧀</span> Offre du moment</span>
         <h3>Pour toute commande de [à définir]</h3>
         <p>Conditions à préciser avec le restaurant.</p>
       </div>
@@ -477,19 +502,19 @@ footer small{color:#77777c}
 <!-- LE RESTO -->
 <section id="resto" class="resto">
   <div class="wrap">
-    <div class="facade"><img src="img/facade.jpg" alt="Devanture Pizz'Burger, rue de la République à Roquemaure"><span class="since">Depuis 2006</span></div>
+    <div class="facade"><img src="img/facade.jpg" alt="Devanture Pizz'Burger, rue de la République à Roquemaure" width="995" height="614" loading="lazy"><span class="since">Depuis 2006</span></div>
     <div>
       <span class="kicker">Rue de la République</span>
       <h2>Le QG<br>de Roquemaure</h2><span class="underline"></span>
       <p>Rue de la République, en plein centre du village, on fait de la street food depuis 2006. Une table en salle, une place en terrasse ou juste le temps de récupérer votre commande : il y a toujours une bonne raison de passer.</p>
       <p>Les habitués le disent mieux que nous : « on n'a jamais été déçus ».</p>
       <div class="services">
-        <div class="service"><i>🍽️</i>Sur place</div>
-        <div class="service"><i>🥡</i>À emporter</div>
-        <div class="service"><i>🛵</i>Livraison</div>
-        <div class="service"><i>☀️</i>Terrasse</div>
-        <div class="service"><i>📅</i>Réservations</div>
-        <div class="service"><i>🥗</i>Options végé</div>
+        <div class="service"><i aria-hidden="true">🍽️</i>Sur place</div>
+        <div class="service"><i aria-hidden="true">🥡</i>À emporter</div>
+        <div class="service"><i aria-hidden="true">🛵</i>Livraison</div>
+        <div class="service"><i aria-hidden="true">☀️</i>Terrasse</div>
+        <div class="service"><i aria-hidden="true">📅</i>Réservations</div>
+        <div class="service"><i aria-hidden="true">🥗</i>Options végé</div>
       </div>
     </div>
   </div>
@@ -504,7 +529,7 @@ footer small{color:#77777c}
         <h2><span>Faites-vous</span><span class="brush">livrer</span></h2>
       </div>
       <div class="side">
-        <div class="scooter">🛵</div>
+        <div class="scooter" aria-hidden="true">🛵</div>
         <div class="price">15€</div>
         <p>Minimum de commande · Roquemaure & alentours</p>
         <a class="btn btn-red" href="tel:+33434479831">Appeler pour commander</a>
@@ -520,23 +545,23 @@ footer small{color:#77777c}
       <div><span class="kicker">Ils ont validé ✅</span><h2>Vos avis</h2><span class="underline"></span></div>
       <div class="reviews-top">
         <div class="score">4,3</div>
-        <div class="score-meta"><div class="stars">★★★★★</div><span>221 avis Google</span></div>
+        <div class="score-meta"><div class="stars" aria-hidden="true">★★★★★</div><span>221 avis Google</span></div>
       </div>
     </div>
     <div class="reviews">
-      <div class="review"><div class="stars">★★★★★</div>
+      <div class="review"><div class="stars" role="img" aria-label="5 étoiles sur 5">★★★★★</div>
         <p>Excellent snack à Roquemaure ! Je me suis régalé avec mes enfants, tout le monde a validé. Burgers, tacos et kebabs sont super bons et bien servis.</p>
         <div class="who">Client Google<small>Sur place</small></div></div>
-      <div class="review"><div class="stars">★★★★★</div>
+      <div class="review"><div class="stars" role="img" aria-label="5 étoiles sur 5">★★★★★</div>
         <p>Cela fait pas mal d'années que je commande kebab avec livraison à domicile… vraiment top et délicieux. Livraison top, accueil téléphonique chaleureux.</p>
         <div class="who">Nath C.<small>Livraison · Dîner</small></div></div>
-      <div class="review"><div class="stars">★★★★★</div>
+      <div class="review"><div class="stars" role="img" aria-label="5 étoiles sur 5">★★★★★</div>
         <p>Toujours un plaisir de venir ici. On habite à Roquemaure depuis janvier et on n'a jamais été déçus ! La nourriture est bonne et le service très agréable.</p>
         <div class="who">Alexiane F.<small>À emporter · Dîner</small></div></div>
     </div>
     <div class="gallery">
-      <img src="img/closeup.jpg" alt=""><img src="img/bigmac.jpg" alt=""><img src="img/tacos.jpg" alt="">
-      <img src="img/bowl.jpg" alt=""><img src="img/fries.jpg" alt=""><img src="img/triple.jpg" alt="">
+      <img src="img/closeup.jpg" alt="" width="715" height="719" loading="lazy"><img src="img/bigmac.jpg" alt="" width="356" height="349" loading="lazy"><img src="img/tacos.jpg" alt="" width="356" height="351" loading="lazy">
+      <img src="img/bowl.jpg" alt="" width="1080" height="717" loading="lazy"><img src="img/fries.jpg" alt="" width="354" height="349" loading="lazy"><img src="img/triple.jpg" alt="" width="715" height="709" loading="lazy">
     </div>
   </div>
 </section>
@@ -548,9 +573,9 @@ footer small{color:#77777c}
       <span class="kicker">On vous attend !</span>
       <h2>Infos pratiques</h2><span class="underline"></span>
       <div class="info-list">
-        <div class="info"><i>📍</i><div><b>Adresse</b>7 Rue de la République, 30150 Roquemaure<br><a href="https://maps.google.com/?q=7+Rue+de+la+R%C3%A9publique+30150+Roquemaure" target="_blank" rel="noopener">Itinéraire →</a></div></div>
-        <div class="info"><i>📞</i><div><b>Téléphone</b><a href="tel:+33434479831">04 34 47 98 31</a></div></div>
-        <div class="info"><i>✉️</i><div><b>E-mail</b><a href="mailto:aprestoute@hotmail.fr">aprestoute@hotmail.fr</a></div></div>
+        <div class="info"><i aria-hidden="true">📍</i><div><b>Adresse</b>7 Rue de la République, 30150 Roquemaure<br><a href="https://maps.google.com/?q=7+Rue+de+la+R%C3%A9publique+30150+Roquemaure" target="_blank" rel="noopener">Itinéraire →</a></div></div>
+        <div class="info"><i aria-hidden="true">📞</i><div><b>Téléphone</b><a href="tel:+33434479831">04 34 47 98 31</a></div></div>
+        <div class="info"><i aria-hidden="true">✉️</i><div><b>E-mail</b><a href="mailto:aprestoute@hotmail.fr">aprestoute@hotmail.fr</a></div></div>
       </div>
       <div class="hours">
         <h3>Horaires</h3>
@@ -563,39 +588,70 @@ footer small{color:#77777c}
       </div>
     </div>
     <div class="map">
-      <iframe title="Plan d'accès Pizz'Burger" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+      <iframe title="Plan d'accès Pizz'Burger" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"
         src="https://maps.google.com/maps?q=7%20Rue%20de%20la%20R%C3%A9publique%2C%2030150%20Roquemaure&z=16&output=embed"></iframe>
     </div>
   </div>
 </section>
 
+</main>
+
 <footer>
   <div class="wrap">
-    <img src="img/logo.png" alt="Pizz'Burger">
+    <img src="img/logo.png" alt="Pizz'Burger" width="336" height="336" loading="lazy">
     <div class="tagline">À très vite chez Pizz'Burger !</div>
-    <div class="links"><a href="#carte">La carte</a><a href="#resto">Le resto</a><a href="#livraison">Livraison</a><a href="#avis">Avis</a><a href="#infos">Infos</a></div>
+    <nav class="links" aria-label="Pied de page"><a href="#carte">La carte</a><a href="#resto">Le resto</a><a href="#livraison">Livraison</a><a href="#avis">Avis</a><a href="#infos">Infos</a></nav>
     <div class="social">
-      <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 9V7c0-.8.5-1 1-1h2V3h-3c-2.8 0-4 1.8-4 4v2H8v3h2v9h4v-9h2.6l.4-3z"/></svg></a>
-      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" style="fill:none;stroke:#fff;stroke-width:2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="#fff"/></svg><svg hidden viewBox="0 0 24 24"><path d="M12 7.3A4.7 4.7 0 1 0 12 16.7 4.7 4.7 0 0 0 12 7.3zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6zM17 5.6a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2zM21.9 7.9c-.1-1.5-.4-2.8-1.5-3.9S18 2.6 16.5 2.5c-1.6-.1-6.4-.1-8 0-1.5.1-2.8.4-3.9 1.5S3.2 6.4 3.1 7.9c-.1 1.6-.1 6.4 0 8 .1 1.5.4 2.8 1.5 3.9s2.4 1.4 3.9 1.5c1.6.1 6.4.1 8 0 1.5-.1 2.8-.4 3.9-1.5s1.4-2.4 1.5-3.9c.1-1.6.1-6.4 0-8z"/></svg></a>
+      <a href="#" aria-label="Facebook"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M14 9V7c0-.8.5-1 1-1h2V3h-3c-2.8 0-4 1.8-4 4v2H8v3h2v9h4v-9h2.6l.4-3z"/></svg></a>
+      <a href="#" aria-label="Instagram"><svg aria-hidden="true" viewBox="0 0 24 24" style="fill:none;stroke:#fff;stroke-width:2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="#fff"/></svg></a>
     </div>
     <small>© 2026 Pizz'Burger · Fast food & pizzeria · Roquemaure · Mentions légales</small>
   </div>
 </footer>
 
-<div class="mobile-bar">
-  <a class="call" href="tel:+33434479831" aria-label="Appeler Pizz'Burger"><svg viewBox="0 0 24 24" fill="#fff"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg></a>
-  <a class="map-btn" href="https://maps.google.com/?q=7+Rue+de+la+R%C3%A9publique+30150+Roquemaure" target="_blank" rel="noopener" aria-label="Itinéraire"><svg viewBox="0 0 24 24" fill="#E3161D"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a>
-</div>
+<nav class="mobile-bar" aria-label="Accès rapide">
+  <a class="call" href="tel:+33434479831" aria-label="Appeler Pizz'Burger"><svg aria-hidden="true" viewBox="0 0 24 24" fill="#fff"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg></a>
+  <a class="map-btn" href="https://maps.google.com/?q=7+Rue+de+la+R%C3%A9publique+30150+Roquemaure" target="_blank" rel="noopener" aria-label="Itinéraire"><svg aria-hidden="true" viewBox="0 0 24 24" fill="#E3161D"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg></a>
+</nav>
 
 <script>
 (function(){
-  var tabs=document.querySelectorAll('.tab'),panels=document.querySelectorAll('.panel');
-  function show(k){
-    tabs.forEach(function(t){t.setAttribute('aria-selected',t.dataset.tab===k?'true':'false')});
-    panels.forEach(function(p){p.classList.toggle('active',p.dataset.panel===k)});
+  var list=document.querySelector('.tabs');
+  var tabs=[].slice.call(list.querySelectorAll('[role="tab"]'));
+  // focusgroup natif (Chrome/Edge 150+) gère les flèches ; sinon, tabindex mobile manuel
+  var nativeFG=Object.prototype.hasOwnProperty.call(HTMLElement.prototype,'focusGroup');
+  function panelOf(t){return document.getElementById('panel-'+t.dataset.tab)}
+  function select(tab,focus){
+    tabs.forEach(function(t){
+      var on=t===tab,p=panelOf(t);
+      t.setAttribute('aria-selected',on?'true':'false');
+      t.toggleAttribute('focusgroupstart',on);
+      if(!nativeFG)t.tabIndex=on?0:-1;
+      if(on){p.removeAttribute('hidden');p.tabIndex=0}
+      else{p.hidden='until-found';p.removeAttribute('tabindex')}
+    });
+    if(focus)tab.focus();
+    try{tab.scrollIntoView({block:'nearest',inline:'nearest',container:'nearest'})}catch(e){}
   }
-  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.dataset.tab)})});
-  document.querySelectorAll('[data-go]').forEach(function(a){a.addEventListener('click',function(){show(a.dataset.go)})});
+  tabs.forEach(function(t){
+    t.addEventListener('click',function(){select(t)});
+    // la sélection suit le focus (flèches gérées par focusgroup natif ou par le repli ci-dessous)
+    t.addEventListener('focus',function(){if(t.getAttribute('aria-selected')!=='true')select(t)});
+    // « Rechercher dans la page » peut révéler un panneau masqué : on synchronise l'onglet
+    panelOf(t).addEventListener('beforematch',function(){select(t)});
+  });
+  if(!nativeFG){
+    tabs.forEach(function(t){t.tabIndex=t.getAttribute('aria-selected')==='true'?0:-1});
+    list.addEventListener('keydown',function(e){
+      var i=tabs.indexOf(document.activeElement);if(i<0)return;
+      var j={ArrowRight:i+1,ArrowLeft:i-1,Home:0,End:tabs.length-1}[e.key];
+      if(j===undefined)return;
+      e.preventDefault();select(tabs[(j+tabs.length)%tabs.length],true);
+    });
+  }
+  document.querySelectorAll('[data-go]').forEach(function(a){
+    a.addEventListener('click',function(){select(document.getElementById('tab-'+a.dataset.go))});
+  });
 })();
 </script>
 </body>
